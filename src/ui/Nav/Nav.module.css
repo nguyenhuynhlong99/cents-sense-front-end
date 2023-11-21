@@ -1,0 +1,66 @@
+.mobileNav {
+  position: fixed;
+  inset: 0;
+  color: #eee;
+  background-color: #212020;
+  z-index: 10;
+  padding: 20px;
+  transition: all 400ms ease-out;
+  transform: translateY(-100%);
+}
+
+.mobileNavLinkList {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobileNavLinkList li {
+  transform: translateX(-110%);
+}
+
+#mobileToggle:checked ~ .mobileNav {
+  transform: translateY(0);
+}
+
+#mobileToggle:checked ~ .mobileNav .mobileNavLinkList li {
+  transform: translateX(0);
+  animation: fadeIn 1s ease-out;
+  transition: all 1s ease-out;
+  /* animation-delay: 0.5s; */
+}
+
+#mobileToggle:checked ~ .mobileNav .mobileNavLinkList li:nth-child(2) {
+  transition-delay: 0.5s;
+  /* animation-delay: 1s; */
+}
+
+#mobileToggle:checked ~ .mobileNav .mobileNavLinkList li:nth-child(3) {
+  transition-delay: 1s;
+  /* animation-delay: 1s; */
+}
+
+@keyframes fadeIn {
+  0% {
+    /* transform: translateX(-100%); */
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    /* transform: translateX(0); */
+    opacity: 1;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .mobileNav {
+    display: none;
+  }
+}
