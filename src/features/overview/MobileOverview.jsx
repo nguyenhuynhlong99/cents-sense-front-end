@@ -69,8 +69,6 @@ function MobileOverview({ data }) {
     }
   }
 
-  // console.log(getCurrentMonthIncome(userID));
-
   return (
     <>
       <div className="max-w-[300px] m-auto">

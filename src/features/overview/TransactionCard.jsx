@@ -7,7 +7,7 @@ function TransactionCard({ icon, date, amountMoney, detail, type }) {
     <div className="grid grid-cols-[40%,20%,40%] py-2">
       <div className="flex items-center gap-2">
         {icon}
-        <span>{detail}</span>
+        <span className="truncate">{detail}</span>
       </div>
       {isIncome ? (
         <span className="font-bold text-green-400">
