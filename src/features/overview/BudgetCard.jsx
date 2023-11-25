@@ -3,9 +3,10 @@ import { formatCurrency } from '../../utils/helpers';
 
 function BudgetCard({ icon, category, totalBudget, usedBudget }) {
   return (
-    <div className="p-3 flex flex-col gap-2 bg-neutral-950 rounded-md">
+    <div className="p-3 flex flex-col gap-2 bg-neutral-900 rounded-md">
       <span className="flex items-center gap-2 text-sm capitalize">
-        {icon} {category}
+        {icon}
+        <span className="block max-w-[70%] truncate">{category}</span>
       </span>
       <span className="text-xs">
         {formatCurrency(usedBudget)} / {formatCurrency(totalBudget)}

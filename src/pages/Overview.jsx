@@ -9,7 +9,7 @@ function Overview() {
 
   useEffect(() => {
     // set initial value
-    const mediaWatcher = window.matchMedia('(max-width: 600px)');
+    const mediaWatcher = window.matchMedia('(max-width: 700px)');
     setIsMobile(mediaWatcher.matches);
 
     //watch for updates

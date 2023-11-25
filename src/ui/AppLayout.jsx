@@ -9,7 +9,7 @@ function AppLayout() {
         <Sidebar />
         <div className="order-1 px-5 py-3 flex flex-col gap-4 lg:order-2 overflow-hidden lg:h-screen">
           <Header />
-          <main className="bg-neutral-900 rounded-lg p-3 grow md:p-8 overflow-auto">
+          <main className="bg-neutral-900 rounded-lg p-3 grow md:grow-0 md:p-8 overflow-auto">
             <Outlet />
           </main>
         </div>
