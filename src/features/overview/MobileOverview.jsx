@@ -71,7 +71,7 @@ function MobileOverview({ data }) {
 
   return (
     <>
-      <div className="max-w-[300px] m-auto">
+      <div className="max-w-[300px] m-auto pt-3">
         <section className="mb-4">
           <h3 className="text-base font-medium mb-2">
             Total Balance:{' '}

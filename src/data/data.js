@@ -12,8 +12,9 @@ export const data = {
       accountID: 1,
       userID: 1,
       name: 'Check card',
-      type: 'credit', // [credit, saving, debit]
+      type: 'debit', // [credit, saving, debit]
       balance: 1000,
+      color: 'neutral',
     },
     {
       accountID: 2,
@@ -21,6 +22,23 @@ export const data = {
       name: 'Check card',
       type: 'credit', // [credit, saving, debit]
       balance: 1000,
+      color: 'neutral',
+    },
+    {
+      accountID: 3,
+      userID: 1,
+      name: 'Chase credit card',
+      type: 'credit', // [credit, saving, debit]
+      balance: 0,
+      color: 'blue',
+    },
+    {
+      accountID: 4,
+      userID: 1,
+      name: 'Emergency High Yield Saving',
+      type: 'saving', // [credit, saving, debit]
+      balance: 0,
+      color: 'red',
     },
   ],
   transactions: [
