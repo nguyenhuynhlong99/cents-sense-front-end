@@ -1,0 +1,144 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "user123",
+      "email": "user123@email.com",
+      "password": "hashed_password",
+      "name": "Long Nguyen"
+    }
+  ],
+  "accounts": [
+    {
+      "id": 1,
+      "userID": 1,
+      "name": "Check card",
+      "type": "debit",
+      "balance": 1000,
+      "color": "black"
+    },
+    {
+      "id": 2,
+      "userID": 2,
+      "name": "Check card",
+      "type": "credit",
+      "balance": 1000,
+      "color": "black"
+    },
+    {
+      "id": 3,
+      "userID": 1,
+      "name": "Chase credit card",
+      "type": "credit",
+      "balance": 0,
+      "color": "blue"
+    },
+    {
+      "id": 4,
+      "userID": 1,
+      "name": "Emergency HYSA",
+      "type": "saving",
+      "balance": 100,
+      "color": "red"
+    },
+    {
+      "name": "Amex Gold Card",
+      "balance": 0,
+      "type": "credit",
+      "color": "gold",
+      "id": "83a6facb-3969-4f09-b8d0-7ec58511eaa0",
+      "userID": 1
+    },
+    {
+      "name": "Amex Platinum Card",
+      "balance": 0,
+      "type": "credit",
+      "color": "silver",
+      "id": "1ff2e67f-c4e4-40a0-b0e0-9b9e9e920042",
+      "userID": 1
+    },
+    {
+      "color": "red",
+      "name": "Bank Of America Check Card",
+      "balance": 0,
+      "type": "debit",
+      "id": "324f3ea9-884c-44b8-8421-e48ae2e8dca6",
+      "userID": 1
+    }
+  ],
+  "transactions": [
+    {
+      "id": 1,
+      "userID": 1,
+      "accountID": 1,
+      "date": "2023-11-01",
+      "amount": 50,
+      "budgetID": 1,
+      "description": "Grocery shopping",
+      "type": "Expense"
+    },
+    {
+      "id": 2,
+      "userID": 1,
+      "accountID": 1,
+      "date": "2023-11-05",
+      "amount": 1200,
+      "budgetID": null,
+      "description": "Monthly salary",
+      "type": "Income"
+    }
+  ],
+  "budgets": [
+    {
+      "id": 1,
+      "userID": 1,
+      "category": "Food",
+      "amount": 300,
+      "createdAt": "2023-11-17T00:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "userID": 1,
+      "category": "Entertainment",
+      "amount": 150,
+      "createdAt": "2023-11-17T00:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "userID": 1,
+      "category": "personal",
+      "amount": 100,
+      "createdAt": "2023-10-17T00:00:00.000Z"
+    },
+    {
+      "id": 4,
+      "userID": 1,
+      "category": "housing",
+      "amount": 700,
+      "createdAt": "2023-11-22T00:00:00.000Z"
+    },
+    {
+      "id": 5,
+      "userID": 1,
+      "category": "transportation",
+      "amount": 200,
+      "createdAt": "2023-11-22T00:00:00.000Z"
+    }
+  ],
+  "savingsGoals": [
+    {
+      "id": 1,
+      "userID": 1,
+      "name": "Europe Trip",
+      "targetAmount": 5000,
+      "currentAmount": 1200
+    },
+    {
+      "id": 2,
+      "userID": 1,
+      "name": "New Laptop",
+      "targetAmount": 1500,
+      "currentAmount": 600
+    }
+  ]
+}

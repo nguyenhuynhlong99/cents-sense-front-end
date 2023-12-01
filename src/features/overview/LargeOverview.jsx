@@ -18,8 +18,8 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 function LargeOverview({ data }) {
   const userID = 1;
-  const { transactions, budgets, accounts, savingsGoals } = data;
-  const userAccounts = accounts.filter((acc) => acc.userID === userID);
+  const { transactions, budgets, savingsGoals } = data;
+  // const userAccounts = accounts.filter((acc) => acc.userID === userID);
   const currentMonth = getMonth(new Date());
   const userIncome = getUserIncome(userID);
   const userExpense = getUserExpense(userID);
@@ -52,8 +52,6 @@ function LargeOverview({ data }) {
     (acc, curr) => acc + curr,
     0
   );
-
-  console.log(topBudgetCategories, topBudgetAmount);
 
   const pieChartData = {
     labels: [...topBudgetCategories, 'Rest'],
@@ -193,6 +191,7 @@ function LargeOverview({ data }) {
             <div className="grid grid-cols-1 divide-y divide-slate-700 text-sm">
               {recentTransactionsWithBudgetCategory.map((t) => (
                 <TransactionCard
+                  key={t.id}
                   type={t.type}
                   detail={t.description}
                   icon={getIcon(t.budgetCategory)}

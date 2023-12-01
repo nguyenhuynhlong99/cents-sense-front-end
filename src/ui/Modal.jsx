@@ -1,10 +1,14 @@
 import { createContext, useContext } from 'react';
 
-const ModalContext = createContext();
+const ModalComponentContext = createContext();
 
-function Modal({ children, isOpen, onClose }) {
+function Modal({ children, isShown, setIsShown }) {
+  function onClose() {
+    setIsShown(false);
+  }
+
   return (
-    isOpen && (
+    isShown && (
       <div
         onClick={onClose}
         className="fixed top-0 left-0 w-full h-full overflow-x-hidden overflow-y-hidden bg-[rgba(0,0,0,0.8)] z-[1] px-5"
@@ -14,9 +18,9 @@ function Modal({ children, isOpen, onClose }) {
           className="max-w-[700px] my-[200px] mx-auto"
         >
           <div className="bg-neutral-800 rounded-lg p-3">
-            <ModalContext.Provider value={{ onClose }}>
+            <ModalComponentContext.Provider value={{ onClose }}>
               {children}
-            </ModalContext.Provider>
+            </ModalComponentContext.Provider>
           </div>
         </div>
       </div>
@@ -25,7 +29,7 @@ function Modal({ children, isOpen, onClose }) {
 }
 
 const ModalHeader = ({ children }) => {
-  const { onClose } = useContext(ModalContext);
+  const { onClose } = useContext(ModalComponentContext);
 
   return (
     <div className="flex items-center justify-between text-xl sm:text-2xl">
@@ -38,15 +42,15 @@ const ModalHeader = ({ children }) => {
 };
 
 const ModalBody = ({ children }) => {
-  return <div>{children}</div>;
+  return <>{children}</>;
 };
 
-const ModalFooter = ({ children }) => {
-  return <div>{children}</div>;
-};
+// const ModalFooter = ({ children }) => {
+//   return <>{children}</>;
+// };
 
 Modal.Header = ModalHeader;
 Modal.Body = ModalBody;
-Modal.Footer = ModalFooter;
+// Modal.Footer = ModalFooter;
 
 export default Modal;
