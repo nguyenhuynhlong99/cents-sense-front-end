@@ -2,7 +2,7 @@ import Heading from '../ui/Heading';
 import { useEffect, useState } from 'react';
 import MobileOverview from '../features/overview/MobileOverview';
 import LargeOverview from '../features/overview/LargeOverview';
-import { data } from '../data/data';
+import { data } from '../../data/data';
 
 function Overview() {
   const [isMobile, setIsMobile] = useState(false);

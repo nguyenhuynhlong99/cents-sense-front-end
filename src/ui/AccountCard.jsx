@@ -2,11 +2,9 @@ import { CreditCard } from '@phosphor-icons/react';
 import { formatCurrency } from '../utils/helpers';
 // import MasterCardIcon from './MasterCardIcon';
 
-function AccountCard({ balance, name, color = 'teal' }) {
+function AccountCard({ balance, name, color = 'black' }) {
   function getColor() {
     switch (color) {
-      case 'teal':
-        return 'from-teal-700 via-teal-500 to-teal-300';
       case 'silver':
         return 'from-zinc-800 via-zinc-700 to-zinc-500';
       case 'gold':
@@ -18,11 +16,9 @@ function AccountCard({ balance, name, color = 'teal' }) {
       case 'brown':
         return 'from-amber-800 via-amber-700 to-amber-600';
       case 'red':
-        return 'from-red-800 via-red-600 to-red-500';
+        return 'from-red-800 via-red-600 to-red-400';
       case 'pink':
         return 'from-pink-600 via-pink-400 to-pink-300';
-      case 'sky':
-        return 'from-sky-600 via-sky-400 to-sky-300';
       default:
         return 'from-neutral-950 via-neutral-900 to-neutral-800';
     }
