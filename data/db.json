@@ -10,7 +10,7 @@
   ],
   "accounts": [
     {
-      "id": 1,
+      "id": "83a6facb-3969-4f09-b8d0-7ec58511eaa3",
       "userID": 1,
       "name": "Check card",
       "type": "debit",
@@ -18,7 +18,7 @@
       "color": "black"
     },
     {
-      "id": 2,
+      "id": "83a6facb-3969-4f09-b8d0-7ec58511eaa2",
       "userID": 2,
       "name": "Check card",
       "type": "credit",
@@ -26,7 +26,7 @@
       "color": "black"
     },
     {
-      "id": 3,
+      "id": "83a6facb-3969-4f09-b8d0-7ec58511eaa1",
       "userID": 1,
       "name": "Chase credit card",
       "type": "credit",
@@ -34,36 +34,20 @@
       "color": "blue"
     },
     {
-      "id": 4,
+      "id": "83a6facb-3969-4f09-b8d0-7ec58511eba1",
       "userID": 1,
       "name": "Emergency HYSA",
       "type": "saving",
-      "balance": 100,
+      "balance": 200,
       "color": "red"
     },
     {
-      "name": "Amex Gold Card",
-      "balance": 0,
-      "type": "credit",
-      "color": "gold",
       "id": "83a6facb-3969-4f09-b8d0-7ec58511eaa0",
-      "userID": 1
-    },
-    {
-      "name": "Amex Platinum Card",
-      "balance": 0,
+      "userID": 1,
+      "name": "Amex Gold Card",
       "type": "credit",
-      "color": "silver",
-      "id": "1ff2e67f-c4e4-40a0-b0e0-9b9e9e920042",
-      "userID": 1
-    },
-    {
-      "color": "red",
-      "name": "Bank Of America Check Card",
       "balance": 0,
-      "type": "debit",
-      "id": "324f3ea9-884c-44b8-8421-e48ae2e8dca6",
-      "userID": 1
+      "color": "gold"
     }
   ],
   "transactions": [
@@ -88,6 +72,7 @@
       "type": "Income"
     }
   ],
+  "expectedIncome": [],
   "budgets": [
     {
       "id": 1,
