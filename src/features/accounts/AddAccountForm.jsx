@@ -14,7 +14,6 @@ function AddAccountForm({ allTypesOfAccount, setIsShown, accountToEdit }) {
   });
 
   const { errors } = formState;
-  console.log(accountToEdit);
 
   function onSubmit(data) {
     if (isEditSession) {

@@ -1,29 +1,29 @@
 import axios from 'axios';
 
 const accountsApi = axios.create({
-  baseURL: 'http://localhost:3500',
+  baseURL: 'http://localhost:3500/accounts',
 });
 
 export const getAccounts = async () => {
-  const response = await accountsApi.get('/accounts');
+  const response = await accountsApi.get('/');
   return response.data;
 };
 
 export const getAccount = async ({ id }) => {
-  const response = await accountsApi.get(`/accounts/${id}`);
+  const response = await accountsApi.get(`/${id}`, id);
   return response.data;
 };
 
 export const createAccount = async (account) => {
-  return await accountsApi.post('/accounts', account);
+  return await accountsApi.post('/', account);
 };
 
 export const editAccount = async (account) => {
-  return await accountsApi.patch(`/accounts/${account.id}`, account);
+  return await accountsApi.patch(`/${account.id}`, account);
 };
 
 export const deleteAccount = async ({ id }) => {
-  return await accountsApi.delete(`/accounts/${id}`, id);
+  return await accountsApi.delete(`/${id}`, id);
 };
 
 export default accountsApi;

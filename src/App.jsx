@@ -9,6 +9,7 @@ import Goals from './pages/Goals';
 import Transactions from './pages/Transactions';
 import Accounts from './pages/Accounts';
 import './index.css';
+import { Toaster } from 'react-hot-toast';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -33,6 +34,32 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          success: {
+            duration: 3000,
+            style: {
+              backgroundColor: '#22c55e',
+              color: '#0a0a0a',
+            },
+          },
+          error: {
+            duration: 5000,
+            style: {
+              backgroundColor: '#ef4444',
+              color: '#0a0a0a',
+            },
+          },
+          style: {
+            fontSize: '13px',
+            maxWidth: '500px',
+            padding: '16px 24px',
+            backgroundColor: '#71717a',
+            color: '#fafafa',
+          },
+        }}
+      />
     </QueryClientProvider>
   );
 }

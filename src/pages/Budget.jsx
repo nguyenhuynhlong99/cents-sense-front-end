@@ -1,5 +1,7 @@
+import BudgetLayout from '../features/budgets/BudgetLayout';
+
 function Budget() {
-  return <div>Budget</div>;
+  return <BudgetLayout />;
 }
 
 export default Budget;

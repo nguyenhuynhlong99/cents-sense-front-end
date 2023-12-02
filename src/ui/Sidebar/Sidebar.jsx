@@ -4,19 +4,26 @@ import SidebarNavLink from './SidebarNavLink';
 import {
   ArrowsLeftRight,
   CreditCard,
+  CurrencyCircleDollar,
   FlagCheckered,
   SquaresFour,
   Wallet,
 } from '@phosphor-icons/react';
 import styles from './Sidebar.module.css';
+import { useNavigate } from 'react-router-dom';
 
 function Sidebar() {
+  const navigate = useNavigate();
+
   return (
     <aside
       className={`${styles.sidebar} order-2 lg:order-1 lg:w-[180px] lg:p-4 xl:w-[220px]`}
     >
       <nav>
-        <div className="hidden text-center lg:block">
+        <div
+          onClick={() => navigate('/')}
+          className="hidden text-center cursor-pointer lg:block"
+        >
           <Logo />
         </div>
         <ul className="flex items-center justify-around text-xs pt-2 lg:pt-0 lg:mt-24 lg:flex-col lg:gap-3 lg:text-base lg:items-start">
@@ -36,7 +43,7 @@ function Sidebar() {
 
           <li className="lg:w-full">
             <SidebarNavLink to="/budget">
-              <CreditCard size={18} />
+              <CurrencyCircleDollar size={20} />
               <span className={styles.navText}>Budget</span>
             </SidebarNavLink>
           </li>
