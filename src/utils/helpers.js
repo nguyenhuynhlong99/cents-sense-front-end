@@ -1,4 +1,6 @@
-import { getMonth } from 'date-fns';
+import { getMonth, getYear } from 'date-fns';
+
+export const currentYear = getYear(new Date());
 
 export const currentMonth = getMonth(new Date());
 

@@ -13,7 +13,7 @@ function CircularProgressBar({ percentage = 0, size = 20 }) {
 
   useEffect(() => {
     if (gradientPercentage < percentage) {
-      setTimeout(() => setGradientPercentage((prev) => (prev += 2)), 50);
+      setTimeout(() => setGradientPercentage((prev) => (prev += 1)), 50);
     }
   }, [gradientPercentage, percentage]);
 

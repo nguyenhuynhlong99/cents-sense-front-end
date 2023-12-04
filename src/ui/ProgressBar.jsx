@@ -10,8 +10,8 @@ function ProgressBar({ height = 10, percentage = 0 }) {
   };
 
   useEffect(() => {
-    if (width <= percentage) {
-      setTimeout(() => setWidth((prev) => (prev += 2)), 50);
+    if (width < percentage) {
+      setTimeout(() => setWidth((prev) => (prev += 1)), 50);
     }
   }, [percentage, width]);
 
