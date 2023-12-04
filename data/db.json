@@ -59,7 +59,7 @@
       "amount": 50,
       "budgetID": 1,
       "description": "Grocery shopping",
-      "type": "Expense"
+      "type": "expense"
     },
     {
       "id": 2,
@@ -69,10 +69,17 @@
       "amount": 1200,
       "budgetID": null,
       "description": "Monthly salary",
-      "type": "Income"
+      "type": "income"
     }
   ],
-  "expectedIncome": [],
+  "expectedIncome": [
+    {
+      "id": "cdb0950a-2f74-49be-a4d4-999a47a85a51",
+      "userID": 1,
+      "createdAt": "2023-12-03T12:45:42-08:00",
+      "expectedIncome": 2000
+    }
+  ],
   "budgets": [
     {
       "id": 1,

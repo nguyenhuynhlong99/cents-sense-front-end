@@ -4,7 +4,7 @@ const expectedIncomeApi = axios.create({
   baseURL: 'http://localhost:3500/expectedIncome',
 });
 
-export const getExpectedIncome = async () => {
+export const getExpectedIncomes = async () => {
   const response = await expectedIncomeApi.get('/');
   return response.data;
 };
