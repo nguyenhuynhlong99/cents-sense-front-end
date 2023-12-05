@@ -83,38 +83,59 @@
   "budgets": [
     {
       "id": 1,
-      "userID": 1,
+      "expectedIncomeID": 1,
       "category": "Food",
       "amount": 300,
-      "createdAt": "2023-11-17T00:00:00.000Z"
+      "createdAt": "2023-11-17T00:00:00.000Z",
+      "icon": "cart"
     },
     {
       "id": 2,
-      "userID": 1,
+      "expectedIncomeID": 1,
       "category": "Entertainment",
       "amount": 150,
-      "createdAt": "2023-11-17T00:00:00.000Z"
+      "createdAt": "2023-11-17T00:00:00.000Z",
+      "icon": "television"
     },
     {
       "id": 3,
-      "userID": 1,
+      "expectedIncomeID": 1,
       "category": "personal",
       "amount": 100,
-      "createdAt": "2023-10-17T00:00:00.000Z"
+      "createdAt": "2023-10-17T00:00:00.000Z",
+      "icon": "barbell"
     },
     {
       "id": 4,
-      "userID": 1,
+      "expectedIncomeID": 1,
       "category": "housing",
       "amount": 700,
-      "createdAt": "2023-11-22T00:00:00.000Z"
+      "createdAt": "2023-11-22T00:00:00.000Z",
+      "icon": "house"
     },
     {
       "id": 5,
-      "userID": 1,
+      "expectedIncomeID": 1,
       "category": "transportation",
       "amount": 200,
-      "createdAt": "2023-11-22T00:00:00.000Z"
+      "createdAt": "2023-11-22T00:00:00.000Z",
+      "icon": "car"
+    },
+    {
+      "id": "2c919a29-f866-4d8a-9364-32b1aa56f0b4",
+      "expectedIncomeID": "cdb0950a-2f74-49be-a4d4-999a47a85a51",
+      "category": "Food",
+      "amount": 300,
+      "createdAt": "2023-12-04T15:50:58-08:00",
+      "icon": "basket"
+    },
+    {
+      "id": "f3757970-59ca-47af-ad76-be5770a11552",
+      "expectedIncomeID": "cdb0950a-2f74-49be-a4d4-999a47a85a51",
+      "category": "Housing",
+      "amount": 1000,
+      "icon": "house",
+      "createdAt": "2023-12-04T18:01:32-08:00"
     }
   ],
   "savingsGoals": [

@@ -1,6 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { useAddAccount } from './useAddAccount';
 import { useUpdateAccount } from './useUpdateAccount';
+import FormRow from '../../ui/FormRow';
+import Input from '../../ui/Input';
 
 function AddAccountForm({ allTypesOfAccount, setIsShown, accountToEdit }) {
   const userID = 1;
@@ -49,11 +51,8 @@ function AddAccountForm({ allTypesOfAccount, setIsShown, accountToEdit }) {
   return (
     <form onSubmit={handleSubmit(onSubmit, onError)} className="text-base">
       <div className="divide-y divide-neutral-700">
-        <div className="py-3 grid grid-cols-1 items-center sm:grid-cols-[10em,_1fr,_1fr]">
-          <label htmlFor="name" className="font-semibold text-sm sm:text-base">
-            Name
-          </label>
-          <input
+        <FormRow label="Name" error={errors?.name?.message}>
+          <Input
             autoFocus
             {...register('name', {
               required: 'This field is required',
@@ -61,22 +60,11 @@ function AddAccountForm({ allTypesOfAccount, setIsShown, accountToEdit }) {
             disabled={isAdding || isUpdating}
             type="text"
             id="name"
-            className="bg-transparent border border-neutral-500 rounded-md  w-full h-9 px-3 py-2 sm:max-w-[250px]"
           />
-          {errors?.name?.message && (
-            <span className="text-xs text-red-500">
-              {errors?.name?.message}
-            </span>
-          )}
-        </div>
-        <div className="py-3 grid grid-cols-1 items-center sm:grid-cols-[10em,_1fr,_1fr]">
-          <label
-            htmlFor="balance"
-            className="font-semibold text-sm sm:text-base"
-          >
-            Starting balance
-          </label>
-          <input
+        </FormRow>
+
+        <FormRow label="Starting balance" error={errors?.balance?.message}>
+          <Input
             defaultValue={0}
             {...register('balance', {
               valueAsNumber: true,
@@ -88,18 +76,10 @@ function AddAccountForm({ allTypesOfAccount, setIsShown, accountToEdit }) {
             disabled={isAdding || isUpdating}
             type="number"
             id="balance"
-            className="bg-transparent border border-neutral-500 rounded-md  w-full h-9 px-3 py-2 sm:max-w-[250px]"
           />
-          {errors?.balance?.message && (
-            <span className="text-xs text-red-500">
-              {errors?.balance?.message}
-            </span>
-          )}
-        </div>
-        <div className="py-3 grid grid-cols-1 items-center sm:grid-cols-[10em,_1fr,_1fr]">
-          <label htmlFor="type" className="font-semibold text-sm sm:text-base">
-            Type
-          </label>
+        </FormRow>
+
+        <FormRow label="Type" error={errors?.type?.message}>
           <select
             defaultValue=""
             {...register('type', {
@@ -113,15 +93,13 @@ function AddAccountForm({ allTypesOfAccount, setIsShown, accountToEdit }) {
               Choose a type
             </option>
             {allTypesOfAccount.map((item) => (
-              <option value={item.type}>{item.name}</option>
+              <option key={item.name} value={item.type}>
+                {item.name}
+              </option>
             ))}
           </select>
-          {errors?.type?.message && (
-            <span className="text-xs text-red-500">
-              {errors?.type?.message}
-            </span>
-          )}
-        </div>
+        </FormRow>
+
         <div className="py-3 grid grid-cols-1 items-center sm:grid-cols-[10em,_1fr,_1fr]">
           <span className="font-semibold text-sm sm:text-base">Color</span>
           <ul className="flex items-center gap-2">
@@ -270,14 +248,14 @@ function AddAccountForm({ allTypesOfAccount, setIsShown, accountToEdit }) {
             disabled={isAdding || isUpdating}
             type="reset"
             onClick={() => setIsShown(false)}
-            className="p-2 border text-gray-400 border-neutral-500 rounded-md hover:text-inherit hover:border-white focus:text-inherit focus:border-white"
+            className="p-2 w-[80px] border text-gray-400 border-neutral-500 rounded-md hover:text-inherit hover:border-white focus:text-inherit focus:border-white"
           >
             Cancel
           </button>
           <button
             disabled={isAdding || isUpdating}
             type="submit"
-            className="py-2 px-4 bg-green-500 border text-neutral-950 border-transparent rounded-md hover:text-inherit hover:bg-transparent hover:border-green-500 focus:text-inherit focus:bg-transparent focus:border-green-500"
+            className="p-2 w-[80px] bg-green-500 border text-neutral-950 border-transparent rounded-md hover:text-inherit hover:bg-transparent hover:border-green-500 focus:text-inherit focus:bg-transparent focus:border-green-500"
           >
             Save
           </button>

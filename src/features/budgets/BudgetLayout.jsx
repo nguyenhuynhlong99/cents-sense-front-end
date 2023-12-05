@@ -10,6 +10,7 @@ import Button from '../../ui/Button';
 import ExpectedIncome from './ExpectedIncome';
 import Loader from '../../ui/Loader';
 import AddBudget from './AddBudget';
+import Icon from '../../ui/Icon';
 
 function BudgetLayout() {
   const userID = 1;
@@ -19,6 +20,8 @@ function BudgetLayout() {
 
   const monthlyExpectedIncome =
     getCurrentMonthExpectedIncome()?.at(0)?.expectedIncome;
+
+  const expectedIncomeID = getCurrentMonthExpectedIncome()?.at(0)?.id;
 
   function getCurrentMonthExpectedIncome() {
     return expectedIncomes?.filter(
@@ -52,8 +55,16 @@ function BudgetLayout() {
       </div>
 
       <ExpectedIncome expectedIncome={monthlyExpectedIncome} />
+      <div>
+        <Icon icon="basket" size={30} />
+      </div>
 
-      <AddBudget isShown={openModal} setIsShown={setOpenModal} />
+      <AddBudget
+        expectedIncomeID={expectedIncomeID}
+        expectedIncomeAmount={monthlyExpectedIncome}
+        isShown={openModal}
+        setIsShown={setOpenModal}
+      />
     </>
   );
 }
