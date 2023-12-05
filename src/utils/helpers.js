@@ -11,3 +11,28 @@ export function formatCurrency(amount) {
   });
   return formatter.format(amount);
 }
+
+export const listOfIcons = [
+  'car',
+  'scroll',
+  'video',
+  'television',
+  'shopping',
+  'cart',
+  'basket',
+  'airplane',
+  'bus',
+  'heart',
+  'pizza',
+  'hamburger',
+  'house',
+  'barbell',
+  'pet',
+  'study',
+  'scissors',
+  'bank',
+  'fork',
+  'stethoscope',
+  'coat',
+  'file',
+];

@@ -10,5 +10,6 @@ export function useBudgets() {
     queryKey: ['budgets'],
     queryFn: getBudgets,
   });
+
   return { isLoading, error, budgets };
 }
