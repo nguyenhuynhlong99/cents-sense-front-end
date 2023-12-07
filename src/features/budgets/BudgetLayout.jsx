@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useExpectedIncomes } from './useExpectedIncome';
-// import { useBudgets } from './useBudgets';
 
 import { getMonth, getYear, parseISO } from 'date-fns';
 import { currentMonth, currentYear } from '../../utils/helpers';
@@ -10,11 +9,15 @@ import Button from '../../ui/Button';
 import ExpectedIncome from './ExpectedIncome';
 import Loader from '../../ui/Loader';
 import AddBudget from './AddBudget';
-import Icon from '../../ui/Icon';
+
+import BudgetList from './BudgetList';
+import DeleteBudget from './DeleteBudget';
 
 function BudgetLayout() {
   const userID = 1;
-  const [openModal, setOpenModal] = useState(false);
+  const [openAddModal, setOpenAddModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [budgetToEdit, setBudgetToEdit] = useState({});
 
   const { isLoading, expectedIncomes } = useExpectedIncomes();
 
@@ -32,38 +35,43 @@ function BudgetLayout() {
     );
   }
 
-  if (isLoading) return <Loader />;
+  function onOpenAddModal() {
+    setBudgetToEdit({});
+    setOpenAddModal(true);
+  }
 
-  // const { isLoading, budgets } = useBudgets();
-  // const monthlyBudgets = getCurrentMonthBudgets();
-  // function getCurrentMonthBudgets() {
-  //   return budgets?.filter(
-  //     (b) =>
-  //       b.userID === userID &&
-  //       getYear(parseISO(b.createdAt)) === currentYear &&
-  //       getMonth(parseISO(b.createdAt)) === currentMonth
-  //   );
-  // }
+  if (isLoading) return <Loader />;
 
   return (
     <>
       <div className="flex items-center justify-between">
         <Heading>Budget</Heading>
         {monthlyExpectedIncome && (
-          <Button onClick={() => setOpenModal(true)}>Add a category</Button>
+          <Button onClick={onOpenAddModal}>Add a category</Button>
         )}
       </div>
 
       <ExpectedIncome expectedIncome={monthlyExpectedIncome} />
-      <div>
-        <Icon icon="basket" size={30} />
-      </div>
+
+      <BudgetList
+        setOpenModal={setOpenAddModal}
+        setBudgetToEdit={setBudgetToEdit}
+        expectedIncomeID={expectedIncomeID}
+        setOpenDeleteModal={setOpenDeleteModal}
+      />
 
       <AddBudget
+        budgetToEdit={budgetToEdit}
         expectedIncomeID={expectedIncomeID}
         expectedIncomeAmount={monthlyExpectedIncome}
-        isShown={openModal}
-        setIsShown={setOpenModal}
+        isShown={openAddModal}
+        setIsShown={setOpenAddModal}
+      />
+
+      <DeleteBudget
+        budgetToDelete={budgetToEdit}
+        openDeleteModal={openDeleteModal}
+        setOpenDeleteModal={setOpenDeleteModal}
       />
     </>
   );
