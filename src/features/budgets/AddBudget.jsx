@@ -6,6 +6,7 @@ function AddBudget({
   setIsShown,
   expectedIncomeID,
   expectedIncomeAmount,
+  budgetToEdit,
 }) {
   return (
     <Modal isShown={isShown} setIsShown={setIsShown}>
@@ -14,6 +15,7 @@ function AddBudget({
           expectedIncomeAmount={expectedIncomeAmount}
           expectedIncomeID={expectedIncomeID}
           setIsShown={setIsShown}
+          budgetToEdit={budgetToEdit}
         />
       </Modal.Body>
     </Modal>

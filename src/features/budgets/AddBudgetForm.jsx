@@ -8,18 +8,32 @@ import { useCreateBudget } from './useCreateBudget';
 import { formatISO } from 'date-fns';
 import Icon from '../../ui/Icon';
 import { listOfIcons } from '../../utils/helpers';
+import { useUpdateBudget } from './useUpdateBudget';
 
-function AddBudgetForm({ setIsShown, expectedIncomeID, expectedIncomeAmount }) {
+function AddBudgetForm({
+  setIsShown,
+  expectedIncomeID,
+  expectedIncomeAmount,
+  budgetToEdit,
+}) {
   const { isLoading, budgets } = useBudgets();
   const { isCreating, createBudget } = useCreateBudget();
+  const { isUpdating, updateBudget } = useUpdateBudget();
 
-  const { register, formState, handleSubmit, reset } = useForm();
+  const { id: budgetID, ...editValues } = budgetToEdit;
+  const isEditSession = Boolean(budgetID);
+
+  const { register, formState, handleSubmit, reset } = useForm({
+    defaultValues: isEditSession ? editValues : {},
+  });
   const { errors } = formState;
 
   const monthlyBudgetsData = getAllBudgetsData();
-  const monthlyBudgetsRemain = getBudgetsRemain();
+  let monthlyBudgetsRemain = getBudgetsRemain();
 
-  console.log(monthlyBudgetsRemain);
+  monthlyBudgetsRemain = isEditSession
+    ? monthlyBudgetsRemain + editValues.amount
+    : monthlyBudgetsRemain;
 
   function getAllBudgetsData() {
     return budgets?.filter((b) => b.expectedIncomeID === expectedIncomeID);
@@ -34,19 +48,34 @@ function AddBudgetForm({ setIsShown, expectedIncomeID, expectedIncomeAmount }) {
   }
 
   function onSubmit(data) {
-    const newBudget = {
-      id: crypto.randomUUID(),
-      expectedIncomeID,
-      ...data,
-      createdAt: formatISO(new Date()),
-    };
+    if (isEditSession) {
+      const updatedBudget = {
+        ...data,
+        id: budgetID,
+        createdAt: formatISO(new Date()),
+      };
 
-    createBudget(newBudget, {
-      onSuccess: () => {
-        reset();
-        setIsShown(false);
-      },
-    });
+      updateBudget(updatedBudget, {
+        onSuccess: () => {
+          reset();
+          setIsShown(false);
+        },
+      });
+    } else {
+      const newBudget = {
+        id: crypto.randomUUID(),
+        expectedIncomeID,
+        ...data,
+        createdAt: formatISO(new Date()),
+      };
+
+      createBudget(newBudget, {
+        onSuccess: () => {
+          reset();
+          setIsShown(false);
+        },
+      });
+    }
   }
 
   function onError(error) {
@@ -61,7 +90,7 @@ function AddBudgetForm({ setIsShown, expectedIncomeID, expectedIncomeAmount }) {
             {...register('category', {
               required: 'This field is required',
             })}
-            disabled={isCreating}
+            disabled={isCreating || isUpdating}
             autoFocus
             type="text"
             id="category"
@@ -82,7 +111,7 @@ function AddBudgetForm({ setIsShown, expectedIncomeID, expectedIncomeAmount }) {
                 message: `Amount exceeded your remaining expected income`,
               },
             })}
-            disabled={isCreating}
+            disabled={isCreating || isUpdating}
             type="number"
             id="amount"
           />
@@ -92,11 +121,12 @@ function AddBudgetForm({ setIsShown, expectedIncomeID, expectedIncomeAmount }) {
           <span className="font-semibold text-sm sm:text-base">Icon</span>
           <ul className="flex flex-wrap gap-2">
             {listOfIcons.map((name) => (
-              <li>
+              <li key={name}>
                 <input
                   {...register('icon', {
                     required: 'This field is required',
                   })}
+                  disabled={isCreating || isUpdating}
                   type="radio"
                   value={name}
                   name="icon"
@@ -118,13 +148,13 @@ function AddBudgetForm({ setIsShown, expectedIncomeID, expectedIncomeAmount }) {
       <div className="mt-3 flex justify-end gap-2">
         <ModalButton
           onClick={() => setIsShown(false)}
-          disabled={isCreating}
+          disabled={isCreating || isUpdating}
           type="reset"
           variations="secondary"
         >
           Cancel
         </ModalButton>
-        <ModalButton disabled={isCreating} type="submit">
+        <ModalButton disabled={isCreating || isUpdating} type="submit">
           Save
         </ModalButton>
       </div>
