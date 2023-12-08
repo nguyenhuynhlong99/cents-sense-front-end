@@ -15,7 +15,7 @@ function Modal({ children, isShown, setIsShown }) {
       >
         <div
           onClick={(e) => e.stopPropagation()}
-          className="max-w-[700px] my-[200px] mx-auto"
+          className="max-w-[700px] mt-[100px] mx-auto"
         >
           <div className="bg-neutral-800 rounded-lg p-7 text-base">
             <ModalComponentContext.Provider value={{ onClose }}>

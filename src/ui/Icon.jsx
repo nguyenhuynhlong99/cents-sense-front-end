@@ -6,21 +6,29 @@ import {
   Bus,
   Car,
   CoatHanger,
+  DeviceMobile,
   FileText,
   ForkKnife,
   GraduationCap,
   Hamburger,
+  Headphones,
   Heart,
+  HighHeel,
   HouseLine,
+  Laptop,
   PawPrint,
+  PiggyBank,
   Pizza,
   Scissors,
   Scroll,
   ShoppingBag,
   ShoppingCart,
   Stethoscope,
+  TShirt,
   Television,
+  TreePalm,
   Video,
+  Watch,
 } from '@phosphor-icons/react';
 
 function Icon({ name, size = 20, color = '#22c55f' }) {
@@ -68,6 +76,22 @@ function Icon({ name, size = 20, color = '#22c55f' }) {
         return <Stethoscope color={color} size={size} />;
       case 'coat':
         return <CoatHanger color={color} size={size} />;
+      case 'piggy':
+        return <PiggyBank color={color} size={size} />;
+      case 'mobileDevice':
+        return <DeviceMobile color={color} size={size} />;
+      case 'laptop':
+        return <Laptop color={color} size={size} />;
+      case 'highHeel':
+        return <HighHeel color={color} size={size} />;
+      case 'tShirt':
+        return <TShirt color={color} size={size} />;
+      case 'treePalm':
+        return <TreePalm color={color} size={size} />;
+      case 'watch':
+        return <Watch color={color} size={size} />;
+      case 'headphones':
+        return <Headphones color={color} size={size} />;
       case 'file':
         return <FileText color={color} size={size} />;
       default:

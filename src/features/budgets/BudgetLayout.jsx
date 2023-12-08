@@ -12,6 +12,7 @@ import AddBudget from './AddBudget';
 
 import BudgetList from './BudgetList';
 import DeleteBudget from './DeleteBudget';
+import BudgetBreakdown from './BudgetBreakdown';
 
 function BudgetLayout() {
   const userID = 1;
@@ -59,6 +60,8 @@ function BudgetLayout() {
         expectedIncomeID={expectedIncomeID}
         setOpenDeleteModal={setOpenDeleteModal}
       />
+
+      <BudgetBreakdown expectedIncomeID={expectedIncomeID} />
 
       <AddBudget
         budgetToEdit={budgetToEdit}
