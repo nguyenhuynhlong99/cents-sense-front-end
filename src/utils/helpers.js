@@ -34,5 +34,13 @@ export const listOfIcons = [
   'fork',
   'stethoscope',
   'coat',
+  'piggy',
+  'mobileDevice',
+  'laptop',
+  'highHeel',
+  'tShirt',
+  'treePalm',
+  'watch',
+  'headphones',
   'file',
 ];

@@ -1,3 +1,11 @@
+import { formatCurrency } from '../../utils/helpers';
+import { getMonth, parseISO } from 'date-fns';
+
+import BudgetCard from './BudgetCard';
+import TransactionCard from './TransactionCard';
+import GoalCard from './GoalCard';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
 import {
   Basket,
   CreditCard,
@@ -5,14 +13,6 @@ import {
   TrendDown,
   TrendUp,
 } from '@phosphor-icons/react';
-// import AccountCard from '../../ui/AccountCard';
-import BudgetCard from './BudgetCard';
-import TransactionCard from './TransactionCard';
-import { formatCurrency } from '../../utils/helpers';
-import { getMonth, parseISO } from 'date-fns';
-import GoalCard from './GoalCard';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -229,47 +229,6 @@ function LargeOverview({ data }) {
           </section>
         </div>
       </div>
-
-      {/* <div className="px-3">
-          Account
-          <section className="bg-neutral-950 rounded-md p-5">
-            <h3 className="text-lg mb-2">Accounts</h3>\
-
-            <div className="max-w-[300px] m-auto">
-              <AccountCard
-                balance={userAccounts[0].balance}
-                name={userAccounts[0].name}
-              />
-            </div>
-
-            <div className="mt-3 pl-3 bg-neutral-950 flex flex-col gap-2 text-sm">
-              <span className="capitalize">
-                Card Type: {userAccounts[0].type}
-              </span>
-              <span className="flex gap-2">
-                <span>Balance:</span>
-                <span className="flex gap-1 text-green-400">
-                  <TrendUp /> +10% from last month
-                </span>
-              </span>
-            </div>
-          </section>
-
-          Goals
-          <section className="bg-neutral-950 p-3 rounded-md mt-4 text-sm">
-            <h3 className="text-lg mb-3">Saving Goals</h3>
-
-            <div className="flex flex-col divide-y divide-slate-700">
-              {savingsGoals.map((goal) => (
-                <GoalCard
-                  name={goal.name}
-                  currentAmount={goal.currentAmount}
-                  targetAmount={goal.targetAmount}
-                />
-              ))}
-            </div>
-          </section>
-        </div> */}
     </div>
   );
 }

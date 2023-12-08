@@ -130,14 +130,6 @@
       "icon": "basket"
     },
     {
-      "id": "f3757970-59ca-47af-ad76-be5770a11552",
-      "expectedIncomeID": "cdb0950a-2f74-49be-a4d4-999a47a85a51",
-      "category": "Housing",
-      "amount": 1000,
-      "icon": "house",
-      "createdAt": "2023-12-04T18:01:32-08:00"
-    },
-    {
       "id": "3bbbdd8b-4131-4f90-b9a1-36a1dfc275f3",
       "expectedIncomeID": "cdb0950a-2f74-49be-a4d4-999a47a85a51",
       "category": "Transportation",
@@ -152,14 +144,16 @@
       "userID": 1,
       "name": "Europe Trip",
       "targetAmount": 5000,
-      "currentAmount": 1200
+      "currentAmount": 1200,
+      "icon": "airplane"
     },
     {
       "id": 2,
       "userID": 1,
       "name": "New Laptop",
       "targetAmount": 1500,
-      "currentAmount": 600
+      "currentAmount": 600,
+      "icon": "laptop"
     }
   ]
 }

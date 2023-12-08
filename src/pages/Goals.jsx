@@ -1,5 +1,7 @@
+import GoalsLayout from '../features/goals/GoalsLayout';
+
 function Goals() {
-  return <div>Goals</div>;
+  return <GoalsLayout />;
 }
 
 export default Goals;

@@ -31,7 +31,8 @@ function BudgetList({
   return (
     <div className="mt-5 bg-neutral-950 p-5 rounded-md">
       <h3 className="text-lg mb-3 md:text-xl">Budget Categories</h3>
-      <ul className="grid gap-3 grid-cols-[repeat(auto-fit,minmax(200px,calc(100%/4-0.75em)))] justify-center">
+
+      <ul className="grid gap-3 grid-cols-[repeat(auto-fit,minmax(200px,calc(100%/4-0.75em)))] justify-center sm:justify-normal">
         {monthlyBudgets?.map((b) => (
           <li key={b.id} className="relative">
             <BudgetCard
