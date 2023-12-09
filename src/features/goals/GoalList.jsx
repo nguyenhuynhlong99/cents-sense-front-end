@@ -1,9 +1,10 @@
+import { PencilSimple, TrashSimple } from '@phosphor-icons/react';
 import Icon from '../../ui/Icon';
 import Loader from '../../ui/Loader';
 import GoalCard from '../overview/GoalCard';
 import { useGoals } from './useGoals';
 
-function GoalList() {
+function GoalList({ setOpenAddModal, setGoalToEdit, setOpenDeleteModal }) {
   const userID = 1;
   const { isLoading, goals } = useGoals();
 
@@ -11,6 +12,16 @@ function GoalList() {
 
   function getGoals() {
     return goals?.filter((g) => g.userID === userID);
+  }
+
+  function onOpenEditModal(data) {
+    setGoalToEdit(data);
+    setOpenAddModal(true);
+  }
+
+  function onOpenDeleteModal(data) {
+    setGoalToEdit(data);
+    setOpenDeleteModal(true);
   }
 
   if (isLoading) return <Loader />;
@@ -40,13 +51,27 @@ function GoalList() {
     <div>
       <ul className="grid gap-3 grid-cols-1 sm:grid-cols-2">
         {userGoals?.map((g) => (
-          <li key={g.id} className="bg-neutral-950 p-5 rounded-md">
+          <li key={g.id} className="bg-neutral-950 p-5 rounded-md relative">
             <GoalCard
               name={g.name}
               currentAmount={g.currentAmount}
               targetAmount={g.targetAmount}
               icon={<Icon name={g.icon} size={40} />}
             />
+            <div className="absolute right-5 top-6">
+              <button
+                onClick={() => onOpenEditModal(g)}
+                className="text-green-500 mr-2"
+              >
+                <PencilSimple size={20} />
+              </button>
+              <button
+                onClick={() => onOpenDeleteModal(g)}
+                className="text-red-500"
+              >
+                <TrashSimple size={20} />
+              </button>
+            </div>
           </li>
         ))}
       </ul>

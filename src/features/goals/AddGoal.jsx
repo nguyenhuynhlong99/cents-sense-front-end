@@ -1,11 +1,11 @@
 import Modal from '../../ui/Modal';
 import AddGoalForm from './AddGoalForm';
 
-function AddGoal({ openAddModal, setOpenAddModal }) {
+function AddGoal({ goalToEdit, openAddModal, setOpenAddModal }) {
   return (
     <Modal isShown={openAddModal} setIsShown={setOpenAddModal}>
       <Modal.Body>
-        <AddGoalForm setIsShown={setOpenAddModal} />
+        <AddGoalForm goalToEdit={goalToEdit} setIsShown={setOpenAddModal} />
       </Modal.Body>
     </Modal>
   );

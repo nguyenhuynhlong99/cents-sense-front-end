@@ -42,5 +42,6 @@ export const listOfIcons = [
   'treePalm',
   'watch',
   'headphones',
+  'gift',
   'file',
 ];

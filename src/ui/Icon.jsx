@@ -9,6 +9,7 @@ import {
   DeviceMobile,
   FileText,
   ForkKnife,
+  Gift,
   GraduationCap,
   Hamburger,
   Headphones,
@@ -92,6 +93,8 @@ function Icon({ name, size = 20, color = '#22c55f' }) {
         return <Watch color={color} size={size} />;
       case 'headphones':
         return <Headphones color={color} size={size} />;
+      case 'gift':
+        return <Gift color={color} size={size} />;
       case 'file':
         return <FileText color={color} size={size} />;
       default:
