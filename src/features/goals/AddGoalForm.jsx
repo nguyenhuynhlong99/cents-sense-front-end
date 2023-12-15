@@ -8,7 +8,7 @@ import { useCreateGoal } from './useCreateGoal';
 import { useUpdateGoal } from './useUpdateGoal';
 
 function AddGoalForm({ goalToEdit, setIsShown }) {
-  const userID = 1;
+  const userId = 1;
   const { isCreating, createGoal } = useCreateGoal();
   const { isUpdating, updateGoal } = useUpdateGoal();
 
@@ -36,7 +36,7 @@ function AddGoalForm({ goalToEdit, setIsShown }) {
     } else {
       const newGoal = {
         id: crypto.randomUUID(),
-        userID,
+        userId,
         ...data,
       };
 

@@ -165,6 +165,10 @@ img {
   filter: grayscale(var(--image-grayscale)) opacity(var(--image-opacity));
 }
 
+.font-space {
+  font-family: 'Space Mono', monospace;
+}
+
 /*
 FOR DARK MODE
 

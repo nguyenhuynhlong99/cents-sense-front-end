@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const expectedIncomeApi = axios.create({
-  baseURL: 'http://localhost:3500/expectedIncome',
+  baseURL: 'http://localhost:3500/expectedIncomes',
 });
 
 export const getExpectedIncomes = async () => {

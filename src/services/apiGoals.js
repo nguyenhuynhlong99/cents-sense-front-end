@@ -23,7 +23,11 @@ export const editGoal = async (goal) => {
 };
 
 export const deleteGoal = async ({ id }) => {
-  return await goalsApi.delete(`/${id}`, id);
+  try {
+    return await goalsApi.delete(`/${id}`, id);
+  } catch (error) {
+    return null;
+  }
 };
 
 export default goalsApi;

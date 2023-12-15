@@ -9,7 +9,7 @@ import ProgressBar from '../../ui/ProgressBar';
 import { CheckCircle, CurrencyDollar } from '@phosphor-icons/react';
 
 function ExpectedIncome({ expectedIncome }) {
-  const userID = 1;
+  const userId = 1;
 
   const { isCreating, createExpectedIncome } = useCreateExpectedIncome();
   const { register, handleSubmit, formState, reset } = useForm();
@@ -18,7 +18,7 @@ function ExpectedIncome({ expectedIncome }) {
   function onSubmit(data) {
     const expectedIncomeData = {
       id: crypto.randomUUID(),
-      userID,
+      userId,
       createdAt: formatISO(new Date()),
       ...data,
     };

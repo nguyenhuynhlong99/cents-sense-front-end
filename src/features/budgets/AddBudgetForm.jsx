@@ -12,7 +12,7 @@ import { useUpdateBudget } from './useUpdateBudget';
 
 function AddBudgetForm({
   setIsShown,
-  expectedIncomeID,
+  expectedIncomeId,
   expectedIncomeAmount,
   budgetToEdit,
 }) {
@@ -36,7 +36,7 @@ function AddBudgetForm({
     : monthlyBudgetsRemain;
 
   function getAllBudgetsData() {
-    return budgets?.filter((b) => b.expectedIncomeID === expectedIncomeID);
+    return budgets?.filter((b) => b.expectedIncomeId === expectedIncomeId);
   }
 
   function getBudgetsRemain() {
@@ -64,7 +64,7 @@ function AddBudgetForm({
     } else {
       const newBudget = {
         id: crypto.randomUUID(),
-        expectedIncomeID,
+        expectedIncomeId,
         ...data,
         createdAt: formatISO(new Date()),
       };

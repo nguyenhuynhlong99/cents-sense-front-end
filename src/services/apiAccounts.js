@@ -23,7 +23,11 @@ export const editAccount = async (account) => {
 };
 
 export const deleteAccount = async ({ id }) => {
-  return await accountsApi.delete(`/${id}`, id);
+  try {
+    return await accountsApi.delete(`/${id}`, id);
+  } catch {
+    return null;
+  }
 };
 
 export default accountsApi;

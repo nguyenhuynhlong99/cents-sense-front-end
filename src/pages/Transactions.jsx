@@ -1,5 +1,7 @@
+import TransactionLayout from '../features/transactions/TransactionLayout';
+
 function Transactions() {
-  return <div>Transactions</div>;
+  return <TransactionLayout />;
 }
 
 export default Transactions;
