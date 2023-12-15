@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createAccount } from '../../services/apiAccounts';
+import toast from 'react-hot-toast';
 
 export function useAddAccount() {
   const queryClient = useQueryClient();
@@ -8,6 +9,7 @@ export function useAddAccount() {
     mutationFn: createAccount,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['accounts'] });
+      toast.success('Added new account successfully!');
     },
     onError: (err) => {
       console.error(err);

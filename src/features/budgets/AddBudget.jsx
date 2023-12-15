@@ -4,7 +4,7 @@ import AddBudgetForm from './AddBudgetForm';
 function AddBudget({
   isShown,
   setIsShown,
-  expectedIncomeID,
+  expectedIncomeId,
   expectedIncomeAmount,
   budgetToEdit,
 }) {
@@ -13,7 +13,7 @@ function AddBudget({
       <Modal.Body>
         <AddBudgetForm
           expectedIncomeAmount={expectedIncomeAmount}
-          expectedIncomeID={expectedIncomeID}
+          expectedIncomeId={expectedIncomeId}
           setIsShown={setIsShown}
           budgetToEdit={budgetToEdit}
         />

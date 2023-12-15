@@ -5,11 +5,11 @@ import FormRow from '../../ui/FormRow';
 import Input from '../../ui/Input';
 
 function AddAccountForm({ allTypesOfAccount, setIsShown, accountToEdit }) {
-  const userID = 1;
+  const userId = 1;
   const { isAdding, addAccount } = useAddAccount();
   const { isUpdating, updateAccount } = useUpdateAccount();
-  const { id: accountID, ...editValues } = accountToEdit;
-  const isEditSession = Boolean(accountID);
+  const { id: accountId, ...editValues } = accountToEdit;
+  const isEditSession = Boolean(accountId);
 
   const { register, handleSubmit, formState, reset } = useForm({
     defaultValues: isEditSession ? editValues : { color: 'black' },
@@ -20,7 +20,7 @@ function AddAccountForm({ allTypesOfAccount, setIsShown, accountToEdit }) {
   function onSubmit(data) {
     if (isEditSession) {
       updateAccount(
-        { ...data, id: accountID },
+        { ...data, id: accountId },
         {
           onSuccess: () => {
             reset();
@@ -32,7 +32,7 @@ function AddAccountForm({ allTypesOfAccount, setIsShown, accountToEdit }) {
       const newAccount = {
         ...data,
         id: crypto.randomUUID(),
-        userID,
+        userId,
       };
 
       addAccount(newAccount, {

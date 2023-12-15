@@ -11,23 +11,15 @@
   "accounts": [
     {
       "id": "83a6facb-3969-4f09-b8d0-7ec58511eaa3",
-      "userID": 1,
+      "userId": 1,
       "name": "Check card",
       "type": "debit",
       "balance": 1000,
       "color": "black"
     },
     {
-      "id": "83a6facb-3969-4f09-b8d0-7ec58511eaa2",
-      "userID": 2,
-      "name": "Check card",
-      "type": "credit",
-      "balance": 1000,
-      "color": "black"
-    },
-    {
       "id": "83a6facb-3969-4f09-b8d0-7ec58511eaa1",
-      "userID": 1,
+      "userId": 1,
       "name": "Chase credit card",
       "type": "credit",
       "balance": 0,
@@ -35,113 +27,73 @@
     },
     {
       "id": "83a6facb-3969-4f09-b8d0-7ec58511eba1",
-      "userID": 1,
+      "userId": 1,
       "name": "Emergency HYSA",
       "type": "saving",
       "balance": 200,
       "color": "red"
     },
     {
-      "id": "83a6facb-3969-4f09-b8d0-7ec58511eaa0",
-      "userID": 1,
-      "name": "Amex Gold Card",
-      "type": "credit",
+      "color": "red",
+      "name": "BOA Check Card",
       "balance": 0,
-      "color": "gold"
+      "type": "debit",
+      "id": "b08353d1-b54c-408c-891e-efc543cd2ac8",
+      "userId": 1
     }
   ],
   "transactions": [
     {
       "id": 1,
-      "userID": 1,
-      "accountID": 1,
+      "userId": 1,
+      "accountId": "83a6facb-3969-4f09-b8d0-7ec58511eaa1",
       "date": "2023-11-01",
       "amount": 50,
-      "budgetID": 1,
+      "budgetId": 1,
       "description": "Grocery shopping",
       "type": "expense"
     },
     {
-      "id": 2,
-      "userID": 1,
-      "accountID": 1,
-      "date": "2023-11-05",
-      "amount": 1200,
-      "budgetID": null,
-      "description": "Monthly salary",
+      "id": 1,
+      "userId": 1,
+      "accountId": "83a6facb-3969-4f09-b8d0-7ec58511eaa3",
+      "date": "2023-11-03",
+      "amount": 1000,
+      "budgetId": 0,
+      "description": "Salary",
       "type": "income"
     }
   ],
-  "expectedIncome": [
+  "expectedIncomes": [
     {
       "id": "cdb0950a-2f74-49be-a4d4-999a47a85a51",
-      "userID": 1,
+      "userId": 1,
       "createdAt": "2023-12-03T12:45:42-08:00",
       "expectedIncome": 2000
     }
   ],
   "budgets": [
     {
-      "id": 1,
-      "expectedIncomeID": 1,
-      "category": "Food",
-      "amount": 300,
-      "createdAt": "2023-11-17T00:00:00.000Z",
-      "icon": "cart"
-    },
-    {
-      "id": 2,
-      "expectedIncomeID": 1,
-      "category": "Entertainment",
-      "amount": 150,
-      "createdAt": "2023-11-17T00:00:00.000Z",
-      "icon": "television"
-    },
-    {
-      "id": 3,
-      "expectedIncomeID": 1,
-      "category": "personal",
-      "amount": 100,
-      "createdAt": "2023-10-17T00:00:00.000Z",
-      "icon": "barbell"
-    },
-    {
-      "id": 4,
-      "expectedIncomeID": 1,
-      "category": "housing",
-      "amount": 700,
-      "createdAt": "2023-11-22T00:00:00.000Z",
-      "icon": "house"
-    },
-    {
-      "id": 5,
-      "expectedIncomeID": 1,
-      "category": "transportation",
-      "amount": 200,
-      "createdAt": "2023-11-22T00:00:00.000Z",
-      "icon": "car"
-    },
-    {
-      "id": "2c919a29-f866-4d8a-9364-32b1aa56f0b4",
-      "expectedIncomeID": "cdb0950a-2f74-49be-a4d4-999a47a85a51",
-      "category": "Food",
-      "amount": 300,
-      "createdAt": "2023-12-04T15:50:58-08:00",
-      "icon": "basket"
-    },
-    {
       "id": "3bbbdd8b-4131-4f90-b9a1-36a1dfc275f3",
-      "expectedIncomeID": "cdb0950a-2f74-49be-a4d4-999a47a85a51",
+      "expectedIncomeId": "cdb0950a-2f74-49be-a4d4-999a47a85a51",
       "category": "Transportation",
       "amount": 300,
       "icon": "car",
       "createdAt": "2023-12-06T11:50:42-08:00"
+    },
+    {
+      "id": "51542f24-5c72-4bee-9936-71fa81be6166",
+      "expectedIncomeId": "cdb0950a-2f74-49be-a4d4-999a47a85a51",
+      "category": "rent",
+      "amount": 1000,
+      "icon": "house",
+      "createdAt": "2023-12-13T16:34:36-08:00"
     }
   ],
   "savingsGoals": [
     {
       "id": 1,
-      "userID": 1,
+      "userId": 1,
       "name": "Europe Trip",
       "targetAmount": 5000,
       "currentAmount": 1200,
@@ -149,11 +101,19 @@
     },
     {
       "id": 2,
-      "userID": 1,
+      "userId": 1,
       "name": "New Laptop",
       "targetAmount": 1500,
       "currentAmount": 600,
       "icon": "laptop"
+    },
+    {
+      "id": "d0aabe32-72f0-4bb3-8227-c8afbc990f07",
+      "userId": 1,
+      "name": "San Francisco",
+      "currentAmount": 0,
+      "targetAmount": 1000,
+      "icon": "airplane"
     }
   ]
 }

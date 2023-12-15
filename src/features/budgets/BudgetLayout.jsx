@@ -15,7 +15,7 @@ import DeleteBudget from './DeleteBudget';
 import BudgetBreakdown from './BudgetBreakdown';
 
 function BudgetLayout() {
-  const userID = 1;
+  const userId = 1;
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [budgetToEdit, setBudgetToEdit] = useState({});
@@ -25,12 +25,12 @@ function BudgetLayout() {
   const monthlyExpectedIncome =
     getCurrentMonthExpectedIncome()?.at(0)?.expectedIncome;
 
-  const expectedIncomeID = getCurrentMonthExpectedIncome()?.at(0)?.id;
+  const expectedIncomeId = getCurrentMonthExpectedIncome()?.at(0)?.id;
 
   function getCurrentMonthExpectedIncome() {
     return expectedIncomes?.filter(
       (e) =>
-        e.userID === userID &&
+        e.userId === userId &&
         getYear(parseISO(e.createdAt)) === currentYear &&
         getMonth(parseISO(e.createdAt)) === currentMonth
     );
@@ -52,20 +52,27 @@ function BudgetLayout() {
         )}
       </div>
 
-      <ExpectedIncome expectedIncome={monthlyExpectedIncome} />
+      {monthlyExpectedIncome ? (
+        <>
+          <ExpectedIncome expectedIncome={monthlyExpectedIncome} />
 
-      <BudgetList
-        setOpenModal={setOpenAddModal}
-        setBudgetToEdit={setBudgetToEdit}
-        expectedIncomeID={expectedIncomeID}
-        setOpenDeleteModal={setOpenDeleteModal}
-      />
+          <BudgetList
+            monthlyExpectedIncome={monthlyExpectedIncome}
+            setOpenModal={setOpenAddModal}
+            setBudgetToEdit={setBudgetToEdit}
+            expectedIncomeID={expectedIncomeId}
+            setOpenDeleteModal={setOpenDeleteModal}
+          />
 
-      <BudgetBreakdown expectedIncomeID={expectedIncomeID} />
+          <BudgetBreakdown expectedIncomeId={expectedIncomeId} />
+        </>
+      ) : (
+        <ExpectedIncome expectedIncome={monthlyExpectedIncome} />
+      )}
 
       <AddBudget
         budgetToEdit={budgetToEdit}
-        expectedIncomeID={expectedIncomeID}
+        expectedIncomeId={expectedIncomeId}
         expectedIncomeAmount={monthlyExpectedIncome}
         isShown={openAddModal}
         setIsShown={setOpenAddModal}

@@ -8,12 +8,13 @@ function DeleteAccount({
   setOpenDeleteModal,
 }) {
   const { isDeleting, deleteAccount } = useDeleteAccount();
-  const accountID = accountToDelete?.id;
+  const accountId = accountToDelete?.id;
   const accountName = accountToDelete?.name;
+  console.log(accountId);
 
   function onDeleteAccount() {
     deleteAccount(
-      { id: accountID },
+      { id: accountId },
       {
         onSuccess: () => {
           setOpenDeleteModal(false);

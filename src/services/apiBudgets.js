@@ -23,7 +23,11 @@ export const editBudget = async (budget) => {
 };
 
 export const deleteBudget = async ({ id }) => {
-  return await budgetsApi.delete(`/${id}`, id);
+  try {
+    return await budgetsApi.delete(`/${id}`, id);
+  } catch (error) {
+    return null;
+  }
 };
 
 export default budgetsApi;

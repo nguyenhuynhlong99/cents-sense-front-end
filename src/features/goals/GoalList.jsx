@@ -5,13 +5,13 @@ import GoalCard from '../overview/GoalCard';
 import { useGoals } from './useGoals';
 
 function GoalList({ setOpenAddModal, setGoalToEdit, setOpenDeleteModal }) {
-  const userID = 1;
+  const userId = 1;
   const { isLoading, goals } = useGoals();
 
   const userGoals = getGoals();
 
   function getGoals() {
-    return goals?.filter((g) => g.userID === userID);
+    return goals?.filter((g) => g.userId === userId);
   }
 
   function onOpenEditModal(data) {

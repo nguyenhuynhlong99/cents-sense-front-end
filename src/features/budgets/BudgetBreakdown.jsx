@@ -5,7 +5,7 @@ import Loader from '../../ui/Loader';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-function BudgetBreakdown({ expectedIncomeID }) {
+function BudgetBreakdown({ expectedIncomeId }) {
   const { isLoading, budgets } = useBudgets();
 
   const monthlyBudgets = getCurrentMonthBudgets();
@@ -26,10 +26,9 @@ function BudgetBreakdown({ expectedIncomeID }) {
     (acc, curr) => acc + curr,
     0
   );
-  console.log(topBudgetCategories);
 
   function getCurrentMonthBudgets() {
-    return budgets?.filter((b) => b?.expectedIncomeID === expectedIncomeID);
+    return budgets?.filter((b) => b?.expectedIncomeId === expectedIncomeId);
   }
 
   let pieChartData;
@@ -47,8 +46,6 @@ function BudgetBreakdown({ expectedIncomeID }) {
         ? [...topBudgetAmount, totalBudgetAmount - totalTopBudgetAmount]
         : [...topBudgetAmount];
   }
-
-  console.log(pieChartAmountData, pieChartLabels);
 
   if (pieChartLabels && pieChartAmountData) {
     pieChartData = {

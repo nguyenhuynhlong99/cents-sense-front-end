@@ -14,9 +14,9 @@ function AccountsList({
   accountToEdit,
   setAccountToEdit,
 }) {
-  const userID = 1;
+  const userId = 1;
   const { accounts, error, isLoading } = useAccounts();
-  const userAccounts = getAllUserAccounts(userID);
+  const userAccounts = getAllUserAccounts(userId);
   const userCreditAccounts = userAccounts?.filter(
     (acc) => acc.type === 'credit'
   );
@@ -26,7 +26,7 @@ function AccountsList({
   );
 
   function getAllUserAccounts(userID) {
-    return accounts?.filter((acc) => acc.userID === userID);
+    return accounts?.filter((acc) => acc.userId === userId);
   }
 
   function openEditModal(item) {

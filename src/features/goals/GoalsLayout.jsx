@@ -1,14 +1,12 @@
 import { useState } from 'react';
 import Button from '../../ui/Button';
 import Heading from '../../ui/Heading';
-import Icon from '../../ui/Icon';
-import GoalCard from '../overview/GoalCard';
 import AddGoal from './AddGoal';
 import GoalList from './GoalList';
 import DeleteGoal from './DeleteGoal';
 
 function GoalsLayout() {
-  const userID = 2;
+  // const userID = 2;
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [goalToEdit, setGoalToEdit] = useState({});

@@ -3,8 +3,10 @@ import { useBudgets } from './useBudgets';
 import BudgetCard from '../overview/BudgetCard';
 import Icon from '../../ui/Icon';
 import { PencilSimple, TrashSimple } from '@phosphor-icons/react';
+import { formatCurrency } from '../../utils/helpers';
 
 function BudgetList({
+  monthlyExpectedIncome,
   expectedIncomeID,
   setOpenModal,
   setBudgetToEdit,
@@ -13,9 +15,15 @@ function BudgetList({
   const { isLoading, budgets } = useBudgets();
 
   const monthlyBudgets = getCurrentMonthBudgets();
+  const totalAmountBudgetUsed = getTotalBudgetUsed();
+  const leftToBudget = monthlyExpectedIncome - totalAmountBudgetUsed;
 
   function getCurrentMonthBudgets() {
-    return budgets?.filter((b) => b.expectedIncomeID === expectedIncomeID);
+    return budgets?.filter((b) => b.expectedIncomeId === expectedIncomeID);
+  }
+
+  function getTotalBudgetUsed() {
+    return monthlyBudgets?.reduce((acc, curr) => acc + curr.amount, 0);
   }
 
   function onOpenEditModal(budget) {
@@ -30,7 +38,11 @@ function BudgetList({
 
   return (
     <div className="mt-5 bg-neutral-950 p-5 rounded-md">
-      <h3 className="text-lg mb-3 md:text-xl">Budget Categories</h3>
+      <h3 className="text-lg mb-1 md:text-xl">Budget Categories</h3>
+      <span className="block mb-3 text-sm font-semibold">
+        Left to budget:
+        <span className="text-green-500"> {formatCurrency(leftToBudget)}</span>
+      </span>
 
       <ul className="grid gap-3 grid-cols-[repeat(auto-fit,minmax(200px,calc(100%/4-0.75em)))] justify-center sm:justify-normal">
         {monthlyBudgets?.map((b) => (
