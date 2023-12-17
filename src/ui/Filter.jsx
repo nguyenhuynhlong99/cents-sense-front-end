@@ -17,8 +17,9 @@ function Filter({ filterField, options }) {
 
   return (
     <div className="mx-auto bg-neutral-950 p-1 rounded-md shadow-sm flex items-center w-[300px] max-w-full sm:mx-0 sm:gap-2">
-      {options.map((opt) => (
+      {options.map((opt, i) => (
         <button
+          key={`${opt.value}-${i}`}
           className="basis-[calc(100%/4)] bg-neutral-950 border-0 rounded-md font-medium text-xs py-2 transition-all duration-[300ms] hover:bg-green-600 hover:text-green-50 sm:text-sm"
           onClick={() => handleClick(opt.value)}
           style={opt.value === currentFilter ? activeStyle : null}

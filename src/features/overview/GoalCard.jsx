@@ -7,7 +7,7 @@ function GoalCard({ name, currentAmount, targetAmount, icon }) {
       <div className="flex items-center gap-3">
         {icon}
         <div className="flex-grow flex flex-col gap-2 py-2">
-          <span className="text-lg sm:text-xl md:text-2xl">{name}</span>
+          <span className="text-base sm:text-xl md:text-2xl">{name}</span>
           <ProgressBar
             height={5}
             percentage={Math.round((currentAmount / targetAmount) * 100)}

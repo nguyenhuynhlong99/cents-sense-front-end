@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { editAccount, getAccount } from './apiAccounts';
 
 const transactionsApi = axios.create({
   baseURL: 'http://localhost:3500/transactions',
@@ -49,6 +50,21 @@ export const getTransactionExpandAccountAndBudget = async ({ type }) => {
   const response = await transactionsApi.get('/', request);
 
   return response.data;
+};
+
+export const addIncomeTransaction = async (transaction) => {
+  const accountData = await getAccount({ id: transaction.accountId });
+  const previousAccountBalance = await accountData.balance;
+  const newAccountBalance = previousAccountBalance + transaction.amount;
+
+  try {
+    return await Promise.all(
+      editAccount({ ...accountData, balance: newAccountBalance }),
+      createTransaction(transaction)
+    );
+  } catch (error) {
+    return null;
+  }
 };
 
 export default transactionsApi;

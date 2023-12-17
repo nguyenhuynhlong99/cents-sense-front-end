@@ -14,7 +14,7 @@
       "userId": 1,
       "name": "Check card",
       "type": "debit",
-      "balance": 1000,
+      "balance": 2000,
       "color": "black"
     },
     {
@@ -32,36 +32,52 @@
       "type": "saving",
       "balance": 200,
       "color": "red"
-    },
-    {
-      "color": "red",
-      "name": "BOA Check Card",
-      "balance": 0,
-      "type": "debit",
-      "id": "b08353d1-b54c-408c-891e-efc543cd2ac8",
-      "userId": 1
     }
   ],
   "transactions": [
     {
       "id": 1,
       "userId": 1,
-      "accountId": "83a6facb-3969-4f09-b8d0-7ec58511eaa1",
-      "date": "2023-11-01",
-      "amount": 50,
-      "budgetId": 1,
-      "description": "Grocery shopping",
-      "type": "expense"
-    },
-    {
-      "id": 1,
-      "userId": 1,
       "accountId": "83a6facb-3969-4f09-b8d0-7ec58511eaa3",
+      "toAccountId": 0,
       "date": "2023-11-03",
       "amount": 1000,
       "budgetId": 0,
       "description": "Salary",
       "type": "income"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "accountId": "83a6facb-3969-4f09-b8d0-7ec58511eaa1",
+      "toAccountId": 0,
+      "date": "2023-11-01",
+      "amount": 50,
+      "budgetId": "3bbbdd8b-4131-4f90-b9a1-36a1dfc275f3",
+      "description": "Grocery shopping",
+      "type": "expense"
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "accountId": "83a6facb-3969-4f09-b8d0-7ec58511eaa3",
+      "toAccountId": "83a6facb-3969-4f09-b8d0-7ec58511eba1",
+      "date": "2023-11-03",
+      "amount": 100,
+      "budgetId": 0,
+      "description": "transfer",
+      "type": "transfer"
+    },
+    {
+      "id": "47554bd8-ac64-49cb-8507-4eecc52d7b70",
+      "userId": 1,
+      "toAccountId": 0,
+      "budgetId": 0,
+      "date": "2023-12-16T17:24:30-08:00",
+      "type": "income",
+      "amount": 1000,
+      "accountId": "83a6facb-3969-4f09-b8d0-7ec58511eaa3",
+      "description": "etsy"
     }
   ],
   "expectedIncomes": [

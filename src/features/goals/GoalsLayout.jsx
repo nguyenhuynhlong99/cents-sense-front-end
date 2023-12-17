@@ -20,7 +20,10 @@ function GoalsLayout() {
     <>
       <div className="mb-5 flex items-center justify-between">
         <Heading>Goals</Heading>
-        <Button onClick={onOpenAddModal}>Add a goal</Button>
+        <Button onClick={onOpenAddModal}>
+          <span className="hidden sm:block">Add a goal</span>
+          <span className="sm:hidden">Add &#x2B;</span>
+        </Button>
       </div>
 
       <GoalList
