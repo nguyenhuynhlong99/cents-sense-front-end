@@ -13,7 +13,7 @@ export function useTransactionsExpandAccountAndBudget() {
     data: transactionsExpandAccountBudget,
     error,
   } = useQuery({
-    queryKey: ['transactionsExpand', filterValue],
+    queryKey: ['transactions', filterValue],
     queryFn: () => getTransactionExpandAccountAndBudget(filter),
   });
 

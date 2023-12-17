@@ -1,33 +1,41 @@
-import { useSearchParams } from 'react-router-dom';
 import Heading from '../../ui/Heading';
-import TransactionTable from './TransactionTable';
 import Filter from '../../ui/Filter';
+import Button from '../../ui/Button';
+import TransactionList from './TransactionList';
+import { useState } from 'react';
+import AddTransaction from './AddTransaction';
 
 function TransactionLayout() {
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  function onSearchType(value) {
-    searchParams.set('type', value);
-    setSearchParams(searchParams);
-  }
+  const [openAddModal, setOpenAddModal] = useState(false);
 
   return (
     <>
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-row items-center justify-between">
         <Heading>Transactions</Heading>
+        <Button onClick={() => setOpenAddModal(true)}>
+          <span className="hidden sm:block">Add a transaction</span>
+          <span className="sm:hidden">Add &#x2B;</span>
+        </Button>
+      </div>
 
+      <div className="mt-5 flex items-center justify-center">
         <Filter
           filterField="type"
           options={[
             { value: 'all', label: 'All' },
             { value: 'income', label: 'Income' },
             { value: 'expense', label: 'Expense' },
-            { value: 'saving', label: 'Saving' },
+            { value: 'transfer', label: 'Transfer' },
           ]}
         />
       </div>
 
-      <TransactionTable />
+      <TransactionList />
+
+      <AddTransaction
+        openAddModal={openAddModal}
+        setOpenAddModal={setOpenAddModal}
+      />
     </>
   );
 }

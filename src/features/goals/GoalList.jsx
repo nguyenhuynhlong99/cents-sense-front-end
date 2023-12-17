@@ -51,14 +51,17 @@ function GoalList({ setOpenAddModal, setGoalToEdit, setOpenDeleteModal }) {
     <div>
       <ul className="grid gap-3 grid-cols-1 sm:grid-cols-2">
         {userGoals?.map((g) => (
-          <li key={g.id} className="bg-neutral-950 p-5 rounded-md relative">
+          <li
+            key={g.id}
+            className="bg-neutral-950 p-2 rounded-md relative md:p-5"
+          >
             <GoalCard
               name={g.name}
               currentAmount={g.currentAmount}
               targetAmount={g.targetAmount}
               icon={<Icon name={g.icon} size={40} />}
             />
-            <div className="absolute right-5 top-6">
+            <div className="absolute right-2 top-3 md:top-5 md:right-5">
               <button
                 onClick={() => onOpenEditModal(g)}
                 className="text-green-500 mr-2"

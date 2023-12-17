@@ -48,7 +48,10 @@ function BudgetLayout() {
       <div className="flex items-center justify-between">
         <Heading>Budget</Heading>
         {monthlyExpectedIncome && (
-          <Button onClick={onOpenAddModal}>Add a category</Button>
+          <Button onClick={onOpenAddModal}>
+            <span className="hidden sm:block">Add a category</span>
+            <span className="sm:hidden">Add &#x2B;</span>
+          </Button>
         )}
       </div>
 
