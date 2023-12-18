@@ -67,4 +67,29 @@ export const addIncomeTransaction = async (transaction) => {
   }
 };
 
+export const addExpenseTransaction = async (transaction) => {
+  const accountData = await getAccount({ id: transaction.accountId });
+  const previousAccountBalance = await accountData.balance;
+  const accountType = await accountData.type;
+  let newAccountBalance;
+  if (accountType === 'debit' || accountType === 'saving') {
+    newAccountBalance = previousAccountBalance - transaction.amount;
+  } else {
+    newAccountBalance = previousAccountBalance + transaction.amount;
+  }
+
+  if (newAccountBalance <= 0) {
+    throw new Error('Insufficient balance!');
+  }
+
+  try {
+    return await Promise.all(
+      editAccount({ ...accountData, balance: newAccountBalance }),
+      createTransaction(transaction)
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export default transactionsApi;

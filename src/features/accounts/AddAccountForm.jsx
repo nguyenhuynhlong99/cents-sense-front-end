@@ -87,7 +87,7 @@ function AddAccountForm({ allTypesOfAccount, setIsShown, accountToEdit }) {
             })}
             disabled={isAdding || isUpdating}
             id="type"
-            class=" border text-sm rounded-lg block w-full px-3 py-2 bg-transparent border-neutral-500 text-white sm:max-w-[250px]"
+            class="border text-sm rounded-lg block w-full px-3 py-2 bg-transparent border-neutral-500 text-white max-w-[250px]"
           >
             <option value="" disabled>
               Choose a type

@@ -42,6 +42,7 @@ function App() {
             style: {
               backgroundColor: '#22c55e',
               color: '#0a0a0a',
+              fontWeight: 600,
             },
           },
           error: {
@@ -49,10 +50,11 @@ function App() {
             style: {
               backgroundColor: '#ef4444',
               color: '#0a0a0a',
+              fontWeight: 600,
             },
           },
           style: {
-            fontSize: '13px',
+            fontSize: '15px',
             maxWidth: '500px',
             padding: '16px 24px',
             backgroundColor: '#71717a',
