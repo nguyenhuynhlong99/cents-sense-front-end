@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAccounts } from '../accounts/useAccounts';
 import { useBudgets } from '../budgets/useBudgets';
@@ -10,24 +10,41 @@ import { formatISO, getMonth, getYear, parseISO } from 'date-fns';
 import { useAddIncome } from './useAddIncome';
 import { currentMonth, currentYear } from '../../utils/helpers';
 import { useAddExpense } from './useAddExpense';
+import { useAddTransfer } from './useAddTransfer';
 
 function AddTransactionForm({ setIsShown }) {
   const userId = 1;
   const { accounts } = useAccounts();
   const { budgets } = useBudgets();
+  const [formType, setFormType] = useState('income');
+
   const { createIncomeTransaction, isCreating: isCreatingIncome } =
     useAddIncome();
   const { createExpenseTransaction, isCreating: isCreatingExpense } =
     useAddExpense();
-  const [formType, setFormType] = useState('income');
+  const { createTransferTransaction, isCreating: isCreatingTransfer } =
+    useAddTransfer();
 
-  const { register, formState, handleSubmit, reset } = useForm();
+  const {
+    register,
+    formState,
+    handleSubmit,
+    reset,
+    getValues,
+    watch,
+    setValue,
+  } = useForm();
   const { errors } = formState;
 
   const userAccounts =
     formType === 'income'
       ? accounts?.filter((acc) => acc.userId === userId && acc.type === 'debit')
       : accounts?.filter((acc) => acc.userId === userId);
+
+  const accountIdValue = watch('accountId');
+  const toUserAccounts = userAccounts?.filter(
+    (acc) => acc.id !== accountIdValue
+  );
 
   const userBudgets = budgets?.filter(
     (b) => b.userId === userId
@@ -76,26 +93,49 @@ function AddTransactionForm({ setIsShown }) {
           setIsShown(false);
         },
       });
+    } else {
+      const newTransaction = {
+        id: crypto.randomUUID(),
+        userId,
+        date: formatISO(new Date()),
+        type: formType,
+        ...data,
+      };
+
+      createTransferTransaction(newTransaction, {
+        onSuccess: () => {
+          reset();
+          setIsShown(false);
+        },
+      });
+      // console.log(newTransaction);
     }
+  }
+
+  function onError() {
+    console.log('Something went wrong!');
   }
 
   return (
     <>
-      <div className="flex items-center gap-3 mb-3">
+      <div className="flex gap-2 items-center">
         {formTypeButtons.map((type) => (
           <button
             key={`key-${type}-button`}
-            className="capitalize border border-neutral-600 rounded-md p-2 hover:bg-green-600 hover:text-green-50 hover:border-green-600 transition-all duration-[300ms]"
+            className="capitalize border border-neutral-600 rounded-md hover:bg-green-600 hover:text-green-50 hover:border-green-600 transition-all duration-[300ms] p-2 text-xs sm:text-sm"
             style={formType === type ? activeStyle : null}
             disabled={formType === type}
-            onClick={() => setFormType(type)}
+            onClick={() => {
+              setFormType(type);
+              reset();
+            }}
           >
             {type}
           </button>
         ))}
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit, onError)}>
         <div className="divide-y divide-neutral-700">
           <FormRow label="Amount" error={errors?.amount?.message}>
             <Input
@@ -134,18 +174,45 @@ function AddTransactionForm({ setIsShown }) {
             </select>
           </FormRow>
 
-          {formType === 'expense' && (
+          {formType === 'transfer' && (
+            <FormRow label="To" error={errors?.toAccountId?.message}>
+              <select
+                defaultValue=""
+                {...register('toAccountId', {
+                  required: 'This field is required',
+                })}
+                disabled={!accountIdValue}
+                id="toAccountId"
+                className="cursor-pointer border text-sm rounded-lg block w-full px-3 py-2 bg-transparent border-neutral-500 text-white max-w-[250px] capitalize"
+              >
+                <option value="" disabled>
+                  Choose an account
+                </option>
+                {toUserAccounts?.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.name}
+                  </option>
+                ))}
+              </select>
+            </FormRow>
+          )}
+
+          {(formType === 'expense' || formType === 'transfer') && (
             <FormRow label="Category" error={errors?.budgetId?.message}>
               <select
-                defaultValue={0}
+                defaultValue=""
                 {...register('budgetId', {
                   required: 'This field is required',
+                  setValueAs: (v) => (v === '0' ? parseInt(v) : v),
                 })}
                 disabled={isCreatingIncome}
                 id="budgetId"
                 className="cursor-pointer border text-sm rounded-lg block w-full px-3 py-2 bg-transparent border-neutral-500 text-white sm:max-w-[250px] capitalize"
               >
-                <option value={0}>None</option>
+                <option value="" disabled>
+                  Choose a category
+                </option>
+                <option value="0">None</option>
                 {userBudgets?.map((item) => (
                   <option key={item.id} value={item.id}>
                     {item.category}

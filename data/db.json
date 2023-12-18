@@ -96,7 +96,7 @@
       "amount": 100,
       "accountId": "83a6facb-3969-4f09-b8d0-7ec58511eaa3",
       "description": "Dinner",
-      "budgetId": "0"
+      "budgetId": 0
     },
     {
       "id": "5758c775-ebe6-4eac-b64b-b23db0945dd9",
@@ -107,18 +107,29 @@
       "amount": 100,
       "accountId": "83a6facb-3969-4f09-b8d0-7ec58511eaa1",
       "description": "Colognes",
-      "budgetId": "0"
+      "budgetId": 0
     },
     {
       "id": "cbcd5347-c30d-4a4d-81c7-d8fbfafe37d8",
       "userId": 1,
       "toAccountId": 0,
-      "budgetId": "0",
+      "budgetId": 0,
       "date": "2023-12-17T21:07:27-08:00",
       "type": "income",
       "amount": 100,
       "accountId": "c00ac7e8-bdb5-4f60-915f-55067992b97c",
       "description": "Mom's money"
+    },
+    {
+      "id": "62fe44b0-e14f-40b2-a655-85239b9b49fb",
+      "userId": 1,
+      "date": "2023-12-18T13:14:42-08:00",
+      "type": "transfer",
+      "amount": 100,
+      "accountId": "83a6facb-3969-4f09-b8d0-7ec58511eaa1",
+      "toAccountId": "83a6facb-3969-4f09-b8d0-7ec58511eba1",
+      "budgetId": 0,
+      "description": "saving"
     }
   ],
   "expectedIncomes": [
