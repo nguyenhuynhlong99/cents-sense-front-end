@@ -92,4 +92,37 @@ export const addExpenseTransaction = async (transaction) => {
   }
 };
 
+export const addTransferTransaction = async (transaction) => {
+  const fromAccountData = await getAccount({ id: transaction.accountId });
+  const previousFromAccountBalance = await fromAccountData.balance;
+  const fromAccountType = await fromAccountData.type;
+  const toAccountData = await getAccount({ id: transaction.toAccountId });
+  const previousToAccountBalance = await toAccountData.balance;
+  const toAccountType = await toAccountData.type;
+
+  const newFromAccountBalance =
+    fromAccountType === 'credit'
+      ? previousFromAccountBalance + transaction.amount
+      : previousFromAccountBalance - transaction.amount;
+
+  const newToAccountBalance =
+    toAccountType === 'credit'
+      ? previousToAccountBalance - transaction.amount
+      : previousToAccountBalance + transaction.amount;
+
+  if (fromAccountType !== 'credit' && newFromAccountBalance < 0) {
+    throw new Error('Insufficient balance');
+  }
+
+  try {
+    return await Promise.all(
+      createTransaction(transaction),
+      editAccount({ ...fromAccountData, balance: newFromAccountBalance }),
+      editAccount({ ...toAccountData, balance: newToAccountBalance })
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export default transactionsApi;

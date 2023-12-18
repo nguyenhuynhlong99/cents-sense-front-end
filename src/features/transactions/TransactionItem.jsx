@@ -1,8 +1,13 @@
 import { parseISO } from 'date-fns';
 import { formatCurrency } from '../../utils/helpers';
 import Icon from '../../ui/Icon';
+import { useAccount } from '../accounts/useAccount';
 
 function TransactionItem({ transaction }) {
+  const { account: toAccount } = useAccount(transaction?.toAccountId);
+
+  const toAccountName = toAccount?.name;
+
   return (
     <li className="bg-neutral-950 rounded-lg py-4 px-5 shadow-md flex flex-col gap-2 min-h-[160px]">
       <h4 className="font-bold capitalize text-lg max-w-[250px] truncate sm:text-xl">
@@ -14,9 +19,21 @@ function TransactionItem({ transaction }) {
           <span>{transaction.budget.category}</span>
         </div>
       )}
-      <span className="font-semibold capitalize text-sm sm:text-base">
-        {transaction?.account?.name}
-      </span>
+      {transaction?.type !== 'transfer' ? (
+        <span className="font-bold capitalize text-sm sm:text-base">
+          {transaction?.account?.name}
+        </span>
+      ) : (
+        <div>
+          <span className="font-bold capitalize text-xs sm:text-sm">
+            {transaction?.account?.name}
+          </span>
+
+          <span className="block font-bold capitalize text-green-500 text-sm sm:text-base">
+            &rarr; {toAccountName}
+          </span>
+        </div>
+      )}
       <div className="mt-auto">
         <span className="text-xs block">
           {parseISO(transaction.date).toDateString()}
