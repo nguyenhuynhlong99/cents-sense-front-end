@@ -2,11 +2,18 @@ import { parseISO } from 'date-fns';
 import { formatCurrency } from '../../utils/helpers';
 import Icon from '../../ui/Icon';
 import { useAccount } from '../accounts/useAccount';
+import { useGoal } from '../goals/useGoal';
 
 function TransactionItem({ transaction }) {
-  const { account: toAccount } = useAccount(transaction?.toAccountId);
+  let name;
+  const { account: toAccount } = useAccount(
+    transaction?.toAccountId !== 0 ? transaction?.toAccountId : null
+  );
 
-  const toAccountName = toAccount?.name;
+  const { goal } = useGoal(
+    transaction?.goalId !== 0 ? transaction?.goalId : null
+  );
+  name = transaction?.toAccountId === 0 ? goal?.name : toAccount?.name;
 
   return (
     <li className="bg-neutral-950 rounded-lg py-4 px-5 shadow-md flex flex-col gap-2 min-h-[160px]">
@@ -30,7 +37,7 @@ function TransactionItem({ transaction }) {
           </span>
 
           <span className="block font-bold capitalize text-green-500 text-sm sm:text-base">
-            &rarr; {toAccountName}
+            &rarr; {name}
           </span>
         </div>
       )}

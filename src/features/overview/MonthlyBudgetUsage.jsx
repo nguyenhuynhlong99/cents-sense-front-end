@@ -37,6 +37,7 @@ function MonthlyBudgetUsage() {
       <div className="grid grid-cols-2 gap-4">
         {monthlyBudgets.map((budget) => (
           <BudgetCard
+            key={budget.id}
             icon={<Icon name={budget.icon} />}
             category={budget.category}
             usedBudget={getTotalUsedBudget(budget.id)}

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAccounts } from '../accounts/useAccounts';
 import { useBudgets } from '../budgets/useBudgets';
+import { useGoals } from '../goals/useGoals';
 
 import FormRow from '../../ui/FormRow';
 import Input from '../../ui/Input';
@@ -16,7 +17,9 @@ function AddTransactionForm({ setIsShown }) {
   const userId = 1;
   const { accounts } = useAccounts();
   const { budgets } = useBudgets();
+  const { goals } = useGoals();
   const [formType, setFormType] = useState('income');
+  const [transferType, setTransferType] = useState('account');
 
   const { createIncomeTransaction, isCreating: isCreatingIncome } =
     useAddIncome();
@@ -45,6 +48,7 @@ function AddTransactionForm({ setIsShown }) {
   const toUserAccounts = userAccounts?.filter(
     (acc) => acc.id !== accountIdValue
   );
+  const userGoals = goals?.filter((g) => g.userId === userId);
 
   const userBudgets = budgets?.filter(
     (b) => b.userId === userId
@@ -58,6 +62,11 @@ function AddTransactionForm({ setIsShown }) {
     color: 'rgb(240,253,244)',
     borderColor: 'rgb(22,163,74)',
     backgroundColor: 'rgb(22,163,74)',
+  };
+
+  const transferTypeStyle = {
+    border: '1px solid rgb(34,197,94)',
+    color: 'rgb(34,197,94)',
   };
 
   function onSubmit(data) {
@@ -94,13 +103,24 @@ function AddTransactionForm({ setIsShown }) {
         },
       });
     } else {
-      const newTransaction = {
-        id: crypto.randomUUID(),
-        userId,
-        date: formatISO(new Date()),
-        type: formType,
-        ...data,
-      };
+      const newTransaction =
+        transferType === 'account'
+          ? {
+              id: crypto.randomUUID(),
+              userId,
+              date: formatISO(new Date()),
+              type: formType,
+              goalId: 0,
+              ...data,
+            }
+          : {
+              id: crypto.randomUUID(),
+              userId,
+              date: formatISO(new Date()),
+              type: formType,
+              toAccountId: 0,
+              ...data,
+            };
 
       createTransferTransaction(newTransaction, {
         onSuccess: () => {
@@ -108,7 +128,6 @@ function AddTransactionForm({ setIsShown }) {
           setIsShown(false);
         },
       });
-      // console.log(newTransaction);
     }
   }
 
@@ -134,6 +153,36 @@ function AddTransactionForm({ setIsShown }) {
           </button>
         ))}
       </div>
+
+      {formType === 'transfer' && (
+        <div className="mt-3 text-sm sm:flex sm:gap-3 sm:items-center">
+          <span className="text-base font-semibold text-green-500">
+            Transfer To:
+          </span>
+          <div className="mt-2 flex gap-3 sm:mt-0">
+            <button
+              className="border border-neutral-600 text-neutral-400 p-2 rounded-md transition-all duration-300 hover:border-green-500 hover:text-green-500"
+              style={transferType === 'account' ? transferTypeStyle : null}
+              onClick={() => {
+                setTransferType('account');
+                reset();
+              }}
+            >
+              Account
+            </button>
+            <button
+              className="border border-neutral-600 text-neutral-400 p-2 rounded-md transition-all duration-300 hover:border-green-500 hover:text-green-500"
+              style={transferType === 'savingGoal' ? transferTypeStyle : null}
+              onClick={() => {
+                setTransferType('savingGoal');
+                reset();
+              }}
+            >
+              Saving Goal
+            </button>
+          </div>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit(onSubmit, onError)}>
         <div className="divide-y divide-neutral-700">
@@ -178,9 +227,12 @@ function AddTransactionForm({ setIsShown }) {
             <FormRow label="To" error={errors?.toAccountId?.message}>
               <select
                 defaultValue=""
-                {...register('toAccountId', {
-                  required: 'This field is required',
-                })}
+                {...register(
+                  transferType === 'account' ? 'toAccountId' : 'goalId',
+                  {
+                    required: 'This field is required',
+                  }
+                )}
                 disabled={!accountIdValue}
                 id="toAccountId"
                 className="cursor-pointer border text-sm rounded-lg block w-full px-3 py-2 bg-transparent border-neutral-500 text-white max-w-[250px] capitalize"
@@ -188,11 +240,17 @@ function AddTransactionForm({ setIsShown }) {
                 <option value="" disabled>
                   Choose an account
                 </option>
-                {toUserAccounts?.map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {item.name}
-                  </option>
-                ))}
+                {transferType === 'account'
+                  ? toUserAccounts?.map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {item.name}
+                      </option>
+                    ))
+                  : userGoals?.map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {item.name}
+                      </option>
+                    ))}
               </select>
             </FormRow>
           )}
@@ -207,7 +265,7 @@ function AddTransactionForm({ setIsShown }) {
                 })}
                 disabled={isCreatingIncome}
                 id="budgetId"
-                className="cursor-pointer border text-sm rounded-lg block w-full px-3 py-2 bg-transparent border-neutral-500 text-white sm:max-w-[250px] capitalize"
+                className="cursor-pointer border text-sm rounded-lg block w-full px-3 py-2 bg-transparent border-neutral-500 text-white max-w-[250px] capitalize"
               >
                 <option value="" disabled>
                   Choose a category
