@@ -1,18 +1,12 @@
-import { formatCurrency } from '../../utils/helpers';
 import { getMonth, parseISO } from 'date-fns';
 
-import BudgetCard from './BudgetCard';
 import TransactionCard from './TransactionCard';
 import GoalCard from './GoalCard';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import {
-  Basket,
-  CreditCard,
-  Television,
-  TrendDown,
-  TrendUp,
-} from '@phosphor-icons/react';
+import { Basket, CreditCard, Television } from '@phosphor-icons/react';
+import MonthlySummary from './MonthlySummary';
+import MonthlyBudgetUsage from './MonthlyBudgetUsage';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -21,9 +15,9 @@ function LargeOverview({ data }) {
   const { transactions, budgets, savingsGoals } = data;
   // const userAccounts = accounts.filter((acc) => acc.userID === userID);
   const currentMonth = getMonth(new Date());
-  const userIncome = getUserIncome(userID);
-  const userExpense = getUserExpense(userID);
-  const userSaving = userIncome - userExpense;
+  // const userIncome = getUserIncome(userID);
+  // const userExpense = getUserExpense(userID);
+  // const userSaving = userIncome - userExpense;
   const monthlyBudgets = getMonthlyBudgets(userID, currentMonth);
   const giveDateForTransactions = transactions.map((t) => {
     return { ...t, date: new Date(t.date) };
@@ -120,71 +114,14 @@ function LargeOverview({ data }) {
     <div className="text-base mt-4">
       {/* Summary */}
       <section className="mb-4">
-        {/* <h3 className="text-lg mb-2">Monthly Summary</h3> */}
-        <div className="grid grid-cols-4 gap-5">
-          <div className="bg-neutral-950 rounded-md pl-4 pr-1 py-2">
-            <div className="flex flex-col gap-2">
-              <span className="">Total Balance</span>
-              <span className="text-lg font-bold">
-                {formatCurrency(userIncome)}
-              </span>
-              <span className="text-green-400 text-xs flex items-center gap-1">
-                <TrendUp size={20} /> <span>+10% from last month</span>
-              </span>
-            </div>
-          </div>
-          <div className="bg-neutral-950 rounded-md pl-4 pr-1 py-2">
-            <div className="flex flex-col gap-2">
-              <span className="">Monthly Income</span>
-              <span className="text-lg font-bold">
-                {formatCurrency(userIncome)}
-              </span>
-              <span className="text-green-400 text-xs flex items-center gap-1">
-                <TrendUp size={20} /> <span>+10% from last month</span>
-              </span>
-            </div>
-          </div>
-          <div className="bg-neutral-950 rounded-md pl-4 py-2">
-            <div className="flex flex-col gap-2">
-              <span className="text-sm">Monthly Expense</span>
-              <span className="text-lg font-bold">
-                {formatCurrency(userExpense)}
-              </span>
-              <span className="text-red-500 text-xs flex items-center gap-1">
-                <TrendUp size={20} /> <span>+10% from last month</span>
-              </span>
-            </div>
-          </div>
-          <div className="bg-neutral-950 rounded-md pl-4 py-2">
-            <div className="flex flex-col gap-2">
-              <span className="text-sm">Monthly Saving</span>
-              <span className="text-lg font-bold">
-                {formatCurrency(userSaving)}
-              </span>
-              <span className="text-red-500 text-xs flex items-center gap-1">
-                <TrendDown size={20} /> <span>-10% from last month</span>
-              </span>
-            </div>
-          </div>
-        </div>
+        <MonthlySummary />
       </section>
 
       <div className="grid grid-cols-2 gap-3">
         <div>
           {/* Budget */}
-          <section className="mb-8 bg-neutral-950 p-3 rounded-lg">
-            <h3 className="text-lg mb-2">Monthly Budget Usage</h3>
-            <div className="grid grid-cols-2 gap-4">
-              {monthlyBudgets.map((budget) => (
-                <BudgetCard
-                  icon={getIcon(budget.category)}
-                  category={budget.category}
-                  usedBudget={getUsedBudget(userID, budget.budgetID)}
-                  totalBudget={budget.amount}
-                />
-              ))}
-            </div>
-          </section>
+          <MonthlyBudgetUsage />
+
           {/* Transaction */}
           <section className="bg-neutral-950 rounded-md p-3">
             <h3 className="text-lg mb-2">Recent Transactions</h3>
