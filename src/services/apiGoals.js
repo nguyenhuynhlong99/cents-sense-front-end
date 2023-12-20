@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const goalsApi = axios.create({
-  baseURL: 'http://localhost:3500/savingsGoals',
+  baseURL: 'http://localhost:3500/savingGoals',
 });
 
 export const getGoals = async () => {

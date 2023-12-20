@@ -1,10 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getAccount } from '../../services/apiAccounts';
-// import { useParams } from 'react-router-dom';
 
 export function useAccount(accountID) {
-  //   const { bookingId } = useParams();
-
   const {
     isLoading,
     data: account,
