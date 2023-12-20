@@ -17,17 +17,12 @@ function MonthlySummary() {
   const previousMonthlyExpense = getPreviousMonthlyExpense();
   const previousMonthlySaving = previousMonthlyIncome - previousMonthlyExpense;
 
-  console.log(monthlyExpense, previousMonthlyExpense);
-  console.log(monthlySaving, previousMonthlySaving);
-
   const monthlyIncomePercent =
     ((monthlyIncome - previousMonthlyIncome) / previousMonthlyIncome) * 100;
   const monthlyExpensePercent =
     ((monthlyExpense - previousMonthlyExpense) / previousMonthlyExpense) * 100;
   const monthlySavingPercent =
     ((monthlySaving - previousMonthlySaving) / previousMonthlySaving) * 100;
-
-  console.log(previousMonthlyExpense);
 
   function getTotalBalance() {
     return user?.accounts

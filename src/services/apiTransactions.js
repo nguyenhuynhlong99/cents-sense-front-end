@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { editAccount, getAccount } from './apiAccounts';
+import { editGoal, getGoal } from './apiGoals';
 
 const transactionsApi = axios.create({
   baseURL: 'http://localhost:3500/transactions',
@@ -96,32 +97,58 @@ export const addTransferTransaction = async (transaction) => {
   const fromAccountData = await getAccount({ id: transaction.accountId });
   const previousFromAccountBalance = await fromAccountData.balance;
   const fromAccountType = await fromAccountData.type;
-  const toAccountData = await getAccount({ id: transaction.toAccountId });
-  const previousToAccountBalance = await toAccountData.balance;
-  const toAccountType = await toAccountData.type;
 
-  const newFromAccountBalance =
-    fromAccountType === 'credit'
-      ? previousFromAccountBalance + transaction.amount
-      : previousFromAccountBalance - transaction.amount;
+  if (transaction.toAccountId !== 0) {
+    const toAccountData = await getAccount({ id: transaction.toAccountId });
+    const previousToAccountBalance = await toAccountData.balance;
+    const toAccountType = await toAccountData.type;
 
-  const newToAccountBalance =
-    toAccountType === 'credit'
-      ? previousToAccountBalance - transaction.amount
-      : previousToAccountBalance + transaction.amount;
+    const newFromAccountBalance =
+      fromAccountType === 'credit'
+        ? previousFromAccountBalance + transaction.amount
+        : previousFromAccountBalance - transaction.amount;
 
-  if (fromAccountType !== 'credit' && newFromAccountBalance < 0) {
-    throw new Error('Insufficient balance');
-  }
+    const newToAccountBalance =
+      toAccountType === 'credit'
+        ? previousToAccountBalance - transaction.amount
+        : previousToAccountBalance + transaction.amount;
 
-  try {
-    return await Promise.all(
-      createTransaction(transaction),
-      editAccount({ ...fromAccountData, balance: newFromAccountBalance }),
-      editAccount({ ...toAccountData, balance: newToAccountBalance })
-    );
-  } catch (error) {
-    console.log(error);
+    if (fromAccountType !== 'credit' && newFromAccountBalance < 0) {
+      throw new Error('Insufficient balance');
+    }
+
+    try {
+      return await Promise.all(
+        createTransaction(transaction),
+        editAccount({ ...fromAccountData, balance: newFromAccountBalance }),
+        editAccount({ ...toAccountData, balance: newToAccountBalance })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    const goalData = await getGoal({ id: transaction.goalId });
+    const goalCurrentAmount = await goalData.currentAmount;
+
+    const newFromAccountBalance =
+      fromAccountType === 'credit'
+        ? previousFromAccountBalance + transaction.amount
+        : previousFromAccountBalance - transaction.amount;
+    const newGoalCurrentAmount = goalCurrentAmount + transaction.amount;
+
+    if (fromAccountType !== 'credit' && newFromAccountBalance < 0) {
+      throw new Error('Insufficient balance');
+    }
+
+    try {
+      return await Promise.all(
+        createTransaction(transaction),
+        editAccount({ ...fromAccountData, balance: newFromAccountBalance }),
+        editGoal({ ...goalData, currentAmount: newGoalCurrentAmount })
+      );
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
 

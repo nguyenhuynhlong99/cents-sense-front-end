@@ -14,7 +14,7 @@
       "userId": 1,
       "name": "Check card",
       "type": "debit",
-      "balance": 1900,
+      "balance": 1800,
       "color": "black"
     },
     {
@@ -141,6 +141,18 @@
       "accountId": "83a6facb-3969-4f09-b8d0-7ec58511eaa1",
       "budgetId": "51542f24-5c72-4bee-9936-71fa81be6166",
       "description": "Apartment"
+    },
+    {
+      "id": "873a4fa0-7e35-4453-860a-2ddb4a2776ee",
+      "userId": 1,
+      "date": "2023-12-20T11:12:32-08:00",
+      "type": "transfer",
+      "toAccountId": 0,
+      "amount": 100,
+      "accountId": "83a6facb-3969-4f09-b8d0-7ec58511eaa3",
+      "goalId": "d0aabe32-72f0-4bb3-8227-c8afbc990f07",
+      "budgetId": 0,
+      "description": "saving"
     }
   ],
   "expectedIncomes": [
@@ -171,9 +183,9 @@
       "createdAt": "2023-12-13T16:34:36-08:00"
     }
   ],
-  "savingGoals": [
+  "goals": [
     {
-      "id": 1,
+      "id": "1",
       "userId": 1,
       "name": "Europe Trip",
       "targetAmount": 5000,
@@ -181,7 +193,7 @@
       "icon": "airplane"
     },
     {
-      "id": 2,
+      "id": "2",
       "userId": 1,
       "name": "New Laptop",
       "targetAmount": 1500,
@@ -192,7 +204,7 @@
       "id": "d0aabe32-72f0-4bb3-8227-c8afbc990f07",
       "userId": 1,
       "name": "San Francisco",
-      "currentAmount": 0,
+      "currentAmount": 100,
       "targetAmount": 1000,
       "icon": "airplane"
     }
