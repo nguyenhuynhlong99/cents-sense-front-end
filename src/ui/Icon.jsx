@@ -98,7 +98,7 @@ function Icon({ name, size = 20, color = '#22c55f' }) {
       case 'file':
         return <FileText color={color} size={size} />;
       default:
-        return <FileText color={color} size={size} />;
+        return <Scroll color={color} size={size} />;
     }
   }
 

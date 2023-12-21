@@ -32,7 +32,7 @@ function MonthlyBudgetUsage() {
   if (isLoading) return <LoaderIcon />;
 
   return (
-    <section className="mb-8 bg-neutral-950 p-3 rounded-lg">
+    <section className="mb-4 bg-neutral-950 p-3 rounded-lg">
       <h3 className="text-lg mb-2">Monthly Budget Usage</h3>
       <div className="grid grid-cols-2 gap-4">
         {monthlyBudgets.map((budget) => (
