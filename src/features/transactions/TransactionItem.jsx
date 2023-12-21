@@ -23,7 +23,7 @@ function TransactionItem({ transaction }) {
       {transaction?.budget && (
         <div className="flex items-center gap-1 text-xs sm:text-sm">
           <Icon name={transaction.budget.icon} color="white" />
-          <span>{transaction.budget.category}</span>
+          <span className="capitalize">{transaction.budget.category}</span>
         </div>
       )}
       {transaction?.type !== 'transfer' ? (

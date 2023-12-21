@@ -23,7 +23,7 @@ export const getUserWithEmbedData = async ({ id }) => {
         'expectedIncomes',
         'budgets',
         'transactions',
-        'savingGoals',
+        'goals',
       ],
     },
   };
