@@ -5,7 +5,7 @@ import BudgetBreakdownChart from '../budgets/BudgetBreakdownChart';
 
 function OverviewBudgetBreakdown() {
   const userId = 1;
-  const { user } = useUser(userId);
+  const { user } = useUser();
 
   const expectedIncomeId = user?.expectedIncomes?.find(
     (item) =>

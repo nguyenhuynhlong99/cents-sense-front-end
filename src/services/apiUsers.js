@@ -47,4 +47,32 @@ export const deleteUser = async ({ id }) => {
   }
 };
 
+export const login = async ({ email, password }) => {
+  const allUsers = await getUsers();
+  const userData = await allUsers.find((u) => u.email === email);
+
+  if (userData && userData?.password === password) {
+    try {
+      const user = await getUserWithEmbedData({ id: userData.id });
+      sessionStorage.setItem('user', JSON.stringify(user));
+      return user;
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    throw new Error('Wrong email or password');
+  }
+};
+
+export const logout = () => {
+  sessionStorage.removeItem('user');
+};
+
+export const getCurrentUser = () => {
+  if (sessionStorage.getItem('user') !== null) {
+    const userData = sessionStorage.getItem('user');
+    return JSON.parse(userData);
+  }
+};
+
 export default usersApi;

@@ -3,7 +3,7 @@ import GoalCard from './GoalCard';
 
 function OverviewGoals() {
   const userId = 1;
-  const { user } = useUser(userId);
+  const { user } = useUser();
 
   return (
     <section className="bg-neutral-950 p-3 rounded-md text-sm">

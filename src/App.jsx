@@ -10,6 +10,7 @@ import Transactions from './pages/Transactions';
 import Accounts from './pages/Accounts';
 import './index.css';
 import { Toaster } from 'react-hot-toast';
+import Login from './pages/Login';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,6 +26,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route index path="/" element={<Home />} />
+          <Route path="login" element={<Login />} />
           <Route element={<AppLayout />}>
             <Route path="overview" element={<Overview />} />
             <Route path="accounts" element={<Accounts />} />
