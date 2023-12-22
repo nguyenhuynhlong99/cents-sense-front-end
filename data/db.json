@@ -2,9 +2,8 @@
   "users": [
     {
       "id": 1,
-      "username": "user123",
-      "email": "user123@email.com",
-      "password": "hashed_password",
+      "email": "long@email.com",
+      "password": "long123",
       "name": "Long Nguyen"
     }
   ],

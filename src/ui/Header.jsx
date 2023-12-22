@@ -1,4 +1,6 @@
+import { SignOut } from '@phosphor-icons/react';
 import Logo from './Logo';
+import { logout } from '../services/apiUsers';
 
 function Header() {
   return (
@@ -16,9 +18,14 @@ function Header() {
           />
         </div> */}
 
-        <span className="text-base">
-          Hello, <span className="font-bold text-green-500">Long Nguyen</span>
-        </span>
+        <div className="flex items-center gap-5">
+          <span className="text-base">
+            Hello, <span className="font-bold text-green-500">Long Nguyen</span>
+          </span>
+          <span className="cursor-pointer" onClick={() => logout()}>
+            <SignOut color="#22c55f" />
+          </span>
+        </div>
       </div>
     </header>
   );

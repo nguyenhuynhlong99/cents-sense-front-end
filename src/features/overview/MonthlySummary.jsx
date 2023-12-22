@@ -6,7 +6,7 @@ import MonthlySummaryCard from './MonthlySummaryCard';
 
 function MonthlySummary() {
   const userId = 1;
-  const { user, isLoading } = useUser(userId);
+  const { user, isLoading } = useUser();
 
   const totalBalance = getTotalBalance();
   const monthlyIncome = getMonthlyIncome();

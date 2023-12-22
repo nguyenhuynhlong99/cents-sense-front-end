@@ -9,11 +9,22 @@ const StyledLogo = styled.span`
   padding: 0 5px;
 `;
 
-function Logo() {
+function Logo({ type }) {
+  if (type === 'login') {
+    return (
+      <>
+        <span className="uppercase text-2xl">
+          <StyledLogo>Cent</StyledLogo>
+          $ense
+        </span>
+      </>
+    );
+  }
+
   return (
     <>
       <span className="hidden sm:inline sm:uppercase sm:text-lg">
-        <StyledLogo>Cents</StyledLogo>
+        <StyledLogo>Cent</StyledLogo>
         $ense
       </span>
       <span className="uppercase text-center text-xl sm:hidden">

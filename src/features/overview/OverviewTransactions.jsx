@@ -5,7 +5,7 @@ import TransactionCard from './TransactionCard';
 
 function OverviewTransactions() {
   const userId = 1;
-  const { user } = useUser(userId);
+  const { user } = useUser();
 
   const userRecentTransactions = user?.transactions?.sort(
     (a, b) => new Date(parseISO(b.date)) - new Date(parseISO(a.date))

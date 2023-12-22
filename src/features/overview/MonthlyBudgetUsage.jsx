@@ -7,7 +7,7 @@ import Icon from '../../ui/Icon';
 
 function MonthlyBudgetUsage() {
   const userId = 1;
-  const { user, isLoading } = useUser(userId);
+  const { user, isLoading } = useUser();
 
   const monthlyBudgets = getMonthlyBudgets();
 
