@@ -1,8 +1,11 @@
 import { SignOut } from '@phosphor-icons/react';
 import Logo from './Logo';
 import { logout } from '../services/apiUsers';
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
+  const navigate = useNavigate();
+
   return (
     <header className="flex items-center">
       <div className="block lg:hidden">
@@ -22,7 +25,13 @@ function Header() {
           <span className="text-base">
             Hello, <span className="font-bold text-green-500">Long Nguyen</span>
           </span>
-          <span className="cursor-pointer" onClick={() => logout()}>
+          <span
+            className="cursor-pointer"
+            onClick={() => {
+              logout();
+              navigate('login');
+            }}
+          >
             <SignOut color="#22c55f" />
           </span>
         </div>

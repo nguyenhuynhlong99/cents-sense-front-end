@@ -10,6 +10,7 @@ export const getAccounts = async () => {
 };
 
 export const getAccount = async ({ id }) => {
+  if (!id) return null;
   const response = await accountsApi.get(`/${id}`, id);
   return response.data;
 };

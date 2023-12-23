@@ -1,10 +1,9 @@
 import { useForm } from 'react-hook-form';
-import { useUsers } from './useUsers';
+
 import { useLogin } from './useLogin';
 import toast from 'react-hot-toast';
 
 function LoginForm() {
-  const { users } = useUsers();
   const { login, isLoading } = useLogin();
 
   const { register, formState, handleSubmit, reset } = useForm();
@@ -14,6 +13,7 @@ function LoginForm() {
     console.log(data);
     login(data, {
       onSuccess: () => {
+        reset();
         toast.success('Login successfully!');
       },
     });
@@ -30,7 +30,11 @@ function LoginForm() {
         </label>
         <input
           {...register('email', {
-            required: 'Please enter your email',
+            required: 'Please enter your email address',
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: 'Please enter a valid email address',
+            },
           })}
           disabled={isLoading}
           autoComplete="username"
@@ -38,6 +42,9 @@ function LoginForm() {
           id="email"
           className="bg-transparent border border-neutral-500 rounded-md py-2 px-3"
         />
+        {errors?.email?.message && (
+          <p className="text-red-500 text-sm">{errors?.email?.message}</p>
+        )}
       </div>
 
       <div className="flex flex-col gap-2">
@@ -54,6 +61,9 @@ function LoginForm() {
           id="password"
           className="bg-transparent border border-neutral-500 rounded-md py-2 px-3"
         />
+        {errors?.password?.message && (
+          <p className="text-red-500 text-sm">{errors?.password?.message}</p>
+        )}
       </div>
 
       <button

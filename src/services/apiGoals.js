@@ -10,6 +10,7 @@ export const getGoals = async () => {
 };
 
 export const getGoal = async ({ id }) => {
+  if (!id) return null;
   const response = await goalsApi.get(`/${id}`, id);
   return response.data;
 };
