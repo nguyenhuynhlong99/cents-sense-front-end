@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Nav from './Nav/Nav';
+import Nav from '../ui/Nav/Nav';
 import { useNavigate } from 'react-router-dom';
 
 const StyledHome = styled.div`
@@ -52,7 +52,7 @@ function Home() {
             <span className="block text-base sm:text-lg font-light">
               Simple way to manage personal finances
             </span>
-            <Button className="mt-6" onClick={() => navigate('/overview')}>
+            <Button className="mt-6" onClick={() => navigate('/login')}>
               Try it now
             </Button>
           </div>

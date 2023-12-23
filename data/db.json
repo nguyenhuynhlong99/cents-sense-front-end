@@ -4,7 +4,13 @@
       "id": 1,
       "email": "long@email.com",
       "password": "long123",
-      "name": "Long Nguyen"
+      "fullName": "Long Nguyen"
+    },
+    {
+      "id": "a1fee639-54e9-4b73-bfd4-22c16d33887b",
+      "fullName": "Long",
+      "email": "longng@email.com",
+      "password": "long1234"
     }
   ],
   "accounts": [
