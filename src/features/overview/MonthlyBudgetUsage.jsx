@@ -6,7 +6,6 @@ import { currentMonth, currentYear } from '../../utils/helpers';
 import Icon from '../../ui/Icon';
 
 function MonthlyBudgetUsage() {
-  const userId = 1;
   const { user, isLoading } = useUser();
 
   const monthlyBudgets = getMonthlyBudgets();
@@ -16,7 +15,7 @@ function MonthlyBudgetUsage() {
       (item) =>
         getYear(parseISO(item.createdAt)) === currentYear &&
         getMonth(parseISO(item.createdAt)) === currentMonth
-    ).id;
+    )?.id;
 
     return user?.budgets?.filter(
       (b) => b.expectedIncomeId === expectedIncomeId
@@ -30,6 +29,8 @@ function MonthlyBudgetUsage() {
   }
 
   if (isLoading) return <LoaderIcon />;
+
+  if (monthlyBudgets?.length < 1) return null;
 
   return (
     <section className="mb-4 bg-neutral-950 p-3 rounded-lg">

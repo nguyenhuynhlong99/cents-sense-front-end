@@ -13,9 +13,10 @@ import AddBudget from './AddBudget';
 import BudgetList from './BudgetList';
 import DeleteBudget from './DeleteBudget';
 import BudgetBreakdown from './BudgetBreakdown';
+import { useUser } from '../auth/useUser';
 
 function BudgetLayout() {
-  const userId = 1;
+  const { user } = useUser();
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [budgetToEdit, setBudgetToEdit] = useState({});
@@ -28,9 +29,8 @@ function BudgetLayout() {
   const expectedIncomeId = getCurrentMonthExpectedIncome()?.at(0)?.id;
 
   function getCurrentMonthExpectedIncome() {
-    return expectedIncomes?.filter(
+    return user?.expectedIncomes?.filter(
       (e) =>
-        e.userId === userId &&
         getYear(parseISO(e.createdAt)) === currentYear &&
         getMonth(parseISO(e.createdAt)) === currentMonth
     );

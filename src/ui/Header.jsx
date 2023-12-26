@@ -2,8 +2,10 @@ import { SignOut } from '@phosphor-icons/react';
 import Logo from './Logo';
 import { logout } from '../services/apiUsers';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../features/auth/useUser';
 
 function Header() {
+  const { user } = useUser();
   const navigate = useNavigate();
 
   return (
@@ -13,17 +15,10 @@ function Header() {
       </div>
 
       <div className="ml-auto flex items-center">
-        {/* <div className="border rounded-full w-[40px] sm:w-[50px]">
-          <img
-            className="w-[40px] sm:w-[50px] rounded-full"
-            src="./notion-avatar-1699487912354.png"
-            alt="notion avatar"
-          />
-        </div> */}
-
-        <div className="flex items-center gap-5">
-          <span className="text-base">
-            Hello, <span className="font-bold text-green-500">Long Nguyen</span>
+        <div className="flex items-center gap-3">
+          <span className="text-sm sm:text-base">
+            Hello,
+            <span className="font-bold text-green-500"> {user?.fullName}</span>
           </span>
           <span
             className="cursor-pointer"

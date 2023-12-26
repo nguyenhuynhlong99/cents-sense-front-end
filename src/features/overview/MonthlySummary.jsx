@@ -1,11 +1,10 @@
 import { LoaderIcon } from 'react-hot-toast';
 import { useUser } from '../auth/useUser';
-import { getMonth, getYear, parse, parseISO } from 'date-fns';
+import { getMonth, getYear, parseISO } from 'date-fns';
 import { currentMonth, currentYear } from '../../utils/helpers';
 import MonthlySummaryCard from './MonthlySummaryCard';
 
 function MonthlySummary() {
-  const userId = 1;
   const { user, isLoading } = useUser();
 
   const totalBalance = getTotalBalance();
@@ -94,13 +93,17 @@ function MonthlySummary() {
 
   if (isLoading) return <LoaderIcon />;
 
+  if (user?.accounts?.length < 1 && user?.transactions?.length < 1) return null;
+
   return (
     <div className="grid grid-cols-4 gap-5">
-      <MonthlySummaryCard
-        label="total balance"
-        amount={totalBalance}
-        type="total"
-      />
+      {totalBalance !== 0 && (
+        <MonthlySummaryCard
+          label="total balance"
+          amount={totalBalance}
+          type="total"
+        />
+      )}
       <MonthlySummaryCard
         label="monthly income"
         amount={monthlyIncome}

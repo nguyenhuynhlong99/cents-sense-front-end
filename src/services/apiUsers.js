@@ -53,7 +53,7 @@ export const login = async ({ email, password }) => {
 
   if (userData && userData?.password === password) {
     try {
-      const user = await getUserWithEmbedData({ id: userData.id });
+      const user = await getUser({ id: userData.id });
       sessionStorage.setItem('user', JSON.stringify(user));
       return user;
     } catch (error) {
@@ -68,10 +68,11 @@ export const logout = () => {
   sessionStorage.removeItem('user');
 };
 
-export const getCurrentUser = () => {
+export const getCurrentUser = async () => {
   if (sessionStorage.getItem('user') !== null) {
-    const userData = sessionStorage.getItem('user');
-    return JSON.parse(userData);
+    const sessionData = sessionStorage.getItem('user');
+    const userId = JSON.parse(sessionData).id;
+    return await getUserWithEmbedData({ id: userId });
   }
 };
 

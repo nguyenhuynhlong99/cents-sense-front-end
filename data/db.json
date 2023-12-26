@@ -45,20 +45,17 @@
       "type": "debit",
       "id": "c00ac7e8-bdb5-4f60-915f-55067992b97c",
       "userId": 1
+    },
+    {
+      "color": "green",
+      "name": "Checking account",
+      "balance": 150,
+      "type": "debit",
+      "id": "fef3da69-b801-4ff8-a234-452766137583",
+      "userId": "a1fee639-54e9-4b73-bfd4-22c16d33887b"
     }
   ],
   "transactions": [
-    {
-      "id": 1,
-      "userId": 1,
-      "accountId": "83a6facb-3969-4f09-b8d0-7ec58511eaa3",
-      "toAccountId": 0,
-      "date": "2023-11-03",
-      "amount": 1000,
-      "budgetId": 0,
-      "description": "Salary",
-      "type": "income"
-    },
     {
       "id": 2,
       "userId": 1,
@@ -71,72 +68,6 @@
       "type": "expense"
     },
     {
-      "id": 3,
-      "userId": 1,
-      "accountId": "83a6facb-3969-4f09-b8d0-7ec58511eaa3",
-      "toAccountId": "83a6facb-3969-4f09-b8d0-7ec58511eba1",
-      "date": "2023-11-03",
-      "amount": 100,
-      "budgetId": 0,
-      "description": "transfer",
-      "type": "transfer"
-    },
-    {
-      "id": "47554bd8-ac64-49cb-8507-4eecc52d7b70",
-      "userId": 1,
-      "toAccountId": 0,
-      "budgetId": 0,
-      "date": "2023-12-16T17:24:30-08:00",
-      "type": "income",
-      "amount": 1000,
-      "accountId": "83a6facb-3969-4f09-b8d0-7ec58511eaa3",
-      "description": "etsy"
-    },
-    {
-      "id": "5ae01048-0d47-409d-8bb0-d20fb1963f46",
-      "userId": 1,
-      "toAccountId": 0,
-      "date": "2023-12-17T21:04:06-08:00",
-      "type": "expense",
-      "amount": 100,
-      "accountId": "83a6facb-3969-4f09-b8d0-7ec58511eaa3",
-      "description": "Dinner",
-      "budgetId": 0
-    },
-    {
-      "id": "5758c775-ebe6-4eac-b64b-b23db0945dd9",
-      "userId": 1,
-      "toAccountId": 0,
-      "date": "2023-12-17T21:04:46-08:00",
-      "type": "expense",
-      "amount": 100,
-      "accountId": "83a6facb-3969-4f09-b8d0-7ec58511eaa1",
-      "description": "Colognes",
-      "budgetId": 0
-    },
-    {
-      "id": "cbcd5347-c30d-4a4d-81c7-d8fbfafe37d8",
-      "userId": 1,
-      "toAccountId": 0,
-      "budgetId": 0,
-      "date": "2023-12-17T21:07:27-08:00",
-      "type": "income",
-      "amount": 100,
-      "accountId": "c00ac7e8-bdb5-4f60-915f-55067992b97c",
-      "description": "Mom's money"
-    },
-    {
-      "id": "62fe44b0-e14f-40b2-a655-85239b9b49fb",
-      "userId": 1,
-      "date": "2023-12-18T13:14:42-08:00",
-      "type": "transfer",
-      "amount": 100,
-      "accountId": "83a6facb-3969-4f09-b8d0-7ec58511eaa1",
-      "toAccountId": "83a6facb-3969-4f09-b8d0-7ec58511eba1",
-      "budgetId": 0,
-      "description": "saving"
-    },
-    {
       "id": "57667f97-c31c-4182-9196-6e77c307259d",
       "userId": 1,
       "toAccountId": 0,
@@ -146,18 +77,6 @@
       "accountId": "83a6facb-3969-4f09-b8d0-7ec58511eaa1",
       "budgetId": "51542f24-5c72-4bee-9936-71fa81be6166",
       "description": "Apartment"
-    },
-    {
-      "id": "873a4fa0-7e35-4453-860a-2ddb4a2776ee",
-      "userId": 1,
-      "date": "2023-12-20T11:12:32-08:00",
-      "type": "transfer",
-      "toAccountId": 0,
-      "amount": 100,
-      "accountId": "83a6facb-3969-4f09-b8d0-7ec58511eaa3",
-      "goalId": "d0aabe32-72f0-4bb3-8227-c8afbc990f07",
-      "budgetId": 0,
-      "description": "saving"
     }
   ],
   "expectedIncomes": [

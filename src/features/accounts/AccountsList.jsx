@@ -4,6 +4,7 @@ import AccountCard from '../../ui/AccountCard';
 import Loader from '../../ui/Loader';
 import { Pen, Trash } from '@phosphor-icons/react';
 import ErrorBox from '../../ui/ErrorBox';
+import { useUser } from '../auth/useUser';
 
 function AccountsList({
   openAddModal,
@@ -14,9 +15,10 @@ function AccountsList({
   accountToEdit,
   setAccountToEdit,
 }) {
-  const userId = 1;
-  const { accounts, error, isLoading } = useAccounts();
-  const userAccounts = getAllUserAccounts(userId);
+  // const userId = 1;
+  // const { accounts, error, isLoading } = useAccounts();
+  const { user, isLoading } = useUser();
+  const userAccounts = user?.accounts;
   const userCreditAccounts = userAccounts?.filter(
     (acc) => acc.type === 'credit'
   );
@@ -24,10 +26,11 @@ function AccountsList({
   const userSavingAccounts = userAccounts?.filter(
     (acc) => acc.type === 'saving'
   );
+  console.log(user);
 
-  function getAllUserAccounts(userID) {
-    return accounts?.filter((acc) => acc.userId === userId);
-  }
+  // function getAllUserAccounts(userID) {
+  //   return accounts?.filter((acc) => acc.userId === userId);
+  // }
 
   function openEditModal(item) {
     setOpenAddModal(true);
@@ -41,9 +44,9 @@ function AccountsList({
 
   if (isLoading) return <Loader />;
 
-  if (error) {
-    return <ErrorBox message="❌ There something went wrong!" />;
-  }
+  // if (error) {
+  //   return <ErrorBox message="❌ There something went wrong!" />;
+  // }
 
   if (userAccounts?.length < 1) {
     return (
@@ -73,28 +76,30 @@ function AccountsList({
           <section className="mt-5">
             <h3 className="text-lg font-semibold mb-2">Debit</h3>
 
-            <ul className="flex overflow-x-auto snap-x snap-mandatory gap-5 scroll-p-5 pb-3 sm:pb-0 sm:grid sm:grid-cols-[repeat(auto-fit,minmax(150px,280px))] sm:gap-5">
+            <ul className="flex overflow-x-auto snap-x snap-mandatory gap-3  pb-3 sm:pb-0 sm:grid sm:grid-cols-[repeat(auto-fit,minmax(150px,280px))] sm:gap-5">
               {userDebitAccounts?.map((acc) => (
                 <li
                   key={acc.id}
-                  className="flex flex-col gap-2 flex-shrink-0 snap-center snap-always w-full max-w-[280px]"
+                  className="flex flex-col gap-2 flex-shrink-0 snap-center snap-always w-[90%] max-w-[280px] sm:w-full"
                 >
-                  <AccountCard
-                    balance={acc.balance}
-                    name={acc.name}
-                    color={acc.color}
-                  />
+                  <div className="min-h-[150px]">
+                    <AccountCard
+                      balance={acc.balance}
+                      name={acc.name}
+                      color={acc.color}
+                    />
+                  </div>
                   <div className="flex items-center gap-2 m-auto">
                     <button
                       onClick={() => openEditModal(acc)}
-                      className="rounded-md bg-green-700 p-3  hover:text-green-400 hover:bg-neutral-950 flex gap-1 items-center"
+                      className="rounded-md bg-green-700 px-1 py-3  hover:text-green-400 hover:bg-neutral-950 flex gap-1 items-center sm:px-3"
                     >
                       <Pen />
                       <span>Manage</span>
                     </button>
                     <button
                       onClick={() => onOpenDeleteModal(acc)}
-                      className="rounded-md bg-red-700 p-3  hover:text-red-500 hover:bg-neutral-950 flex gap-1 items-center"
+                      className="rounded-md bg-red-700 px-1 py-3 hover:text-red-500 hover:bg-neutral-950 flex gap-1 items-center sm:px-3"
                     >
                       <Trash />
                       <span>Delete</span>
@@ -110,28 +115,30 @@ function AccountsList({
           <section className="mt-5">
             <h3 className="text-lg font-semibold mb-2">Credit</h3>
 
-            <ul className="flex overflow-x-auto snap-x snap-mandatory gap-5 scroll-p-5 pb-3 sm:pb-0 sm:grid sm:grid-cols-[repeat(auto-fit,minmax(150px,280px))] sm:gap-5">
+            <ul className="flex overflow-x-auto snap-x snap-mandatory gap-3  pb-3 sm:pb-0 sm:grid sm:grid-cols-[repeat(auto-fit,minmax(150px,280px))] sm:gap-5">
               {userCreditAccounts?.map((acc) => (
                 <li
                   key={acc.id}
-                  className="flex flex-col gap-2 flex-shrink-0 snap-center snap-always w-full max-w-[280px]"
+                  className="flex flex-col gap-2 flex-shrink-0 snap-center snap-always w-[90%] max-w-[280px] sm:w-full"
                 >
-                  <AccountCard
-                    balance={acc.balance}
-                    name={acc.name}
-                    color={acc.color}
-                  />
+                  <div className="min-h-[150px]">
+                    <AccountCard
+                      balance={acc.balance}
+                      name={acc.name}
+                      color={acc.color}
+                    />
+                  </div>
                   <div className="flex items-center gap-2 m-auto">
                     <button
                       onClick={() => openEditModal(acc)}
-                      className="rounded-md bg-green-700 p-3  hover:text-green-400 hover:bg-neutral-950 flex gap-1 items-center"
+                      className="rounded-md bg-green-700 px-1 py-3  hover:text-green-400 hover:bg-neutral-950 flex gap-1 items-center sm:px-3"
                     >
                       <Pen />
                       <span>Manage</span>
                     </button>
                     <button
                       onClick={() => onOpenDeleteModal(acc)}
-                      className="rounded-md bg-red-700 p-3  hover:text-red-500 hover:bg-neutral-950 flex gap-1 items-center"
+                      className="rounded-md bg-red-700 px-1 py-3 hover:text-red-500 hover:bg-neutral-950 flex gap-1 items-center sm:px-3"
                     >
                       <Trash />
                       <span>Delete</span>
@@ -147,28 +154,30 @@ function AccountsList({
           <section className="mt-5">
             <h3 className="text-lg font-semibold mb-2">Saving</h3>
 
-            <ul className="grid grid-cols-[repeat(auto-fit,minmax(150px,280px))] gap-5">
+            <ul className="flex overflow-x-auto snap-x snap-mandatory gap-3  pb-3 sm:pb-0 sm:grid sm:grid-cols-[repeat(auto-fit,minmax(150px,280px))] sm:gap-5">
               {userSavingAccounts?.map((acc) => (
                 <li
                   key={acc.id}
-                  className="flex flex-col gap-2 flex-shrink-0 snap-center snap-always w-full max-w-[280px]"
+                  className="flex flex-col gap-2 flex-shrink-0 snap-center snap-always w-[90%] max-w-[280px] sm:w-full"
                 >
-                  <AccountCard
-                    balance={acc.balance}
-                    name={acc.name}
-                    color={acc.color}
-                  />
+                  <div className="min-h-[150px]">
+                    <AccountCard
+                      balance={acc.balance}
+                      name={acc.name}
+                      color={acc.color}
+                    />
+                  </div>
                   <div className="flex items-center gap-2 m-auto">
                     <button
                       onClick={() => openEditModal(acc)}
-                      className="rounded-md bg-green-700 p-3  hover:text-green-400 hover:bg-neutral-950 flex gap-1 items-center"
+                      className="rounded-md bg-green-700 px-1 py-3  hover:text-green-400 hover:bg-neutral-950 flex gap-1 items-center sm:px-3"
                     >
                       <Pen />
                       <span>Manage</span>
                     </button>
                     <button
                       onClick={() => onOpenDeleteModal(acc)}
-                      className="rounded-md bg-red-700 p-3  hover:text-red-500 hover:bg-neutral-950 flex gap-1 items-center"
+                      className="rounded-md bg-red-700 px-1 py-3 hover:text-red-500 hover:bg-neutral-950 flex gap-1 items-center sm:px-3"
                     >
                       <Trash />
                       <span>Delete</span>

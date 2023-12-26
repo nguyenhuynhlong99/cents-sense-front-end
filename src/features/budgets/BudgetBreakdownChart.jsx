@@ -1,15 +1,9 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import { useBudgets } from './useBudgets';
-import Loader from '../../ui/Loader';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-function BudgetBreakdownChart({ expectedIncomeId }) {
-  const { isLoading, budgets } = useBudgets();
-
-  const monthlyBudgets = getCurrentMonthBudgets();
-
+function BudgetBreakdownChart({ expectedIncomeId, monthlyBudgets }) {
   const totalBudgetAmount = monthlyBudgets?.reduce(
     (acc, curr) => acc + curr.amount,
     0
@@ -26,10 +20,6 @@ function BudgetBreakdownChart({ expectedIncomeId }) {
     (acc, curr) => acc + curr,
     0
   );
-
-  function getCurrentMonthBudgets() {
-    return budgets?.filter((b) => b?.expectedIncomeId === expectedIncomeId);
-  }
 
   let pieChartData;
   let pieChartLabels;
@@ -67,8 +57,6 @@ function BudgetBreakdownChart({ expectedIncomeId }) {
       ],
     };
   }
-
-  if (isLoading) return <Loader />;
 
   return <>{pieChartData && <Doughnut data={pieChartData} />}</>;
 }

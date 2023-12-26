@@ -2,88 +2,100 @@ import AccountCard from '../../ui/AccountCard';
 import {
   ArrowCircleDown,
   ArrowCircleUp,
-  Basket,
-  CreditCard,
   Money,
   PiggyBank,
-  Television,
 } from '@phosphor-icons/react';
 import MobileSummaryCard from './MobileSummaryCard';
-import { formatCurrency } from '../../utils/helpers';
-import { getMonth, parseISO } from 'date-fns';
+import { currentYear, formatCurrency, currentMonth } from '../../utils/helpers';
+import { getMonth, getYear, parseISO } from 'date-fns';
 import MobileTransactionCard from './MobileTransactionCard';
+import { useUser } from '../auth/useUser';
+import Icon from '../../ui/Icon';
 
 function MobileOverview({ data }) {
-  const userID = 1;
-  const { accounts, transactions, budgets } = data;
-  const currentMonth = getMonth(new Date());
-  const userAccounts = accounts.filter((acc) => acc.userID === userID);
-  const userTotalBalance = getUserTotalBalance(userID);
-  const userMonthlyTransactions = transactions.filter(
-    (t) => getMonth(parseISO(t.date)) === currentMonth && t.userID === userID
+  const { user, isLoading } = useUser();
+  const totalBalance = getTotalBalance();
+  const monthlyIncome = getMonthlyIncome();
+  const monthlyExpense = getMonthlyExpense();
+  const monthlyBudgetUsedAmount = getMonthlyBudgetUsed();
+  const monthlySaving = monthlyIncome - monthlyExpense;
+  const recentTransactions = user?.transactions?.sort(
+    (a, b) => new Date(parseISO(b.date)) - new Date(parseISO(a.date))
   );
-  const userMonthlyIncome = getMonthlyTransactionsOnType('income');
-  const userMonthlyExpense = getMonthlyTransactionsOnType('expense');
-  const userMonthlyBudgetsAmount = budgets
-    .filter((b) => b.userID === userID && getMonth(parseISO(b.createdAt)))
-    .reduce((acc, curr) => acc + curr.amount, 0);
-  const userMonthlySavings = userMonthlyIncome - userMonthlyExpense;
+  console.log(user);
 
-  const giveDateForTransactions = transactions.map((t) => {
-    return { ...t, date: new Date(t.date) };
-  });
-  const recentTransactions = giveDateForTransactions.sort(
-    (a, b) => b.date - a.date
-  );
-  const recentTransactionsWithBudgetCategory = recentTransactions.map((t) => ({
-    ...t,
-    budgetCategory: findBudgetCategoryWithBudgetID(t.budgetID),
-  }));
-
-  function getUserTotalBalance(userID) {
-    return userAccounts.reduce((acc, curr) => acc + curr.balance, 0);
+  function getTotalBalance() {
+    return user?.accounts
+      ?.filter((acc) => acc.type !== 'credit')
+      .reduce((acc, curr) => acc + curr.balance, 0);
   }
 
-  function getMonthlyTransactionsOnType(type) {
-    return userMonthlyTransactions
-      .filter((t) => t.type === type)
+  function getMonthlyIncome() {
+    return user?.transactions
+      ?.filter(
+        (t) =>
+          t.type === 'income' &&
+          getYear(parseISO(t.date)) === currentYear &&
+          getMonth(parseISO(t.date)) === currentMonth
+      )
       .reduce((acc, curr) => acc + curr.amount, 0);
   }
 
-  function findBudgetCategoryWithBudgetID(budgetID) {
-    if (!budgetID) return;
-    const budget = budgets.find((b) => b.budgetID === budgetID);
-    return budget.category;
+  function getMonthlyExpense() {
+    return user?.transactions
+      ?.filter(
+        (t) =>
+          t.type === 'expense' &&
+          getYear(parseISO(t.date)) === currentYear &&
+          getMonth(parseISO(t.date)) === currentMonth
+      )
+      .reduce((acc, curr) => acc + curr.amount, 0);
   }
 
-  function getIcon(category) {
-    switch (category) {
-      case 'food':
-        return <Basket />;
+  function getMonthlyBudgetUsed() {
+    const expectedIncomeId = user?.expectedIncomes?.find(
+      (inc) =>
+        getYear(parseISO(inc.createdAt)) === currentYear &&
+        getMonth(parseISO(inc.createdAt)) === currentMonth
+    ).id;
 
-      case 'entertainment':
-        return <Television />;
+    return user?.budgets
+      ?.filter((b) => b.expectedIncomeId === expectedIncomeId)
+      .reduce((acc, curr) => acc + curr.amount, 0);
+  }
 
-      default:
-        return <CreditCard />;
-    }
+  function getIconWithBudgetId(budgetId) {
+    const icon = user?.budgets?.find((b) => b.id === budgetId)?.icon;
+
+    return <Icon name={icon} />;
   }
 
   return (
     <>
-      <div className="max-w-[300px] m-auto pt-3">
+      <div className="max-w-[300px] m-auto pt-2">
         <section className="mb-4">
-          <h3 className="text-base font-medium mb-2">
-            Total Balance:{' '}
-            <span className="text-xl text-green-500">
-              {formatCurrency(userTotalBalance)}
-            </span>
-          </h3>
+          <span className="block text-sm font-medium text-neutral-400">
+            Total Balance
+          </span>
+          <span className="block text-2xl font-bold text-green-500 font-space mb-2">
+            {formatCurrency(totalBalance)}
+          </span>
 
-          <AccountCard
-            name={userAccounts[0].name}
-            balance={userAccounts[0].balance}
-          />
+          <ul className="flex overflow-x-auto snap-x snap-mandatory gap-3 py-2">
+            {user?.accounts?.map((acc) => (
+              <li
+                key={acc.id}
+                className="h-[100px] w-[180px] flex-shrink-0 snap-center snap-always"
+              >
+                <AccountCard
+                  type="small"
+                  name={acc.name}
+                  balance={acc.balance}
+                  color={acc.color}
+                />
+              </li>
+            ))}
+          </ul>
         </section>
 
         <section className="mb-4">
@@ -92,25 +104,25 @@ function MobileOverview({ data }) {
           <div className="grid grid-cols-2 gap-2">
             <MobileSummaryCard
               name="income"
-              amount={userMonthlyIncome}
+              amount={monthlyIncome}
               icon={<ArrowCircleUp color="#1E51D9" size={35} />}
             />
 
             <MobileSummaryCard
               name="Expense"
-              amount={userMonthlyExpense}
+              amount={monthlyExpense}
               icon={<ArrowCircleDown color="#eb001b" size={35} />}
             />
 
             <MobileSummaryCard
               name="Budget"
-              amount={userMonthlyBudgetsAmount}
+              amount={monthlyBudgetUsedAmount}
               icon={<Money color="#21c55d" size={35} />}
             />
 
             <MobileSummaryCard
               name="Saving"
-              amount={userMonthlySavings}
+              amount={monthlySaving}
               icon={<PiggyBank color="#F9DF4A" size={40} />}
             />
           </div>
@@ -120,58 +132,14 @@ function MobileOverview({ data }) {
           <h3 className="text-base font-medium mb-2">Recent Transactions</h3>
 
           <div className="flex flex-col gap-2">
-            {recentTransactionsWithBudgetCategory.map((t) => (
+            {recentTransactions.map((t) => (
               <MobileTransactionCard
                 type={t.type}
                 description={t.description}
-                icon={getIcon(t.budgetCategory)}
+                icon={getIconWithBudgetId(t.budgetId)}
                 amount={t.amount}
               />
             ))}
-
-            {/* <div className="bg-neutral-950 rounded-md py-2 px-3 flex items-center">
-              <Basket color="#fff" />
-
-              <span className="inline-block ml-2 text-base">Groceries</span>
-              <span className="text-base ml-auto text-red-600">-$50</span>
-            </div>
-
-            <div className="bg-neutral-950 rounded-md py-2 px-3 flex items-center">
-              <Barbell color="#fff" />
-
-              <span className="inline-block ml-2 text-base">Gym</span>
-              <span className="text-base ml-auto text-red-600">-$50</span>
-            </div>
-
-            <div className="bg-neutral-950 rounded-md py-2 px-3 flex items-center">
-              <Television color="#fff" />
-
-              <span className="inline-block ml-2 text-base">Netflix</span>
-              <span className="text-base ml-auto text-red-600">-$50</span>
-            </div>
-
-            <div className="bg-neutral-950 rounded-md py-2 px-3 flex items-center">
-              <House color="#fff" />
-
-              <span className="inline-block ml-2 text-base">Rent</span>
-              <span className="text-base ml-auto text-red-600">-$500</span>
-            </div>
-
-            <div className="bg-neutral-950 rounded-md py-2 px-3 flex items-center">
-              <TShirt color="#fff" />
-
-              <span className="inline-block ml-2 text-base">Shirt</span>
-              <span className="text-base ml-auto text-red-600">-$50</span>
-            </div>
-
-            <div className="bg-neutral-950 rounded-md py-2 px-3 flex items-center">
-              <Bank color="#fff" />
-
-              <span className="inline-block ml-2 text-base">
-                Emergency HYSA
-              </span>
-              <span className="text-base ml-auto text-red-600">-$50</span>
-            </div> */}
           </div>
         </section>
       </div>
