@@ -3,9 +3,11 @@ import { useAddAccount } from './useAddAccount';
 import { useUpdateAccount } from './useUpdateAccount';
 import FormRow from '../../ui/FormRow';
 import Input from '../../ui/Input';
+import { useUser } from '../auth/useUser';
 
 function AddAccountForm({ allTypesOfAccount, setIsShown, accountToEdit }) {
-  const userId = 1;
+  const { user } = useUser();
+  const userId = user?.id;
   const { isAdding, addAccount } = useAddAccount();
   const { isUpdating, updateAccount } = useUpdateAccount();
   const { id: accountId, ...editValues } = accountToEdit;
@@ -87,7 +89,7 @@ function AddAccountForm({ allTypesOfAccount, setIsShown, accountToEdit }) {
             })}
             disabled={isAdding || isUpdating}
             id="type"
-            class="border text-sm rounded-lg block w-full px-3 py-2 bg-transparent border-neutral-500 text-white max-w-[250px]"
+            className="border text-sm rounded-lg block w-full px-3 py-2 bg-transparent border-neutral-500 text-white max-w-[250px]"
           >
             <option value="" disabled>
               Choose a type

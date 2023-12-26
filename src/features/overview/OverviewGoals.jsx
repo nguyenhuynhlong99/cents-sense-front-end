@@ -2,8 +2,9 @@ import { useUser } from '../auth/useUser';
 import GoalCard from './GoalCard';
 
 function OverviewGoals() {
-  const userId = 1;
   const { user } = useUser();
+
+  if (user?.goals?.length < 1) return null;
 
   return (
     <section className="bg-neutral-950 p-3 rounded-md text-sm">

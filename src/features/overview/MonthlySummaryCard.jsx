@@ -2,8 +2,6 @@ import { TrendDown, TrendUp } from '@phosphor-icons/react';
 import { formatCurrency } from '../../utils/helpers';
 
 function MonthlySummaryCard({ label, amount, percent, type }) {
-  // const style =
-  //   percent > 0 && type !== "expense" ? { color: 'rgb(34,197,94)' } : percent ? { color: 'rgb(239 68 68)' } : ;
   let style;
   if (type === 'expense') {
     style =
@@ -24,7 +22,7 @@ function MonthlySummaryCard({ label, amount, percent, type }) {
         ) : (
           <span className="text-lg font-bold">{formatCurrency(amount)}</span>
         )}
-        {percent && (
+        {percent && !isNaN(percent) && (
           <span className="text-xs flex items-center gap-1" style={style}>
             {percent > 0 ? <TrendUp size={20} /> : <TrendDown size={20} />}
             <span>

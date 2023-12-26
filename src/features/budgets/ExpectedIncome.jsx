@@ -7,9 +7,11 @@ import { formatISO } from 'date-fns';
 import Button from '../../ui/Button';
 import ProgressBar from '../../ui/ProgressBar';
 import { CheckCircle, CurrencyDollar } from '@phosphor-icons/react';
+import { useUser } from '../auth/useUser';
 
 function ExpectedIncome({ expectedIncome }) {
-  const userId = 1;
+  const { user } = useUser();
+  const userId = user?.id;
 
   const { isCreating, createExpectedIncome } = useCreateExpectedIncome();
   const { register, handleSubmit, formState, reset } = useForm();

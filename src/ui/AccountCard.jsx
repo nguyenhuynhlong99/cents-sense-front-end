@@ -2,7 +2,7 @@ import { CreditCard } from '@phosphor-icons/react';
 import { formatCurrency } from '../utils/helpers';
 // import MasterCardIcon from './MasterCardIcon';
 
-function AccountCard({ balance, name, color = 'black' }) {
+function AccountCard({ balance, name, color = 'black', type }) {
   function getColor() {
     switch (color) {
       case 'silver':
@@ -26,17 +26,20 @@ function AccountCard({ balance, name, color = 'black' }) {
 
   return (
     <div
-      className={`bg-gradient-to-r ${getColor()} rounded-2xl p-3 h-[150px] w-full`}
+      className={`bg-gradient-to-r ${getColor()} rounded-2xl p-3 h-full w-full`}
     >
       <div className="flex flex-col h-full">
         <div className="flex gap-2">
           <CreditCard size={20} />
-          <span className="text-base   block max-w-350px]">{name}</span>
-          {/* <MasterCardIcon /> */}
+          {type !== 'small' ? (
+            <span className="text-base block capitalize">{name}</span>
+          ) : (
+            <span className="text-sm block capitalize">{name}</span>
+          )}
         </div>
 
         <div className="mt-auto">
-          <span className="text-xs">Current Balance</span>
+          {type !== 'small' && <span className="text-xs">Current Balance</span>}
           <span className="block text-lg font-semibold">
             {formatCurrency(balance)}
           </span>

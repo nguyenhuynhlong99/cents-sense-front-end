@@ -8,8 +8,9 @@ export function useCreateExpectedIncome() {
   const { mutate: createExpectedIncome, isLoading: isCreating } = useMutation({
     mutationFn: createExpectedIncomeApi,
     onSuccess: () => {
-      toast.success('Created expected income successfully!');
       queryClient.invalidateQueries({ queryKey: ['expectedIncomes'] });
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+      toast.success('Created expected income successfully!');
     },
     onError: (err) => {
       console.error(err);

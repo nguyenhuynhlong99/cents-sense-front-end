@@ -10,6 +10,7 @@ export function useUpdateAccount() {
     onSuccess: () => {
       toast.success('Edit account successfully!');
       queryClient.invalidateQueries({ queryKey: ['accounts'] });
+      queryClient.invalidateQueries({ queryKey: ['user'] });
     },
     onError: (err) => {
       console.error(err);

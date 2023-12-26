@@ -9,6 +9,7 @@ export function useAddAccount() {
     mutationFn: createAccount,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['accounts'] });
+      queryClient.invalidateQueries({ queryKey: ['user'] });
       toast.success('Added new account successfully!');
     },
     onError: (err) => {

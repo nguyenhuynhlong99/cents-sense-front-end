@@ -8,10 +8,13 @@ export function useDeleteAccount() {
   const { isLoading: isDeleting, mutate: deleteAccount } = useMutation({
     mutationFn: deleteAccountApi,
     onSuccess: () => {
-      toast.success('Deleted Account Successfully!');
       queryClient.invalidateQueries({
         queryKey: ['accounts'],
       });
+      queryClient.invalidateQueries({
+        queryKey: ['user'],
+      });
+      toast.success('Deleted Account Successfully!');
     },
     onError: (err) => console.log(err),
   });

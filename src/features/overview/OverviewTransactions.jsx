@@ -4,7 +4,6 @@ import { useUser } from '../auth/useUser';
 import TransactionCard from './TransactionCard';
 
 function OverviewTransactions() {
-  const userId = 1;
   const { user } = useUser();
 
   const userRecentTransactions = user?.transactions?.sort(
@@ -18,6 +17,8 @@ function OverviewTransactions() {
 
     return <Icon />;
   }
+
+  if (user?.transactions?.length < 1) return null;
 
   return (
     <section className="bg-neutral-950 rounded-md p-3">
