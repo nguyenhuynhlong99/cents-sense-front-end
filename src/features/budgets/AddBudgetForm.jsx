@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form';
-import { useBudgets } from './useBudgets';
 
 import FormRow from '../../ui/FormRow';
 import Input from '../../ui/Input';
@@ -9,6 +8,7 @@ import { formatISO } from 'date-fns';
 import Icon from '../../ui/Icon';
 import { listOfIcons } from '../../utils/helpers';
 import { useUpdateBudget } from './useUpdateBudget';
+import { useUser } from '../auth/useUser';
 
 function AddBudgetForm({
   setIsShown,
@@ -16,7 +16,8 @@ function AddBudgetForm({
   expectedIncomeAmount,
   budgetToEdit,
 }) {
-  const { isLoading, budgets } = useBudgets();
+  const { isLoading, user } = useUser();
+  const budgets = user?.budgets;
   const { isCreating, createBudget } = useCreateBudget();
   const { isUpdating, updateBudget } = useUpdateBudget();
 
@@ -64,6 +65,7 @@ function AddBudgetForm({
     } else {
       const newBudget = {
         id: crypto.randomUUID(),
+        userId: user?.id,
         expectedIncomeId,
         ...data,
         createdAt: formatISO(new Date()),

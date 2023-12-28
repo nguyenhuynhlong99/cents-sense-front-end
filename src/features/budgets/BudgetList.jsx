@@ -1,9 +1,8 @@
-import { useBudgets } from './useBudgets';
-
 import BudgetCard from '../overview/BudgetCard';
 import Icon from '../../ui/Icon';
 import { PencilSimple, TrashSimple } from '@phosphor-icons/react';
 import { formatCurrency } from '../../utils/helpers';
+import { useUser } from '../auth/useUser';
 
 function BudgetList({
   monthlyExpectedIncome,
@@ -12,7 +11,8 @@ function BudgetList({
   setBudgetToEdit,
   setOpenDeleteModal,
 }) {
-  const { isLoading, budgets } = useBudgets();
+  const { isLoading, user } = useUser();
+  const budgets = user?.budgets;
 
   const monthlyBudgets = getCurrentMonthBudgets();
   const totalAmountBudgetUsed = getTotalBudgetUsed();
@@ -24,6 +24,12 @@ function BudgetList({
 
   function getTotalBudgetUsed() {
     return monthlyBudgets?.reduce((acc, curr) => acc + curr.amount, 0);
+  }
+
+  function getTotalUsedBudget(budgetId) {
+    return user?.transactions
+      ?.filter((t) => t.budgetId === budgetId)
+      .reduce((acc, curr) => acc + curr.amount, 0);
   }
 
   function onOpenEditModal(budget) {
@@ -51,7 +57,7 @@ function BudgetList({
               icon={<Icon name={b.icon} />}
               category={b.category}
               totalBudget={b.amount}
-              usedBudget={0}
+              usedBudget={getTotalUsedBudget(b.id)}
             />
             <div className="absolute right-1 bottom-0">
               <button

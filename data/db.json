@@ -19,7 +19,7 @@
       "userId": 1,
       "name": "Check card",
       "type": "debit",
-      "balance": 1800,
+      "balance": 2700,
       "color": "black"
     },
     {
@@ -35,7 +35,7 @@
       "userId": 1,
       "name": "Emergency HYSA",
       "type": "saving",
-      "balance": 200,
+      "balance": 300,
       "color": "red"
     },
     {
@@ -49,24 +49,13 @@
     {
       "color": "green",
       "name": "Checking account",
-      "balance": 150,
+      "balance": 1090,
       "type": "debit",
-      "id": "fef3da69-b801-4ff8-a234-452766137583",
+      "id": "c81eaf3c-2c18-4f64-9f9b-144a1bf530fb",
       "userId": "a1fee639-54e9-4b73-bfd4-22c16d33887b"
     }
   ],
   "transactions": [
-    {
-      "id": 2,
-      "userId": 1,
-      "accountId": "83a6facb-3969-4f09-b8d0-7ec58511eaa1",
-      "toAccountId": 0,
-      "date": "2023-11-01",
-      "amount": 50,
-      "budgetId": "3bbbdd8b-4131-4f90-b9a1-36a1dfc275f3",
-      "description": "Grocery shopping",
-      "type": "expense"
-    },
     {
       "id": "57667f97-c31c-4182-9196-6e77c307259d",
       "userId": 1,
@@ -77,6 +66,51 @@
       "accountId": "83a6facb-3969-4f09-b8d0-7ec58511eaa1",
       "budgetId": "51542f24-5c72-4bee-9936-71fa81be6166",
       "description": "Apartment"
+    },
+    {
+      "id": "c47aaeca-165b-42cc-bd0e-a624fef3e817",
+      "userId": 1,
+      "toAccountId": 0,
+      "budgetId": 0,
+      "date": "2023-12-27T10:35:31-08:00",
+      "type": "income",
+      "amount": 1000,
+      "accountId": "83a6facb-3969-4f09-b8d0-7ec58511eaa3",
+      "description": "Salary"
+    },
+    {
+      "id": "4a53fb8c-ed1a-4a39-bdd2-b586f85473f4",
+      "userId": 1,
+      "date": "2023-12-27T10:39:30-08:00",
+      "type": "transfer",
+      "goalId": 0,
+      "amount": 100,
+      "accountId": "83a6facb-3969-4f09-b8d0-7ec58511eaa3",
+      "toAccountId": "83a6facb-3969-4f09-b8d0-7ec58511eba1",
+      "budgetId": 0,
+      "description": "saving"
+    },
+    {
+      "id": "20b40fec-b9ad-4414-9e76-bbb061df4b64",
+      "userId": "a1fee639-54e9-4b73-bfd4-22c16d33887b",
+      "toAccountId": 0,
+      "budgetId": 0,
+      "date": "2023-12-27T15:50:21-08:00",
+      "type": "income",
+      "amount": 1000,
+      "accountId": "c81eaf3c-2c18-4f64-9f9b-144a1bf530fb",
+      "description": "Salary"
+    },
+    {
+      "id": "406dec01-4613-444a-9484-9753eb02ab80",
+      "userId": "a1fee639-54e9-4b73-bfd4-22c16d33887b",
+      "toAccountId": 0,
+      "date": "2023-12-27T15:52:45-08:00",
+      "type": "expense",
+      "amount": 10,
+      "accountId": "c81eaf3c-2c18-4f64-9f9b-144a1bf530fb",
+      "budgetId": "8de6c59b-34dd-4d92-8d9a-e2ab18b87aee",
+      "description": "Snack"
     }
   ],
   "expectedIncomes": [
@@ -85,6 +119,12 @@
       "userId": 1,
       "createdAt": "2023-12-03T12:45:42-08:00",
       "expectedIncome": 2000
+    },
+    {
+      "id": "6c8470fd-dd9b-4073-ba4e-e99b1663e7e5",
+      "userId": "a1fee639-54e9-4b73-bfd4-22c16d33887b",
+      "createdAt": "2023-12-27T10:17:11-08:00",
+      "expectedIncome": 500
     }
   ],
   "budgets": [
@@ -105,6 +145,24 @@
       "amount": 1000,
       "icon": "house",
       "createdAt": "2023-12-13T16:34:36-08:00"
+    },
+    {
+      "id": "ba96c948-7813-405e-a53e-efb6a4383f22",
+      "userId": "a1fee639-54e9-4b73-bfd4-22c16d33887b",
+      "expectedIncomeId": "6c8470fd-dd9b-4073-ba4e-e99b1663e7e5",
+      "category": "Food",
+      "amount": 100,
+      "icon": "cart",
+      "createdAt": "2023-12-27T14:08:25-08:00"
+    },
+    {
+      "id": "8de6c59b-34dd-4d92-8d9a-e2ab18b87aee",
+      "userId": "a1fee639-54e9-4b73-bfd4-22c16d33887b",
+      "expectedIncomeId": "6c8470fd-dd9b-4073-ba4e-e99b1663e7e5",
+      "category": "Personal Items",
+      "amount": 100,
+      "icon": "shopping",
+      "createdAt": "2023-12-27T14:18:40-08:00"
     }
   ],
   "goals": [
@@ -131,6 +189,14 @@
       "currentAmount": 100,
       "targetAmount": 1000,
       "icon": "airplane"
+    },
+    {
+      "id": "62a09ba6-c9f2-4590-bb3f-7bbfb2b16022",
+      "userId": "a1fee639-54e9-4b73-bfd4-22c16d33887b",
+      "name": "Trip to Bali",
+      "currentAmount": 0,
+      "targetAmount": 3000,
+      "icon": "treePalm"
     }
   ]
 }

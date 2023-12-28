@@ -22,7 +22,7 @@ function MonthlySummaryCard({ label, amount, percent, type }) {
         ) : (
           <span className="text-lg font-bold">{formatCurrency(amount)}</span>
         )}
-        {percent && !isNaN(percent) && (
+        {percent && !isNaN(percent) && isFinite(percent) && (
           <span className="text-xs flex items-center gap-1" style={style}>
             {percent > 0 ? <TrendUp size={20} /> : <TrendDown size={20} />}
             <span>

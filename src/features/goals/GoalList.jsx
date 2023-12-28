@@ -3,16 +3,17 @@ import Icon from '../../ui/Icon';
 import Loader from '../../ui/Loader';
 import GoalCard from '../overview/GoalCard';
 import { useGoals } from './useGoals';
+import { useUser } from '../auth/useUser';
 
 function GoalList({ setOpenAddModal, setGoalToEdit, setOpenDeleteModal }) {
-  const userId = 1;
-  const { isLoading, goals } = useGoals();
+  const { user, isLoading } = useUser();
+  // const { isLoading, goals } = useGoals();
 
-  const userGoals = getGoals();
+  const userGoals = user?.goals;
 
-  function getGoals() {
-    return goals?.filter((g) => g.userId === userId);
-  }
+  // function getGoals() {
+  //   return goals?.filter((g) => g.userId === userId);
+  // }
 
   function onOpenEditModal(data) {
     setGoalToEdit(data);

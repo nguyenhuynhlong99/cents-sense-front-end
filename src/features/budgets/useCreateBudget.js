@@ -10,6 +10,7 @@ export function useCreateBudget() {
     mutationFn: createBudgetApi,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
+      queryClient.invalidateQueries({ queryKey: ['user'] });
       toast.success('Created budget category successfully!');
     },
     onError: (err) => {

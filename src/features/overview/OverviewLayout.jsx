@@ -6,10 +6,11 @@ import { data } from '../../../data/data';
 import { useUser } from '../auth/useUser';
 import Button from '../../ui/Button';
 import { useNavigate } from 'react-router-dom';
+import Loader from '../../ui/Loader';
 
 function OverviewLayout() {
   const [isMobile, setIsMobile] = useState(false);
-  const { user } = useUser();
+  const { user, isLoading } = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,6 +29,8 @@ function OverviewLayout() {
       mediaWatcher.removeEventListener('change', updateIsMobile);
     };
   }, [setIsMobile]);
+
+  if (isLoading) return <Loader />;
 
   if (user?.accounts?.length < 1) {
     return (

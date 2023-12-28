@@ -9,6 +9,7 @@ export function useAddIncome() {
     useMutation({
       mutationFn: addIncomeTransaction,
       onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['user'] });
         queryClient.invalidateQueries({ queryKey: ['transactions'] });
         queryClient.invalidateQueries({ queryKey: ['accounts'] });
         toast.success('Created transaction successfully!');

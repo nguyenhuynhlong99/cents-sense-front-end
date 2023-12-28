@@ -11,6 +11,7 @@ export function useDeleteGoal() {
       queryClient.invalidateQueries({
         queryKey: ['goals'],
       });
+      queryClient.invalidateQueries({ queryKey: ['user'] });
       toast.success('Deleted goal successfully!');
     },
     onError: (err) => console.error(err),

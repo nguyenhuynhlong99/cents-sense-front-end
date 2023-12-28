@@ -1,8 +1,8 @@
 import { useCreateExpectedIncome } from './UseCreateExpectedIncome';
 import { useForm } from 'react-hook-form';
 
-import { formatCurrency } from '../../utils/helpers';
-import { formatISO } from 'date-fns';
+import { currentMonth, currentYear, formatCurrency } from '../../utils/helpers';
+import { formatISO, getMonth, getYear, parseISO } from 'date-fns';
 
 import Button from '../../ui/Button';
 import ProgressBar from '../../ui/ProgressBar';
@@ -12,10 +12,22 @@ import { useUser } from '../auth/useUser';
 function ExpectedIncome({ expectedIncome }) {
   const { user } = useUser();
   const userId = user?.id;
+  const budgetUsedAmount = getBudgetUsed();
 
   const { isCreating, createExpectedIncome } = useCreateExpectedIncome();
   const { register, handleSubmit, formState, reset } = useForm();
   const { errors } = formState;
+
+  function getBudgetUsed() {
+    return user?.transactions
+      ?.filter(
+        (t) =>
+          t.budgetId !== 0 &&
+          getYear(parseISO(t.date)) === currentYear &&
+          getMonth(parseISO(t.date)) === currentMonth
+      )
+      .reduce((acc, curr) => acc + curr.amount, 0);
+  }
 
   function onSubmit(data) {
     const expectedIncomeData = {
@@ -97,10 +109,7 @@ function ExpectedIncome({ expectedIncome }) {
     <div className="mt-5 bg-neutral-950 border-2 border-green-800 p-4 rounded-lg">
       <h3 className="text-lg mb-3 md:text-xl">My monthly budget</h3>
       <div className="text-sm md:text-base">
-        <p className="text-red-500 font-bold">
-          🚨 Need transactions to calculate the amount of used budget!!!
-        </p>
-        <span>{formatCurrency(100)} </span>
+        <span>{formatCurrency(budgetUsedAmount)} </span>
         <span className="text-neutral-400">
           of {formatCurrency(expectedIncome)}
         </span>
@@ -108,10 +117,10 @@ function ExpectedIncome({ expectedIncome }) {
       <div className="grid grid-cols-[_1fr,auto] items-center gap-3">
         <ProgressBar
           height={10}
-          percentage={Math.round((10 / expectedIncome) * 100)}
+          percentage={Math.round((budgetUsedAmount / expectedIncome) * 100)}
         />
         <span className="text-lg md:text-xl">
-          {Math.round((10 / expectedIncome) * 100)}%
+          {Math.round((budgetUsedAmount / expectedIncome) * 100)}%
         </span>
       </div>
       <div className="flex gap-1 items-center">

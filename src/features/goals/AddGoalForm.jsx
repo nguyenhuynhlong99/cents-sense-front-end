@@ -6,9 +6,11 @@ import ModalButton from '../../ui/ModalButton';
 import { listOfIcons } from '../../utils/helpers';
 import { useCreateGoal } from './useCreateGoal';
 import { useUpdateGoal } from './useUpdateGoal';
+import { useUser } from '../auth/useUser';
 
 function AddGoalForm({ goalToEdit, setIsShown }) {
-  const userId = 1;
+  const { user } = useUser();
+  const userId = user?.id;
   const { isCreating, createGoal } = useCreateGoal();
   const { isUpdating, updateGoal } = useUpdateGoal();
 

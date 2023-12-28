@@ -9,6 +9,7 @@ export function useUpdateGoal() {
     mutationFn: editGoal,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['goals'] });
+      queryClient.invalidateQueries({ queryKey: ['user'] });
       toast.success('Updated budget successfully!');
     },
     onError: (err) => {

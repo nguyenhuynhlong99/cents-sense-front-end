@@ -5,13 +5,13 @@ import BudgetBreakdownChart from '../budgets/BudgetBreakdownChart';
 
 function OverviewBudgetBreakdown() {
   const { user } = useUser();
-  const monthlyBudgets = getCurrentMonthBudgets();
 
   const expectedIncomeId = user?.expectedIncomes?.find(
     (item) =>
       getYear(parseISO(item.createdAt)) === currentYear &&
       getMonth(parseISO(item.createdAt)) === currentMonth
   )?.id;
+  const monthlyBudgets = getCurrentMonthBudgets();
 
   function getCurrentMonthBudgets() {
     return user?.budgets?.filter(
