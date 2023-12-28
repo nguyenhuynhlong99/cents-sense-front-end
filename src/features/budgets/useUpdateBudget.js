@@ -8,8 +8,9 @@ export function useUpdateBudget() {
   const { mutate: updateBudget, isLoading: isUpdating } = useMutation({
     mutationFn: editBudget,
     onSuccess: () => {
-      toast.success('Updated budget successfully!');
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+      toast.success('Updated budget successfully!');
     },
     onError: (err) => {
       console.error(err);

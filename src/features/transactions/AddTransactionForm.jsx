@@ -12,11 +12,12 @@ import { useAddIncome } from './useAddIncome';
 import { currentMonth, currentYear } from '../../utils/helpers';
 import { useAddExpense } from './useAddExpense';
 import { useAddTransfer } from './useAddTransfer';
+import { useUser } from '../auth/useUser';
 
 function AddTransactionForm({ setIsShown }) {
-  const userId = 1;
+  const { user } = useUser();
+  const userId = user?.id;
   const { accounts } = useAccounts();
-  const { budgets } = useBudgets();
   const { goals } = useGoals();
   const [formType, setFormType] = useState('income');
   const [transferType, setTransferType] = useState('account');
@@ -50,11 +51,7 @@ function AddTransactionForm({ setIsShown }) {
   );
   const userGoals = goals?.filter((g) => g.userId === userId);
 
-  const userBudgets = budgets?.filter(
-    (b) => b.userId === userId
-    // getYear(parseISO(b.createdAt)) === currentYear &&
-    // getMonth(parseISO(b.createdAt)) === currentMonth
-  );
+  const userBudgets = user?.budgets;
 
   const formTypeButtons = ['income', 'expense', 'transfer'];
 
