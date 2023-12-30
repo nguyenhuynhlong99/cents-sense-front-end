@@ -21,8 +21,10 @@ function AddAccountForm({ allTypesOfAccount, setIsShown, accountToEdit }) {
 
   function onSubmit(data) {
     if (isEditSession) {
+      const newData = { ...data, userId };
+
       updateAccount(
-        { ...data, id: accountId },
+        { account: newData, id: accountId },
         {
           onSuccess: () => {
             reset();
@@ -31,18 +33,15 @@ function AddAccountForm({ allTypesOfAccount, setIsShown, accountToEdit }) {
         }
       );
     } else {
-      const newAccount = {
-        ...data,
-        id: crypto.randomUUID(),
-        userId,
-      };
-
-      addAccount(newAccount, {
-        onSuccess: () => {
-          reset();
-          setIsShown(false);
-        },
-      });
+      addAccount(
+        { ...data, userId },
+        {
+          onSuccess: () => {
+            reset();
+            setIsShown(false);
+          },
+        }
+      );
     }
   }
 

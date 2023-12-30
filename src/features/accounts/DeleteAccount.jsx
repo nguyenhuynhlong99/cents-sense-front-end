@@ -13,14 +13,11 @@ function DeleteAccount({
   console.log(accountId);
 
   function onDeleteAccount() {
-    deleteAccount(
-      { id: accountId },
-      {
-        onSuccess: () => {
-          setOpenDeleteModal(false);
-        },
-      }
-    );
+    deleteAccount(accountId, {
+      onSuccess: () => {
+        setOpenDeleteModal(false);
+      },
+    });
   }
 
   return (

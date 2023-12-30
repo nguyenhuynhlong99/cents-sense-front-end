@@ -10,7 +10,6 @@ function LoginForm() {
   const { errors } = formState;
 
   function onSubmit(data) {
-    console.log(data);
     login(data, {
       onSuccess: () => {
         reset();

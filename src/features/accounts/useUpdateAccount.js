@@ -6,7 +6,7 @@ export function useUpdateAccount() {
   const queryClient = useQueryClient();
 
   const { mutate: updateAccount, isLoading: isUpdating } = useMutation({
-    mutationFn: editAccount,
+    mutationFn: ({ account, id }) => editAccount(account, id),
     onSuccess: () => {
       toast.success('Edit account successfully!');
       queryClient.invalidateQueries({ queryKey: ['accounts'] });
