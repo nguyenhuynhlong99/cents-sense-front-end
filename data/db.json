@@ -27,7 +27,7 @@
       "userId": 1,
       "name": "Chase credit card",
       "type": "credit",
-      "balance": 600,
+      "balance": 620,
       "color": "blue"
     },
     {
@@ -111,6 +111,17 @@
       "accountId": "c81eaf3c-2c18-4f64-9f9b-144a1bf530fb",
       "budgetId": "8de6c59b-34dd-4d92-8d9a-e2ab18b87aee",
       "description": "Snack"
+    },
+    {
+      "id": "3a56da2c-c71d-4521-a655-fefa0e03a76a",
+      "userId": 1,
+      "toAccountId": 0,
+      "date": "2023-12-28T19:29:13-08:00",
+      "type": "expense",
+      "amount": 20,
+      "accountId": "83a6facb-3969-4f09-b8d0-7ec58511eaa1",
+      "budgetId": "473ef2bc-fe94-4029-b4dd-0704c49ab53c",
+      "description": "Starbuck"
     }
   ],
   "expectedIncomes": [
@@ -163,6 +174,15 @@
       "amount": 100,
       "icon": "shopping",
       "createdAt": "2023-12-27T14:18:40-08:00"
+    },
+    {
+      "id": "473ef2bc-fe94-4029-b4dd-0704c49ab53c",
+      "userId": 1,
+      "expectedIncomeId": "cdb0950a-2f74-49be-a4d4-999a47a85a51",
+      "category": "Personal",
+      "amount": 100,
+      "icon": "shopping",
+      "createdAt": "2023-12-28T19:28:11-08:00"
     }
   ],
   "goals": [

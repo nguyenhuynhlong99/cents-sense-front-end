@@ -17,16 +17,13 @@ function AccountsList({
 }) {
   // const userId = 1;
   // const { accounts, error, isLoading } = useAccounts();
-  const { user, isLoading } = useUser();
-  const userAccounts = user?.accounts;
-  const userCreditAccounts = userAccounts?.filter(
-    (acc) => acc.type === 'credit'
-  );
-  const userDebitAccounts = userAccounts?.filter((acc) => acc.type === 'debit');
-  const userSavingAccounts = userAccounts?.filter(
-    (acc) => acc.type === 'saving'
-  );
-  console.log(user);
+  // const { user, isLoading } = useUser();
+  const { accounts, isLoading } = useAccounts();
+  // const userAccounts = await accounts;
+  const userCreditAccounts = accounts?.filter((acc) => acc.type === 'credit');
+  const userDebitAccounts = accounts?.filter((acc) => acc.type === 'debit');
+  const userSavingAccounts = accounts?.filter((acc) => acc.type === 'saving');
+  console.log(accounts);
 
   // function getAllUserAccounts(userID) {
   //   return accounts?.filter((acc) => acc.userId === userId);
@@ -48,7 +45,7 @@ function AccountsList({
   //   return <ErrorBox message="❌ There something went wrong!" />;
   // }
 
-  if (userAccounts?.length < 1) {
+  if (accounts?.length < 1) {
     return (
       <div className="max-w-[500px] m-auto lg:max-w-none lg:m-0 lg:flex lg:items-center lg:gap-3">
         <img
