@@ -6,7 +6,7 @@ export function useUpdateBudget() {
   const queryClient = useQueryClient();
 
   const { mutate: updateBudget, isLoading: isUpdating } = useMutation({
-    mutationFn: editBudget,
+    mutationFn: ({ budget, id }) => editBudget(budget, id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
       queryClient.invalidateQueries({ queryKey: ['user'] });

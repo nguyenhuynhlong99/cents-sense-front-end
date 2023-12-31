@@ -11,9 +11,6 @@ export function useDeleteBudget() {
       queryClient.invalidateQueries({
         queryKey: ['budgets'],
       });
-      queryClient.invalidateQueries({
-        queryKey: ['user'],
-      });
       toast.success('Deleted budget successfully!');
     },
     onError: (err) => console.error(err),

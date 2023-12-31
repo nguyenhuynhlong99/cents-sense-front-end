@@ -6,11 +6,10 @@ export function useUpdateGoal() {
   const queryClient = useQueryClient();
 
   const { mutate: updateGoal, isLoading: isUpdating } = useMutation({
-    mutationFn: editGoal,
+    mutationFn: ({ goal, id }) => editGoal(goal, id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['goals'] });
-      queryClient.invalidateQueries({ queryKey: ['user'] });
-      toast.success('Updated budget successfully!');
+      toast.success('Updated goal successfully!');
     },
     onError: (err) => {
       console.error(err);

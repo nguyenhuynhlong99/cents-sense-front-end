@@ -3,17 +3,9 @@ import Icon from '../../ui/Icon';
 import Loader from '../../ui/Loader';
 import GoalCard from '../overview/GoalCard';
 import { useGoals } from './useGoals';
-import { useUser } from '../auth/useUser';
 
 function GoalList({ setOpenAddModal, setGoalToEdit, setOpenDeleteModal }) {
-  const { user, isLoading } = useUser();
-  // const { isLoading, goals } = useGoals();
-
-  const userGoals = user?.goals;
-
-  // function getGoals() {
-  //   return goals?.filter((g) => g.userId === userId);
-  // }
+  const { isLoading, goals } = useGoals();
 
   function onOpenEditModal(data) {
     setGoalToEdit(data);
@@ -27,7 +19,7 @@ function GoalList({ setOpenAddModal, setGoalToEdit, setOpenDeleteModal }) {
 
   if (isLoading) return <Loader />;
 
-  if (userGoals?.length < 1) {
+  if (goals?.length < 1) {
     return (
       <div className="max-w-[500px] m-auto lg:max-w-none lg:m-0 lg:flex lg:items-center lg:gap-3">
         <img
@@ -51,7 +43,7 @@ function GoalList({ setOpenAddModal, setGoalToEdit, setOpenDeleteModal }) {
   return (
     <div>
       <ul className="grid gap-3 grid-cols-1 sm:grid-cols-2">
-        {userGoals?.map((g) => (
+        {goals?.map((g) => (
           <li
             key={g.id}
             className="bg-neutral-950 p-2 rounded-md relative md:p-5"

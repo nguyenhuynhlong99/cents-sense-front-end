@@ -1,14 +1,14 @@
 import { useForm } from 'react-hook-form';
+import { useUpdateBudget } from './useUpdateBudget';
+import { useUser } from '../auth/useUser';
+import { useBudgets } from './useBudgets';
+import { useCreateBudget } from './useCreateBudget';
 
 import FormRow from '../../ui/FormRow';
 import Input from '../../ui/Input';
 import ModalButton from '../../ui/ModalButton';
-import { useCreateBudget } from './useCreateBudget';
-import { formatISO } from 'date-fns';
 import Icon from '../../ui/Icon';
 import { listOfIcons } from '../../utils/helpers';
-import { useUpdateBudget } from './useUpdateBudget';
-import { useUser } from '../auth/useUser';
 
 function AddBudgetForm({
   setIsShown,
@@ -16,8 +16,9 @@ function AddBudgetForm({
   expectedIncomeAmount,
   budgetToEdit,
 }) {
-  const { isLoading, user } = useUser();
-  const budgets = user?.budgets;
+  const { user } = useUser();
+  const userId = user?.id;
+  const { budgets } = useBudgets();
   const { isCreating, createBudget } = useCreateBudget();
   const { isUpdating, updateBudget } = useUpdateBudget();
 
@@ -52,23 +53,23 @@ function AddBudgetForm({
     if (isEditSession) {
       const updatedBudget = {
         ...data,
-        id: budgetID,
-        createdAt: formatISO(new Date()),
+        userId,
       };
 
-      updateBudget(updatedBudget, {
-        onSuccess: () => {
-          reset();
-          setIsShown(false);
-        },
-      });
+      updateBudget(
+        { budget: updatedBudget, id: budgetID },
+        {
+          onSuccess: () => {
+            reset();
+            setIsShown(false);
+          },
+        }
+      );
     } else {
       const newBudget = {
-        id: crypto.randomUUID(),
-        userId: user?.id,
+        userId,
         expectedIncomeId,
         ...data,
-        createdAt: formatISO(new Date()),
       };
 
       createBudget(newBudget, {

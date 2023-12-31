@@ -10,8 +10,7 @@ export function useCreateGoal() {
     mutationFn: createGoalApi,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['goals'] });
-      queryClient.invalidateQueries({ queryKey: ['user'] });
-      toast.success('Created saving goal successfully!');
+      toast.success('Created goal successfully!');
     },
     onError: (err) => {
       toast.error('Something went wrong!');

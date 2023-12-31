@@ -8,14 +8,11 @@ function DeleteGoal({ goalToDelete, openDeleteModal, setOpenDeleteModal }) {
   const goalName = goalToDelete?.name;
 
   function onDeleteGoal() {
-    deleteGoal(
-      { id: goalID },
-      {
-        onSuccess: () => {
-          setOpenDeleteModal(false);
-        },
-      }
-    );
+    deleteGoal(goalID, {
+      onSuccess: () => {
+        setOpenDeleteModal(false);
+      },
+    });
   }
 
   return (

@@ -10,7 +10,6 @@ function DeleteAccount({
   const { isDeleting, deleteAccount } = useDeleteAccount();
   const accountId = accountToDelete?.id;
   const accountName = accountToDelete?.name;
-  console.log(accountId);
 
   function onDeleteAccount() {
     deleteAccount(accountId, {
