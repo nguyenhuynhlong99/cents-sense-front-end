@@ -1,22 +1,22 @@
 import { getMonth, getYear, parseISO } from 'date-fns';
 import { currentMonth, currentYear } from '../../utils/helpers';
-import { useUser } from '../auth/useUser';
 import BudgetBreakdownChart from './BudgetBreakdownChart';
+import { useExpectedIncomes } from './useExpectedIncomes';
+import { useBudgets } from './useBudgets';
 
 function BudgetBreakdown() {
-  const { user } = useUser();
+  const { expectedIncomes } = useExpectedIncomes();
+  const { budgets } = useBudgets();
 
-  const expectedIncomeId = user?.expectedIncomes?.find(
+  const expectedIncomeId = expectedIncomes?.find(
     (item) =>
-      getYear(parseISO(item.createdAt)) === currentYear &&
-      getMonth(parseISO(item.createdAt)) === currentMonth
+      getYear(parseISO(item.created_at)) === currentYear &&
+      getMonth(parseISO(item.created_at)) === currentMonth
   )?.id;
   const monthlyBudgets = getCurrentMonthBudgets();
 
   function getCurrentMonthBudgets() {
-    return user?.budgets?.filter(
-      (b) => b?.expectedIncomeId === expectedIncomeId
-    );
+    return budgets?.filter((b) => b?.expectedIncomeId === expectedIncomeId);
   }
 
   if (monthlyBudgets?.length < 1) return null;

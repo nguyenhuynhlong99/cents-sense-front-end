@@ -2,7 +2,7 @@ import { useCreateExpectedIncome } from './UseCreateExpectedIncome';
 import { useForm } from 'react-hook-form';
 
 import { currentMonth, currentYear, formatCurrency } from '../../utils/helpers';
-import { formatISO, getMonth, getYear, parseISO } from 'date-fns';
+import { getMonth, getYear, parseISO } from 'date-fns';
 
 import Button from '../../ui/Button';
 import ProgressBar from '../../ui/ProgressBar';
@@ -31,9 +31,7 @@ function ExpectedIncome({ expectedIncome }) {
 
   function onSubmit(data) {
     const expectedIncomeData = {
-      id: crypto.randomUUID(),
       userId,
-      createdAt: formatISO(new Date()),
       ...data,
     };
 
@@ -72,12 +70,12 @@ function ExpectedIncome({ expectedIncome }) {
           onSubmit={handleSubmit(onSubmit, onError)}
           className="max-w-[400px] mt-5 mx-auto"
         >
-          <div class="flex mb-2">
-            <span class="inline-flex items-center px-3 bg-neutral-950 border rounded-e-0 border-neutral-400 rounded-s-md">
+          <div className="flex mb-2">
+            <span className="inline-flex items-center px-3 bg-neutral-950 border rounded-e-0 border-neutral-400 rounded-s-md">
               <CurrencyDollar size={18} color="#22c55f" />
             </span>
             <input
-              {...register('expectedIncome', {
+              {...register('amount', {
                 required: 'This field is required',
                 valueAsNumber: true,
                 min: {
@@ -86,14 +84,13 @@ function ExpectedIncome({ expectedIncome }) {
                 },
               })}
               type="number"
-              class="rounded-none rounded-e-lg bg-neutral-950 border  focus:ring-blue-500 focus:border-blue-500 block flex-1 w-full text-xs border-neutral-400 py-2.5 px-1 sm:text-sm md:text-base"
+              id="amount"
+              className="rounded-none rounded-e-lg bg-neutral-950 border  focus:ring-blue-500 focus:border-blue-500 block flex-1 w-full text-xs border-neutral-400 py-2.5 px-1 sm:text-sm md:text-base"
               placeholder="Enter your expected income"
             />
           </div>
-          {errors?.expectedIncome?.message && (
-            <p className="text-red-500 text-sm">
-              {errors?.expectedIncome?.message}
-            </p>
+          {errors?.amount?.message && (
+            <p className="text-red-500 text-sm">{errors?.amount?.message}</p>
           )}
           <div className="flex items-center justify-center">
             <Button disabled={isCreating} type="submit">

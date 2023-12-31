@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useExpectedIncomes } from './useExpectedIncome';
 
 import { getMonth, getYear, parseISO } from 'date-fns';
 import { currentMonth, currentYear } from '../../utils/helpers';
@@ -13,24 +12,34 @@ import AddBudget from './AddBudget';
 import BudgetList from './BudgetList';
 import DeleteBudget from './DeleteBudget';
 import BudgetBreakdown from './BudgetBreakdown';
-import { useUser } from '../auth/useUser';
+import { useExpectedIncomes } from './useExpectedIncomes';
+import { useBudgets } from './useBudgets';
 
 function BudgetLayout() {
-  const { user, isLoading } = useUser();
+  const { expectedIncomes, isLoading } = useExpectedIncomes();
+  const { budgets } = useBudgets();
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [budgetToEdit, setBudgetToEdit] = useState({});
 
-  const monthlyExpectedIncome = getCurrentMonthExpectedIncome()?.expectedIncome;
+  const monthlyExpectedIncome = getCurrentMonthExpectedIncome()?.amount;
 
   const expectedIncomeId = getCurrentMonthExpectedIncome()?.id;
 
+  const monthlyBudgets = getMonthlyBudgets(expectedIncomeId);
+
+  console.log(monthlyBudgets);
+
   function getCurrentMonthExpectedIncome() {
-    return user?.expectedIncomes?.find(
+    return expectedIncomes?.find(
       (e) =>
-        getYear(parseISO(e.createdAt)) === currentYear &&
-        getMonth(parseISO(e.createdAt)) === currentMonth
+        getYear(parseISO(e.created_at)) === currentYear &&
+        getMonth(parseISO(e.created_at)) === currentMonth
     );
+  }
+
+  function getMonthlyBudgets(expectedIncomeId) {
+    return budgets?.filter((b) => b.expectedIncomeId === expectedIncomeId);
   }
 
   function onOpenAddModal() {
@@ -38,7 +47,7 @@ function BudgetLayout() {
     setOpenAddModal(true);
   }
 
-  console.log(user);
+  console.log(expectedIncomes);
 
   if (isLoading) return <Loader />;
 
@@ -57,8 +66,7 @@ function BudgetLayout() {
       {monthlyExpectedIncome ? (
         <>
           <ExpectedIncome expectedIncome={monthlyExpectedIncome} />
-
-          {user?.budgets.length > 0 ? (
+          {monthlyBudgets?.length > 0 ? (
             <>
               <BudgetList
                 monthlyExpectedIncome={monthlyExpectedIncome}

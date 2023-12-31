@@ -9,7 +9,6 @@ export function useCreateExpectedIncome() {
     mutationFn: createExpectedIncomeApi,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['expectedIncomes'] });
-      queryClient.invalidateQueries({ queryKey: ['user'] });
       toast.success('Created expected income successfully!');
     },
     onError: (err) => {

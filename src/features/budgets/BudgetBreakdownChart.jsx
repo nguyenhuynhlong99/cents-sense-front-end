@@ -58,6 +58,8 @@ function BudgetBreakdownChart({ expectedIncomeId, monthlyBudgets }) {
     };
   }
 
+  console.log(monthlyBudgets);
+
   return <>{pieChartData && <Doughnut data={pieChartData} />}</>;
 }
 

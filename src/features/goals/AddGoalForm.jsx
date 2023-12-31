@@ -29,15 +29,17 @@ function AddGoalForm({ goalToEdit, setIsShown }) {
         ...data,
       };
 
-      updateGoal(updatedGoal, {
-        onSuccess: () => {
-          reset();
-          setIsShown(false);
-        },
-      });
+      updateGoal(
+        { goal: updatedGoal, id: goalID },
+        {
+          onSuccess: () => {
+            reset();
+            setIsShown(false);
+          },
+        }
+      );
     } else {
       const newGoal = {
-        id: crypto.randomUUID(),
         userId,
         ...data,
       };
