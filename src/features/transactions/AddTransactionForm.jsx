@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAccounts } from '../accounts/useAccounts';
 import { useBudgets } from '../budgets/useBudgets';
@@ -7,18 +7,21 @@ import { useGoals } from '../goals/useGoals';
 import FormRow from '../../ui/FormRow';
 import Input from '../../ui/Input';
 import ModalButton from '../../ui/ModalButton';
-import { formatISO, getMonth, getYear, parseISO } from 'date-fns';
 import { useAddIncome } from './useAddIncome';
-import { currentMonth, currentYear } from '../../utils/helpers';
 import { useAddExpense } from './useAddExpense';
 import { useAddTransfer } from './useAddTransfer';
 import { useUser } from '../auth/useUser';
+import { useExpectedIncome } from '../budgets/useExpectedIncome';
 
 function AddTransactionForm({ setIsShown }) {
   const { user } = useUser();
   const userId = user?.id;
   const { accounts } = useAccounts();
   const { goals } = useGoals();
+  const { budgets } = useBudgets();
+  const { expectedIncome } = useExpectedIncome();
+  const expectedIncomeId = expectedIncome?.id;
+
   const [formType, setFormType] = useState('income');
   const [transferType, setTransferType] = useState('account');
 
@@ -29,29 +32,22 @@ function AddTransactionForm({ setIsShown }) {
   const { createTransferTransaction, isCreating: isCreatingTransfer } =
     useAddTransfer();
 
-  const {
-    register,
-    formState,
-    handleSubmit,
-    reset,
-    getValues,
-    watch,
-    setValue,
-  } = useForm();
+  const { register, formState, handleSubmit, reset, watch } = useForm();
   const { errors } = formState;
 
   const userAccounts =
     formType === 'income'
-      ? accounts?.filter((acc) => acc.userId === userId && acc.type === 'debit')
-      : accounts?.filter((acc) => acc.userId === userId);
+      ? accounts?.filter((acc) => acc.type === 'debit')
+      : accounts;
 
   const accountIdValue = watch('accountId');
   const toUserAccounts = userAccounts?.filter(
     (acc) => acc.id !== accountIdValue
   );
-  const userGoals = goals?.filter((g) => g.userId === userId);
 
-  const userBudgets = user?.budgets;
+  const monthlyBudgets = budgets?.filter(
+    (b) => b.expectedIncomeId === expectedIncomeId
+  );
 
   const formTypeButtons = ['income', 'expense', 'transfer'];
 
@@ -69,14 +65,11 @@ function AddTransactionForm({ setIsShown }) {
   function onSubmit(data) {
     if (formType === 'income') {
       const newTransaction = {
-        id: crypto.randomUUID(),
         userId,
-        toAccountId: 0,
-        budgetId: 0,
-        date: formatISO(new Date()),
         type: formType,
         ...data,
       };
+
       createIncomeTransaction(newTransaction, {
         onSuccess: () => {
           reset();
@@ -85,10 +78,7 @@ function AddTransactionForm({ setIsShown }) {
       });
     } else if (formType === 'expense') {
       const newTransaction = {
-        id: crypto.randomUUID(),
         userId,
-        toAccountId: 0,
-        date: formatISO(new Date()),
         type: formType,
         ...data,
       };
@@ -103,19 +93,15 @@ function AddTransactionForm({ setIsShown }) {
       const newTransaction =
         transferType === 'account'
           ? {
-              id: crypto.randomUUID(),
               userId,
-              date: formatISO(new Date()),
               type: formType,
-              goalId: 0,
+              goalId: null,
               ...data,
             }
           : {
-              id: crypto.randomUUID(),
               userId,
-              date: formatISO(new Date()),
               type: formType,
-              toAccountId: 0,
+              toAccountId: null,
               ...data,
             };
 
@@ -193,7 +179,9 @@ function AddTransactionForm({ setIsShown }) {
                   message: 'Amount should be at least 1',
                 },
               })}
-              disabled={isCreatingIncome}
+              disabled={
+                isCreatingIncome || isCreatingExpense || isCreatingTransfer
+              }
               id="amount"
               type="number"
             />
@@ -205,7 +193,9 @@ function AddTransactionForm({ setIsShown }) {
               {...register('accountId', {
                 required: 'This field is required',
               })}
-              disabled={isCreatingIncome}
+              disabled={
+                isCreatingIncome || isCreatingExpense || isCreatingTransfer
+              }
               id="accountId"
               className="cursor-pointer border text-sm rounded-lg block w-full px-3 py-2 bg-transparent border-neutral-500 text-white max-w-[250px] capitalize"
             >
@@ -243,7 +233,7 @@ function AddTransactionForm({ setIsShown }) {
                         {item.name}
                       </option>
                     ))
-                  : userGoals?.map((item) => (
+                  : goals?.map((item) => (
                       <option key={item.id} value={item.id}>
                         {item.name}
                       </option>
@@ -257,18 +247,19 @@ function AddTransactionForm({ setIsShown }) {
               <select
                 defaultValue=""
                 {...register('budgetId', {
-                  required: 'This field is required',
-                  setValueAs: (v) => (v === '0' ? parseInt(v) : v),
+                  setValueAs: (value) => (value === '' ? null : value),
                 })}
-                disabled={isCreatingIncome}
+                disabled={
+                  isCreatingIncome || isCreatingExpense || isCreatingTransfer
+                }
                 id="budgetId"
                 className="cursor-pointer border text-sm rounded-lg block w-full px-3 py-2 bg-transparent border-neutral-500 text-white max-w-[250px] capitalize"
               >
                 <option value="" disabled>
                   Choose a category
                 </option>
-                <option value="0">None</option>
-                {userBudgets?.map((item) => (
+                <option value="">None</option>
+                {monthlyBudgets?.map((item) => (
                   <option key={item.id} value={item.id}>
                     {item.category}
                   </option>
@@ -282,7 +273,9 @@ function AddTransactionForm({ setIsShown }) {
               {...register('description', {
                 required: 'This field is required',
               })}
-              disabled={isCreatingIncome}
+              disabled={
+                isCreatingIncome || isCreatingExpense || isCreatingTransfer
+              }
               id="description"
               type="text"
             />
@@ -292,14 +285,18 @@ function AddTransactionForm({ setIsShown }) {
         <div className="mt-3 flex justify-end gap-2">
           <ModalButton
             onClick={() => setIsShown(false)}
-            disabled={isCreatingIncome || isCreatingExpense}
+            disabled={
+              isCreatingIncome || isCreatingExpense || isCreatingTransfer
+            }
             type="reset"
             variations="secondary"
           >
             Cancel
           </ModalButton>
           <ModalButton
-            disabled={isCreatingIncome || isCreatingExpense}
+            disabled={
+              isCreatingIncome || isCreatingExpense || isCreatingTransfer
+            }
             type="submit"
           >
             Save

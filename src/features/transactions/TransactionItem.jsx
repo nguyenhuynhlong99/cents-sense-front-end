@@ -2,38 +2,37 @@ import { parseISO } from 'date-fns';
 import { formatCurrency } from '../../utils/helpers';
 import Icon from '../../ui/Icon';
 import { useAccount } from '../accounts/useAccount';
-import { useGoal } from '../goals/useGoal';
 
 function TransactionItem({ transaction }) {
   let name;
   const { account: toAccount } = useAccount(
-    transaction?.toAccountId !== 0 ? transaction?.toAccountId : null
+    transaction?.toAccountId ? transaction?.toAccountId : null
   );
 
-  const { goal } = useGoal(
-    transaction?.goalId !== 0 ? transaction?.goalId : null
-  );
-  name = transaction?.toAccountId === 0 ? goal?.name : toAccount?.name;
+  // const { goal } = useGoal(
+  //   transaction?.goalId !== 0 ? transaction?.goalId : null
+  // );
+  name = transaction?.goals?.name ? transaction.goals?.name : toAccount?.name;
 
   return (
     <li className="bg-neutral-950 rounded-lg py-4 px-5 shadow-md flex flex-col gap-2 min-h-[160px]">
       <h4 className="font-bold capitalize text-lg max-w-[250px] truncate sm:text-xl">
         {transaction.description}
       </h4>
-      {transaction?.budget && (
+      {transaction?.budgets?.category && (
         <div className="flex items-center gap-1 text-xs sm:text-sm">
-          <Icon name={transaction.budget.icon} color="white" />
-          <span className="capitalize">{transaction.budget.category}</span>
+          <Icon name={transaction?.budgets?.icon} color="white" />
+          <span className="capitalize">{transaction?.budgets?.category}</span>
         </div>
       )}
       {transaction?.type !== 'transfer' ? (
         <span className="font-bold capitalize text-sm sm:text-base">
-          {transaction?.account?.name}
+          {transaction?.accounts?.name}
         </span>
       ) : (
         <div>
           <span className="font-bold capitalize text-xs sm:text-sm">
-            {transaction?.account?.name}
+            {transaction?.accounts?.name}
           </span>
 
           <span className="block font-bold capitalize text-green-500 text-sm sm:text-base">
@@ -43,7 +42,7 @@ function TransactionItem({ transaction }) {
       )}
       <div className="mt-auto">
         <span className="text-xs block">
-          {parseISO(transaction.date).toDateString()}
+          {parseISO(transaction.created_at).toDateString()}
         </span>
         <span
           className="font-semibold font-space text-lg sm:text-xl"

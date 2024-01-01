@@ -52,7 +52,7 @@ function Home() {
             <span className="block text-base sm:text-lg font-light">
               Simple way to manage personal finances
             </span>
-            <Button className="mt-6" onClick={() => navigate('/login')}>
+            <Button className="mt-6" onClick={() => navigate('/accounts')}>
               Try it now
             </Button>
           </div>

@@ -1,14 +1,29 @@
 import axios from 'axios';
 import { editAccount, getAccount } from './apiAccounts';
 import { editGoal, getGoal } from './apiGoals';
+import supabase from './supabase';
+import { getCurrentUser } from './apiAuth';
 
 const transactionsApi = axios.create({
   baseURL: 'http://localhost:3500/transactions',
 });
 
 export const getTransactions = async () => {
-  const response = await transactionsApi.get('/');
-  return response.data;
+  const userData = await getCurrentUser();
+
+  const { data, error } = await supabase
+    .from('transactions')
+    .select(
+      'id, created_at, type, amount, description, toAccountId, accounts(name, type, balance), budgets(category, icon), goals(name)'
+    )
+    .eq('userId', userData?.id);
+
+  if (error) {
+    console.error(error);
+    throw new Error('Transactions could not be loaded');
+  }
+
+  return data;
 };
 
 export const getTransaction = async ({ id }) => {
@@ -17,7 +32,14 @@ export const getTransaction = async ({ id }) => {
 };
 
 export const createTransaction = async (transaction) => {
-  return await transactionsApi.post('/', transaction);
+  const { data, error } = await supabase
+    .from('transactions')
+    .insert([{ ...transaction }])
+    .select();
+
+  if (error) throw new Error(error.message);
+
+  return data;
 };
 
 export const editTransaction = async (transaction) => {
@@ -54,22 +76,23 @@ export const getTransactionExpandAccountAndBudget = async ({ type }) => {
 };
 
 export const addIncomeTransaction = async (transaction) => {
-  const accountData = await getAccount({ id: transaction.accountId });
+  const accountData = await getAccount(transaction.accountId);
   const previousAccountBalance = await accountData.balance;
   const newAccountBalance = previousAccountBalance + transaction.amount;
 
+  const newData = { ...accountData, balance: newAccountBalance };
+  console.log(accountData);
+
   try {
     return await Promise.all(
-      editAccount({ ...accountData, balance: newAccountBalance }),
+      editAccount(newData, transaction.accountId),
       createTransaction(transaction)
     );
-  } catch (error) {
-    return null;
-  }
+  } catch (error) {}
 };
 
 export const addExpenseTransaction = async (transaction) => {
-  const accountData = await getAccount({ id: transaction.accountId });
+  const accountData = await getAccount(transaction.accountId);
   const previousAccountBalance = await accountData.balance;
   const accountType = await accountData.type;
   let newAccountBalance;
@@ -83,23 +106,25 @@ export const addExpenseTransaction = async (transaction) => {
     throw new Error('Insufficient balance!');
   }
 
+  const newAccountData = { ...accountData, balance: newAccountBalance };
+
   try {
     return await Promise.all(
-      editAccount({ ...accountData, balance: newAccountBalance }),
+      editAccount(newAccountData, transaction.accountId),
       createTransaction(transaction)
     );
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
 export const addTransferTransaction = async (transaction) => {
-  const fromAccountData = await getAccount({ id: transaction.accountId });
+  const fromAccountData = await getAccount(transaction.accountId);
   const previousFromAccountBalance = await fromAccountData.balance;
   const fromAccountType = await fromAccountData.type;
 
-  if (transaction.toAccountId !== 0) {
-    const toAccountData = await getAccount({ id: transaction.toAccountId });
+  if (transaction.toAccountId) {
+    const toAccountData = await getAccount(transaction.toAccountId);
     const previousToAccountBalance = await toAccountData.balance;
     const toAccountType = await toAccountData.type;
 
@@ -117,17 +142,24 @@ export const addTransferTransaction = async (transaction) => {
       throw new Error('Insufficient balance');
     }
 
+    const newFromAccountData = {
+      ...fromAccountData,
+      balance: newFromAccountBalance,
+    };
+
+    const newToAccountData = { ...toAccountData, balance: newToAccountBalance };
+
     try {
       return await Promise.all(
         createTransaction(transaction),
-        editAccount({ ...fromAccountData, balance: newFromAccountBalance }),
-        editAccount({ ...toAccountData, balance: newToAccountBalance })
+        editAccount(newFromAccountData, transaction.accountId),
+        editAccount(newToAccountData, transaction.toAccountId)
       );
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   } else {
-    const goalData = await getGoal({ id: transaction.goalId });
+    const goalData = await getGoal(transaction.goalId);
     const goalCurrentAmount = await goalData.currentAmount;
 
     const newFromAccountBalance =
@@ -140,11 +172,17 @@ export const addTransferTransaction = async (transaction) => {
       throw new Error('Insufficient balance');
     }
 
+    const newFromAccountData = {
+      ...fromAccountData,
+      balance: newFromAccountBalance,
+    };
+    const newGoalData = { ...goalData, currentAmount: newGoalCurrentAmount };
+
     try {
       return await Promise.all(
         createTransaction(transaction),
-        editAccount({ ...fromAccountData, balance: newFromAccountBalance }),
-        editGoal({ ...goalData, currentAmount: newGoalCurrentAmount })
+        editAccount(newFromAccountData, transaction?.accountId),
+        editGoal(newGoalData, transaction?.goalId)
       );
     } catch (error) {
       console.log(error);

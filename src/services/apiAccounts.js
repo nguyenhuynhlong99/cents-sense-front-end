@@ -23,10 +23,17 @@ export const getAccounts = async () => {
   return data;
 };
 
-export const getAccount = async ({ id }) => {
+export const getAccount = async (id) => {
   if (!id) return null;
-  const response = await accountsApi.get(`/${id}`, id);
-  return response.data;
+  const { data, error } = await supabase
+    .from('accounts')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error) throw new Error('Could not loaded this account');
+
+  return data;
 };
 
 export const createAccount = async (account) => {

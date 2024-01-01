@@ -9,6 +9,7 @@ export function useTransactions() {
   } = useQuery({
     queryKey: ['transactions'],
     queryFn: getTransactions,
+    retry: 0,
   });
 
   return { isLoading, error, transactions };

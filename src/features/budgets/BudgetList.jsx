@@ -5,23 +5,21 @@ import { formatCurrency } from '../../utils/helpers';
 // import { useUser } from '../auth/useUser';
 import { useBudgets } from './useBudgets';
 import Loader from '../../ui/Loader';
+import { useExpectedIncome } from './useExpectedIncome';
 
-function BudgetList({
-  monthlyExpectedIncome,
-  expectedIncomeID,
-  setOpenModal,
-  setBudgetToEdit,
-  setOpenDeleteModal,
-}) {
+function BudgetList({ setOpenModal, setBudgetToEdit, setOpenDeleteModal }) {
   // const { isLoading, user } = useUser();
   const { budgets, isLoading } = useBudgets();
+  const { expectedIncome } = useExpectedIncome();
+  const expectedIncomeId = expectedIncome?.id;
+  const monthlyExpectedIncome = expectedIncome?.amount;
 
   const monthlyBudgets = getCurrentMonthBudgets();
   const totalAmountBudgetUsed = getTotalBudgetUsed();
   const leftToBudget = monthlyExpectedIncome - totalAmountBudgetUsed;
 
   function getCurrentMonthBudgets() {
-    return budgets?.filter((b) => b.expectedIncomeId === expectedIncomeID);
+    return budgets?.filter((b) => b.expectedIncomeId === expectedIncomeId);
   }
 
   function getTotalBudgetUsed() {
