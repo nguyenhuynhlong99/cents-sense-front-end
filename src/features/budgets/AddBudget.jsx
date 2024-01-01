@@ -1,22 +1,11 @@
 import Modal from '../../ui/Modal';
 import AddBudgetForm from './AddBudgetForm';
 
-function AddBudget({
-  isShown,
-  setIsShown,
-  expectedIncomeId,
-  expectedIncomeAmount,
-  budgetToEdit,
-}) {
+function AddBudget({ isShown, setIsShown, budgetToEdit }) {
   return (
     <Modal isShown={isShown} setIsShown={setIsShown}>
       <Modal.Body>
-        <AddBudgetForm
-          expectedIncomeAmount={expectedIncomeAmount}
-          expectedIncomeId={expectedIncomeId}
-          setIsShown={setIsShown}
-          budgetToEdit={budgetToEdit}
-        />
+        <AddBudgetForm setIsShown={setIsShown} budgetToEdit={budgetToEdit} />
       </Modal.Body>
     </Modal>
   );

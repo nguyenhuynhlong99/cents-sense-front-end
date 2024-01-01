@@ -1,25 +1,25 @@
-import { useTransactionsExpandAccountAndBudget } from './useTransactionsExpandAccountsAndBudget';
+// import { useTransactionsExpandAccountAndBudget } from './useTransactionsExpandAccountsAndBudget';
+import { useTransactions } from './useTransactions';
 
 import Loader from '../../ui/Loader';
 import TransactionItem from './TransactionItem';
-import { useUser } from '../auth/useUser';
+// import { useUser } from '../auth/useUser';
 
 function TransactionList() {
-  const { user } = useUser();
-  const userId = user?.id;
+  // const { user } = useUser();
+  // const userId = user?.id;
 
-  const { transactionsExpandAccountBudget, isLoading } =
-    useTransactionsExpandAccountAndBudget();
+  const { transactions, isLoading } = useTransactions();
 
   const recentTransactions = getRecentTransactions();
 
   function getRecentTransactions() {
-    return transactionsExpandAccountBudget
-      ?.filter((t) => t.userId === userId)
-      ?.sort((a, b) => new Date(b.date) - new Date(a.date));
+    return transactions?.sort((a, b) => new Date(b.date) - new Date(a.date));
   }
+  console.log(recentTransactions);
 
   if (isLoading) return <Loader />;
+  console.log(transactions);
 
   return (
     <div className="rounded-md p-5 text-base mt-5">

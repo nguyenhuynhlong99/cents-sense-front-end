@@ -9,16 +9,16 @@ import Input from '../../ui/Input';
 import ModalButton from '../../ui/ModalButton';
 import Icon from '../../ui/Icon';
 import { listOfIcons } from '../../utils/helpers';
+import { useExpectedIncome } from './useExpectedIncome';
 
-function AddBudgetForm({
-  setIsShown,
-  expectedIncomeId,
-  expectedIncomeAmount,
-  budgetToEdit,
-}) {
+function AddBudgetForm({ setIsShown, budgetToEdit }) {
   const { user } = useUser();
   const userId = user?.id;
   const { budgets } = useBudgets();
+  const { expectedIncome } = useExpectedIncome();
+  const expectedIncomeId = expectedIncome?.id;
+  const expectedIncomeAmount = expectedIncome?.amount;
+
   const { isCreating, createBudget } = useCreateBudget();
   const { isUpdating, updateBudget } = useUpdateBudget();
 

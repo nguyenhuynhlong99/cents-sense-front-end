@@ -3,7 +3,7 @@ import { Doughnut } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-function BudgetBreakdownChart({ expectedIncomeId, monthlyBudgets }) {
+function BudgetBreakdownChart({ monthlyBudgets }) {
   const totalBudgetAmount = monthlyBudgets?.reduce(
     (acc, curr) => acc + curr.amount,
     0

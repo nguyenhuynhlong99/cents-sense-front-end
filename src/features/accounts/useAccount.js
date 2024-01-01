@@ -7,8 +7,8 @@ export function useAccount(accountID) {
     data: account,
     error,
   } = useQuery({
-    queryKey: ['accounts', accountID],
-    queryFn: () => getAccount({ id: accountID }),
+    queryKey: ['account', accountID],
+    queryFn: () => getAccount(accountID),
     retry: false, //by default React Query will try to fetch the data 3 times in case it fails in the beginning.
   });
 

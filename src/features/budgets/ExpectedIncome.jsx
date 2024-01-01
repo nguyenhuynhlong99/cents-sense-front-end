@@ -8,10 +8,13 @@ import Button from '../../ui/Button';
 import ProgressBar from '../../ui/ProgressBar';
 import { CheckCircle, CurrencyDollar } from '@phosphor-icons/react';
 import { useUser } from '../auth/useUser';
+import { useExpectedIncome } from './useExpectedIncome';
 
-function ExpectedIncome({ expectedIncome }) {
+function ExpectedIncome() {
   const { user } = useUser();
   const userId = user?.id;
+  const { expectedIncome } = useExpectedIncome();
+
   const budgetUsedAmount = getBudgetUsed();
 
   const { isCreating, createExpectedIncome } = useCreateExpectedIncome();
@@ -46,7 +49,7 @@ function ExpectedIncome({ expectedIncome }) {
     console.error(error);
   }
 
-  if (!expectedIncome) {
+  if (!expectedIncome?.amount) {
     return (
       <div>
         <div className="max-w-[500px] m-auto lg:max-w-none lg:m-0 lg:flex lg:items-center lg:gap-3">
@@ -108,16 +111,18 @@ function ExpectedIncome({ expectedIncome }) {
       <div className="text-sm md:text-base">
         <span>{formatCurrency(budgetUsedAmount)} </span>
         <span className="text-neutral-400">
-          of {formatCurrency(expectedIncome)}
+          of {formatCurrency(expectedIncome?.amount)}
         </span>
       </div>
       <div className="grid grid-cols-[_1fr,auto] items-center gap-3">
         <ProgressBar
           height={10}
-          percentage={Math.round((budgetUsedAmount / expectedIncome) * 100)}
+          percentage={Math.round(
+            (budgetUsedAmount / expectedIncome?.amount) * 100
+          )}
         />
         <span className="text-lg md:text-xl">
-          {Math.round((budgetUsedAmount / expectedIncome) * 100)}%
+          {Math.round((budgetUsedAmount / expectedIncome?.amount) * 100)}%
         </span>
       </div>
       <div className="flex gap-1 items-center">

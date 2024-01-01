@@ -10,9 +10,9 @@ export function useAddTransfer() {
     useMutation({
       mutationFn: addTransferTransaction,
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['user'] });
         queryClient.invalidateQueries({ queryKey: ['transactions'] });
         queryClient.invalidateQueries({ queryKey: ['accounts'] });
+        queryClient.invalidateQueries({ queryKey: ['goals'] });
         toast.success('Created transfer transaction successfully!');
       },
       onError: (err) => {
