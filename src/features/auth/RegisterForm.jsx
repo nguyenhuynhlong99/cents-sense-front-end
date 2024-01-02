@@ -1,27 +1,16 @@
 import { useForm } from 'react-hook-form';
-import { useUsers } from './useUsers';
 import { useRegister } from './useRegister';
 
 function RegisterForm() {
-  const { users } = useUsers();
-  const { register: handleRegister, isLoading } = useRegister();
+  const { register: signup, isLoading } = useRegister();
   const { register, formState, handleSubmit, reset, getValues } = useForm();
   const { errors } = formState;
 
-  function isEmailUnique(email) {
-    let isUnique = true;
-    users?.forEach((u) => {
-      if (u.email === email) isUnique = false;
-    });
-    return isUnique;
-  }
-
   function onSubmit({ fullName, email, password }) {
-    console.log({ fullName, email, password });
-    handleRegister(
-      { id: crypto.randomUUID(), fullName, email, password },
+    signup(
+      { fullName, email, password },
       {
-        onSuccess: () => {
+        onSettled: () => {
           reset();
         },
       }
@@ -61,10 +50,8 @@ function RegisterForm() {
             required: 'Please enter your email address',
             pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: 'Please enter a valid email address',
+              message: 'Please provide a valid email address',
             },
-            validate: (value) =>
-              isEmailUnique(value) || 'Provided email already existed',
           })}
           disabled={isLoading}
           type="email"
@@ -122,7 +109,7 @@ function RegisterForm() {
 
       <button
         type="submit"
-        // disabled={isLoading}
+        disabled={isLoading}
         className="mt-7 block w-full bg-green-600 py-2 px-3 rounded-md text-green-50 font-semibold"
       >
         Sign Up
