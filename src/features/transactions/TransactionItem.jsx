@@ -2,10 +2,11 @@ import { parseISO } from 'date-fns';
 import { formatCurrency } from '../../utils/helpers';
 import Icon from '../../ui/Icon';
 import { useAccount } from '../accounts/useAccount';
+import Loader from '../../ui/Loader';
 
 function TransactionItem({ transaction }) {
   let name;
-  const { account: toAccount } = useAccount(
+  const { account: toAccount, isLoading } = useAccount(
     transaction?.toAccountId ? transaction?.toAccountId : null
   );
 
@@ -13,6 +14,8 @@ function TransactionItem({ transaction }) {
   //   transaction?.goalId !== 0 ? transaction?.goalId : null
   // );
   name = transaction?.goals?.name ? transaction.goals?.name : toAccount?.name;
+
+  if (isLoading) return <Loader />;
 
   return (
     <li className="bg-neutral-950 rounded-lg py-4 px-5 shadow-md flex flex-col gap-2 min-h-[160px]">

@@ -15,7 +15,8 @@ import { useExpectedIncome } from './useExpectedIncome';
 
 function BudgetLayout() {
   const { budgets, isLoading } = useBudgets();
-  const { expectedIncome } = useExpectedIncome();
+  const { expectedIncome, isLoading: isGettingMonthlyIncome } =
+    useExpectedIncome();
   const expectedIncomeId = expectedIncome?.id;
   const monthlyExpectedIncome = expectedIncome?.amount;
 
@@ -36,9 +37,7 @@ function BudgetLayout() {
     setOpenAddModal(true);
   }
 
-  // console.log(expectedIncomes);
-
-  if (isLoading) return <Loader />;
+  if (isLoading || isGettingMonthlyIncome) return <Loader />;
 
   return (
     <>

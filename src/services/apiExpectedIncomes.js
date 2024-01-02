@@ -32,7 +32,8 @@ export const getMonthlyExpectedIncome = async () => {
       getMonth(parseISO(inc.created_at)) === currentMonth
   );
 
-  return monthlyExpectedIncome;
+  if (monthlyExpectedIncome) return monthlyExpectedIncome;
+  return null;
 };
 
 export const createExpectedIncome = async (expectedIncome) => {

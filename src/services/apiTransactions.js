@@ -8,15 +8,21 @@ const transactionsApi = axios.create({
   baseURL: 'http://localhost:3500/transactions',
 });
 
-export const getTransactions = async () => {
+export const getTransactions = async ({ filter }) => {
   const userData = await getCurrentUser();
 
-  const { data, error } = await supabase
+  let query = supabase
     .from('transactions')
     .select(
       'id, created_at, type, amount, description, toAccountId, accounts(name, type, balance), budgets(category, icon), goals(name)'
     )
     .eq('userId', userData?.id);
+
+  if (filter) {
+    query = query[filter.method || 'eq'](filter.field, filter.value);
+  }
+
+  const { data, error } = await query;
 
   if (error) {
     console.error(error);
