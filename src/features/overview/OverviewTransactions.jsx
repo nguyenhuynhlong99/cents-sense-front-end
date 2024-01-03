@@ -1,24 +1,19 @@
 import { parseISO } from 'date-fns';
 import Icon from '../../ui/Icon';
-import { useUser } from '../auth/useUser';
+// import { useUser } from '../auth/useUser';
 import TransactionCard from './TransactionCard';
+import { useTransactions } from '../transactions/useTransactions';
 
 function OverviewTransactions() {
-  const { user } = useUser();
+  // const { user } = useUser();
+  const { transactions } = useTransactions();
 
-  const userRecentTransactions = user?.transactions?.sort(
-    (a, b) => new Date(parseISO(b.date)) - new Date(parseISO(a.date))
+  const userRecentTransactions = transactions?.sort(
+    (a, b) =>
+      new Date(parseISO(b.created_at)) - new Date(parseISO(a.created_at))
   );
-  function getIcon(budgetId) {
-    if (budgetId !== 0) {
-      const iconName = user?.budgets?.find((b) => b.id === budgetId).icon;
-      return <Icon name={iconName} />;
-    }
 
-    return <Icon />;
-  }
-
-  if (user?.transactions?.length < 1) return null;
+  if (transactions?.length < 1) return null;
 
   return (
     <section className="bg-neutral-950 rounded-md p-3">
@@ -29,9 +24,9 @@ function OverviewTransactions() {
             key={t.id}
             type={t.type}
             detail={t.description}
-            icon={getIcon(t.budgetId)}
+            icon={<Icon name={t?.budgets?.icon} />}
             amountMoney={t.amount}
-            date={new Date(t.date).toDateString()}
+            date={new Date(t.created_at).toDateString()}
           />
         ))}
       </div>

@@ -9,11 +9,13 @@ import ProgressBar from '../../ui/ProgressBar';
 import { CheckCircle, CurrencyDollar } from '@phosphor-icons/react';
 import { useUser } from '../auth/useUser';
 import { useExpectedIncome } from './useExpectedIncome';
+import { useTransactions } from '../transactions/useTransactions';
 
 function ExpectedIncome() {
   const { user } = useUser();
   const userId = user?.id;
   const { expectedIncome } = useExpectedIncome();
+  const { transactions } = useTransactions();
 
   const budgetUsedAmount = getBudgetUsed();
 
@@ -22,12 +24,12 @@ function ExpectedIncome() {
   const { errors } = formState;
 
   function getBudgetUsed() {
-    return user?.transactions
+    return transactions
       ?.filter(
         (t) =>
-          t.budgetId !== 0 &&
-          getYear(parseISO(t.date)) === currentYear &&
-          getMonth(parseISO(t.date)) === currentMonth
+          t.budgets?.id &&
+          getYear(parseISO(t.created_at)) === currentYear &&
+          getMonth(parseISO(t.created_at)) === currentMonth
       )
       .reduce((acc, curr) => acc + curr.amount, 0);
   }

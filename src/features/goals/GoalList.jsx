@@ -27,7 +27,7 @@ function GoalList({ setOpenAddModal, setGoalToEdit, setOpenDeleteModal }) {
           src="personalgoalschecklist-cuate.svg"
           alt="manage accounts"
         />
-        <div className="text-center">
+        <div className="text-center lg:text-left">
           <h4 className="text-xl font-semibold text-green-500 sm:text-2xl lg:text-3xl">
             Ready to turn your dreams into realities?
           </h4>

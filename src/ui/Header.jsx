@@ -17,7 +17,7 @@ function Header() {
           <span className="text-sm sm:text-base">
             Hello,
             <span className="font-bold text-green-500">
-              {user?.user_metadata?.fullName}
+              {' ' + user?.user_metadata?.fullName}
             </span>
           </span>
           <LogOut />

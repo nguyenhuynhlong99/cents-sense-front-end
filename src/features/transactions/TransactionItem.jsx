@@ -10,9 +10,6 @@ function TransactionItem({ transaction }) {
     transaction?.toAccountId ? transaction?.toAccountId : null
   );
 
-  // const { goal } = useGoal(
-  //   transaction?.goalId !== 0 ? transaction?.goalId : null
-  // );
   name = transaction?.goals?.name ? transaction.goals?.name : toAccount?.name;
 
   if (isLoading) return <Loader />;

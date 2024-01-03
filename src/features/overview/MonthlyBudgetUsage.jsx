@@ -1,30 +1,28 @@
 import BudgetCard from './BudgetCard';
+import { useExpectedIncome } from '../budgets/useExpectedIncome';
+import { useTransactions } from '../transactions/useTransactions';
+import { useBudgets } from '../budgets/useBudgets';
 import { LoaderIcon } from 'react-hot-toast';
-import { useUser } from '../auth/useUser';
-import { getMonth, getYear, parseISO } from 'date-fns';
-import { currentMonth, currentYear } from '../../utils/helpers';
+// import { useUser } from '../auth/useUser';
 import Icon from '../../ui/Icon';
 
 function MonthlyBudgetUsage() {
-  const { user, isLoading } = useUser();
+  // const { user, isLoading } = useUser();
+  const { expectedIncome, isLoading } = useExpectedIncome();
+  const { budgets } = useBudgets();
+  const { transactions } = useTransactions();
 
   const monthlyBudgets = getMonthlyBudgets();
 
   function getMonthlyBudgets() {
-    const expectedIncomeId = user?.expectedIncomes?.find(
-      (item) =>
-        getYear(parseISO(item.createdAt)) === currentYear &&
-        getMonth(parseISO(item.createdAt)) === currentMonth
-    )?.id;
+    const expectedIncomeId = expectedIncome?.id;
 
-    return user?.budgets?.filter(
-      (b) => b.expectedIncomeId === expectedIncomeId
-    );
+    return budgets?.filter((b) => b.expectedIncomeId === expectedIncomeId);
   }
 
   function getTotalUsedBudget(budgetId) {
-    return user?.transactions
-      ?.filter((t) => t.budgetId === budgetId)
+    return transactions
+      ?.filter((t) => t?.budgets?.id === budgetId)
       .reduce((acc, curr) => acc + curr.amount, 0);
   }
 
@@ -36,7 +34,7 @@ function MonthlyBudgetUsage() {
     <section className="mb-4 bg-neutral-950 p-3 rounded-lg">
       <h3 className="text-lg mb-2">Monthly Budget Usage</h3>
       <div className="grid grid-cols-2 gap-4">
-        {monthlyBudgets.map((budget) => (
+        {monthlyBudgets?.map((budget) => (
           <BudgetCard
             key={budget.id}
             icon={<Icon name={budget.icon} />}

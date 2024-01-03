@@ -14,7 +14,7 @@ export const getTransactions = async ({ filter }) => {
   let query = supabase
     .from('transactions')
     .select(
-      'id, created_at, type, amount, description, toAccountId, accounts(name, type, balance), budgets(category, icon), goals(name)'
+      'id, created_at, type, amount, description, toAccountId, accounts(name, type, balance), budgets(id, category, icon), goals(name)'
     )
     .eq('userId', userData?.id);
 

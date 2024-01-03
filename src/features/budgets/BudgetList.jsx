@@ -6,11 +6,13 @@ import { formatCurrency } from '../../utils/helpers';
 import { useBudgets } from './useBudgets';
 import Loader from '../../ui/Loader';
 import { useExpectedIncome } from './useExpectedIncome';
+import { useTransactions } from '../transactions/useTransactions';
 
 function BudgetList({ setOpenModal, setBudgetToEdit, setOpenDeleteModal }) {
   // const { isLoading, user } = useUser();
   const { budgets, isLoading } = useBudgets();
   const { expectedIncome } = useExpectedIncome();
+  const { transactions } = useTransactions();
   const expectedIncomeId = expectedIncome?.id;
   const monthlyExpectedIncome = expectedIncome?.amount;
 
@@ -26,11 +28,12 @@ function BudgetList({ setOpenModal, setBudgetToEdit, setOpenDeleteModal }) {
     return monthlyBudgets?.reduce((acc, curr) => acc + curr.amount, 0);
   }
 
-  // function getTotalUsedBudget(budgetId) {
-  //   return transactions
-  //     ?.filter((t) => t.budgetId === budgetId)
-  //     .reduce((acc, curr) => acc + curr.amount, 0);
-  // }
+  function getTotalUsedBudget(budgetId) {
+    return transactions
+      ?.filter((t) => t?.budgets?.id === budgetId)
+      .reduce((acc, curr) => acc + curr.amount, 0);
+  }
+  console.log(transactions);
 
   function onOpenEditModal(budget) {
     setBudgetToEdit(budget);
@@ -61,7 +64,7 @@ function BudgetList({ setOpenModal, setBudgetToEdit, setOpenDeleteModal }) {
               icon={<Icon name={b.icon} />}
               category={b.category}
               totalBudget={b.amount}
-              // usedBudget={getTotalUsedBudget(b.id)}
+              usedBudget={getTotalUsedBudget(b.id)}
             />
             <div className="absolute right-1 bottom-0">
               <button
