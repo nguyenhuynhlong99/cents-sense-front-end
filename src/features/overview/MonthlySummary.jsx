@@ -100,8 +100,6 @@ function MonthlySummary() {
 
   if (accounts?.length < 1 && transactions?.length < 1) return null;
 
-  console.log(monthlyIncome);
-
   return (
     <div className="grid grid-cols-4 gap-5">
       {totalBalance !== 0 && (

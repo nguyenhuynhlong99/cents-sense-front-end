@@ -11,15 +11,17 @@ function TransactionCard({ icon, date, amountMoney, detail, type }) {
         <span className="truncate">{detail}</span>
       </div>
       {isIncome ? (
-        <span className="font-bold text-green-400">
+        <span className="font-bold font-space text-green-400">
           {'+' + formatCurrency(amountMoney)}
         </span>
       ) : isExpense ? (
-        <span className="font-bold text-red-500">
+        <span className="font-bold font-space text-red-500">
           {formatCurrency(-amountMoney)}
         </span>
       ) : (
-        <span className="font-bold">{formatCurrency(amountMoney)}</span>
+        <span className="font-bold font-space">
+          {formatCurrency(amountMoney)}
+        </span>
       )}
       <span className="text-right">{date}</span>
     </div>

@@ -87,7 +87,6 @@ export const addIncomeTransaction = async (transaction) => {
   const newAccountBalance = previousAccountBalance + transaction.amount;
 
   const newData = { ...accountData, balance: newAccountBalance };
-  console.log(accountData);
 
   try {
     return await Promise.all(

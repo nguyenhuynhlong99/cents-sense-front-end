@@ -18,10 +18,8 @@ function TransactionList() {
       (a, b) => new Date(b.created_at) - new Date(a.created_at)
     );
   }
-  console.log(recentTransactions);
 
   if (isLoading) return <Loader />;
-  console.log(transactions);
 
   return (
     <div className="rounded-md p-5 text-base mt-5">

@@ -33,7 +33,6 @@ function BudgetList({ setOpenModal, setBudgetToEdit, setOpenDeleteModal }) {
       ?.filter((t) => t?.budgets?.id === budgetId)
       .reduce((acc, curr) => acc + curr.amount, 0);
   }
-  console.log(transactions);
 
   function onOpenEditModal(budget) {
     setBudgetToEdit(budget);
