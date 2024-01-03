@@ -23,7 +23,6 @@ function AccountsList({
   const userCreditAccounts = accounts?.filter((acc) => acc.type === 'credit');
   const userDebitAccounts = accounts?.filter((acc) => acc.type === 'debit');
   const userSavingAccounts = accounts?.filter((acc) => acc.type === 'saving');
-  console.log(accounts);
 
   // function getAllUserAccounts(userID) {
   //   return accounts?.filter((acc) => acc.userId === userId);

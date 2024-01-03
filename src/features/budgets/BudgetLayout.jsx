@@ -26,8 +26,6 @@ function BudgetLayout() {
 
   const monthlyBudgets = getMonthlyBudgets(expectedIncomeId);
 
-  console.log(monthlyBudgets);
-
   function getMonthlyBudgets(expectedIncomeId) {
     return budgets?.filter((b) => b.expectedIncomeId === expectedIncomeId);
   }

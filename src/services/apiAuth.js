@@ -8,7 +8,7 @@ export async function register({ fullName, email, password }) {
       data: {
         fullName,
       },
-      emailRedirectTo: 'http://127.0.0.1:5173/accounts',
+      emailRedirectTo: 'http://127.0.0.1:5173/overview',
     },
   });
 
@@ -28,7 +28,7 @@ export async function login({ email, password }) {
   if (error) {
     throw new Error(error.message);
   }
-  console.log(data);
+
   return data;
 }
 
@@ -46,6 +46,5 @@ export async function getCurrentUser() {
 
   if (error) throw new Error(error.message);
 
-  console.log(data);
   return data?.user;
 }

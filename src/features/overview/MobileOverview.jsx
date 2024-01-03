@@ -9,66 +9,72 @@ import MobileSummaryCard from './MobileSummaryCard';
 import { currentYear, formatCurrency, currentMonth } from '../../utils/helpers';
 import { getMonth, getYear, parseISO } from 'date-fns';
 import MobileTransactionCard from './MobileTransactionCard';
-import { useUser } from '../auth/useUser';
 import Icon from '../../ui/Icon';
+import { useTransactions } from '../transactions/useTransactions';
+import { useAccounts } from '../accounts/useAccounts';
+import { useExpectedIncome } from '../budgets/useExpectedIncome';
+import { useBudgets } from '../budgets/useBudgets';
+import Loader from '../../ui/Loader';
 
 function MobileOverview() {
-  const { user, isLoading } = useUser();
+  const { transactions, isLoading } = useTransactions();
+  const { accounts } = useAccounts();
+  const { expectedIncome } = useExpectedIncome();
+  const { budgets } = useBudgets();
+
   const totalBalance = getTotalBalance();
   const monthlyIncome = getMonthlyIncome();
   const monthlyExpense = getMonthlyExpense();
   const monthlyBudgetUsedAmount = getMonthlyBudgetUsed();
   const monthlySaving = monthlyIncome - monthlyExpense;
-  const recentTransactions = user?.transactions?.sort(
-    (a, b) => new Date(parseISO(b.date)) - new Date(parseISO(a.date))
+  const recentTransactions = transactions?.sort(
+    (a, b) =>
+      new Date(parseISO(b.created_at)) - new Date(parseISO(a.created_at))
   );
-  console.log(user);
 
   function getTotalBalance() {
-    return user?.accounts
+    return accounts
       ?.filter((acc) => acc.type !== 'credit')
       .reduce((acc, curr) => acc + curr.balance, 0);
   }
 
   function getMonthlyIncome() {
-    return user?.transactions
+    return transactions
       ?.filter(
         (t) =>
           t.type === 'income' &&
-          getYear(parseISO(t.date)) === currentYear &&
-          getMonth(parseISO(t.date)) === currentMonth
+          getYear(parseISO(t.created_at)) === currentYear &&
+          getMonth(parseISO(t.created_at)) === currentMonth
       )
       .reduce((acc, curr) => acc + curr.amount, 0);
   }
 
   function getMonthlyExpense() {
-    return user?.transactions
+    return transactions
       ?.filter(
         (t) =>
           t.type === 'expense' &&
-          getYear(parseISO(t.date)) === currentYear &&
-          getMonth(parseISO(t.date)) === currentMonth
+          getYear(parseISO(t.created_at)) === currentYear &&
+          getMonth(parseISO(t.created_at)) === currentMonth
       )
       .reduce((acc, curr) => acc + curr.amount, 0);
   }
 
   function getMonthlyBudgetUsed() {
-    const expectedIncomeId = user?.expectedIncomes?.find(
-      (inc) =>
-        getYear(parseISO(inc.createdAt)) === currentYear &&
-        getMonth(parseISO(inc.createdAt)) === currentMonth
-    ).id;
+    const expectedIncomeId = expectedIncome?.id;
 
-    return user?.budgets
+    return budgets
       ?.filter((b) => b.expectedIncomeId === expectedIncomeId)
       .reduce((acc, curr) => acc + curr.amount, 0);
   }
 
   function getIconWithBudgetId(budgetId) {
-    const icon = user?.budgets?.find((b) => b.id === budgetId)?.icon;
+    const icon = budgets?.find((b) => b.id === budgetId)?.icon;
 
     return <Icon name={icon} />;
   }
+
+  if (isLoading) return <Loader />;
 
   return (
     <>
@@ -82,7 +88,7 @@ function MobileOverview() {
           </span>
 
           <ul className="flex overflow-x-auto snap-x snap-mandatory gap-3 py-2">
-            {user?.accounts?.map((acc) => (
+            {accounts?.map((acc) => (
               <li
                 key={acc.id}
                 className="h-[100px] w-[180px] flex-shrink-0 snap-center snap-always"
@@ -132,7 +138,7 @@ function MobileOverview() {
           <h3 className="text-base font-medium mb-2">Recent Transactions</h3>
 
           <div className="flex flex-col gap-2">
-            {recentTransactions.map((t) => (
+            {recentTransactions?.map((t) => (
               <MobileTransactionCard
                 type={t.type}
                 description={t.description}

@@ -7,7 +7,6 @@ function DeleteBudget({ budgetToDelete, openDeleteModal, setOpenDeleteModal }) {
 
   const budgetID = budgetToDelete?.id;
   const budgetCategory = budgetToDelete?.category;
-  console.log(budgetID);
 
   function onDeleteBudget() {
     deleteBudget(budgetID, {
