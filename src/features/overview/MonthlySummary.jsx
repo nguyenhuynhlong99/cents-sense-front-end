@@ -1,11 +1,16 @@
 import { LoaderIcon } from 'react-hot-toast';
-import { useUser } from '../auth/useUser';
+// import { useUser } from '../auth/useUser';
+import { useAccounts } from '../../features/accounts/useAccounts';
+import { useTransactions } from '../../features/transactions/useTransactions';
+
 import { getMonth, getYear, parseISO } from 'date-fns';
 import { currentMonth, currentYear } from '../../utils/helpers';
 import MonthlySummaryCard from './MonthlySummaryCard';
 
 function MonthlySummary() {
-  const { user, isLoading } = useUser();
+  // const { user, isLoading } = useUser();
+  const { accounts } = useAccounts();
+  const { transactions, isLoading } = useTransactions();
 
   const totalBalance = getTotalBalance();
   const monthlyIncome = getMonthlyIncome();
@@ -24,76 +29,78 @@ function MonthlySummary() {
     ((monthlySaving - previousMonthlySaving) / previousMonthlySaving) * 100;
 
   function getTotalBalance() {
-    return user?.accounts
+    return accounts
       ?.filter((acc) => acc.type !== 'credit')
       .reduce((acc, curr) => acc + curr.balance, 0);
   }
 
   function getPreviousMonthlyIncome() {
-    return user?.transactions
+    return transactions
       ?.filter((t) => {
-        if (getMonth(parseISO(t.date)) !== 0) {
+        if (getMonth(parseISO(t.created_at)) !== 0) {
           return (
             t.type === 'income' &&
-            getYear(parseISO(t.date)) === currentYear &&
-            getMonth(parseISO(t.date)) === currentMonth - 1
+            getYear(parseISO(t.created_at)) === currentYear &&
+            getMonth(parseISO(t.created_at)) === currentMonth - 1
           );
         }
 
         return (
           t.type === 'income' &&
-          getYear(parseISO(t.date)) === currentYear - 1 &&
-          getMonth(parseISO(t.date)) === 11
+          getYear(parseISO(t.created_at)) === currentYear - 1 &&
+          getMonth(parseISO(t.created_at)) === 11
         );
       })
       .reduce((acc, curr) => acc + curr.amount, 0);
   }
 
   function getMonthlyIncome() {
-    return user?.transactions
+    return transactions
       ?.filter(
         (t) =>
           t.type === 'income' &&
-          getYear(parseISO(t.date)) === currentYear &&
-          getMonth(parseISO(t.date)) === currentMonth
+          getYear(parseISO(t.created_at)) === currentYear &&
+          getMonth(parseISO(t.created_at)) === currentMonth
       )
       .reduce((acc, curr) => acc + curr.amount, 0);
   }
 
   function getPreviousMonthlyExpense() {
-    return user?.transactions
+    return transactions
       ?.filter((t) => {
-        if (getMonth(parseISO(t.date)) !== 0) {
+        if (getMonth(parseISO(t.created_at)) !== 0) {
           return (
             t.type === 'expense' &&
-            getYear(parseISO(t.date)) === currentYear &&
-            getMonth(parseISO(t.date)) === currentMonth - 1
+            getYear(parseISO(t.created_at)) === currentYear &&
+            getMonth(parseISO(t.created_at)) === currentMonth - 1
           );
         }
 
         return (
           t.type === 'income' &&
-          getYear(parseISO(t.date)) === currentYear - 1 &&
-          getMonth(parseISO(t.date)) === 11
+          getYear(parseISO(t.created_at)) === currentYear - 1 &&
+          getMonth(parseISO(t.created_at)) === 11
         );
       })
       .reduce((acc, curr) => acc + curr.amount, 0);
   }
 
   function getMonthlyExpense() {
-    return user?.transactions
+    return transactions
       ?.filter(
         (t) =>
           t.type === 'expense' &&
-          getYear(parseISO(t.date)) === currentYear &&
-          getMonth(parseISO(t.date)) === currentMonth
+          getYear(parseISO(t.created_at)) === currentYear &&
+          getMonth(parseISO(t.created_at)) === currentMonth
       )
       .reduce((acc, curr) => acc + curr.amount, 0);
   }
 
   if (isLoading) return <LoaderIcon />;
 
-  if (user?.accounts?.length < 1 && user?.transactions?.length < 1) return null;
+  if (accounts?.length < 1 && transactions?.length < 1) return null;
+
+  console.log(monthlyIncome);
 
   return (
     <div className="grid grid-cols-4 gap-5">

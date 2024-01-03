@@ -14,7 +14,9 @@ function TransactionList() {
   const recentTransactions = getRecentTransactions();
 
   function getRecentTransactions() {
-    return transactions?.sort((a, b) => new Date(b.date) - new Date(a.date));
+    return transactions?.sort(
+      (a, b) => new Date(b.created_at) - new Date(a.created_at)
+    );
   }
   console.log(recentTransactions);
 

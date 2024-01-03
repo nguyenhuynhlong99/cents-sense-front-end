@@ -12,7 +12,7 @@ import MobileTransactionCard from './MobileTransactionCard';
 import { useUser } from '../auth/useUser';
 import Icon from '../../ui/Icon';
 
-function MobileOverview({ data }) {
+function MobileOverview() {
   const { user, isLoading } = useUser();
   const totalBalance = getTotalBalance();
   const monthlyIncome = getMonthlyIncome();

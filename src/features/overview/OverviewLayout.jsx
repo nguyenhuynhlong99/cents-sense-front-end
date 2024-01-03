@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAccounts } from '../accounts/useAccounts';
+
 import MobileOverview from './MobileOverview';
 import LargeOverview from './LargeOverview';
-
-import { data } from '../../../data/data';
-import { useUser } from '../auth/useUser';
 import Button from '../../ui/Button';
-import { useNavigate } from 'react-router-dom';
 import Loader from '../../ui/Loader';
 
 function OverviewLayout() {
   const [isMobile, setIsMobile] = useState(false);
-  const { user, isLoading } = useUser();
+  const { accounts, isLoading } = useAccounts();
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,7 +32,7 @@ function OverviewLayout() {
 
   if (isLoading) return <Loader />;
 
-  if (user?.accounts?.length < 1) {
+  if (accounts?.length < 1) {
     return (
       <section>
         <p className="text-center text-3xl text-green-500 uppercase font-semibold">
@@ -50,7 +50,7 @@ function OverviewLayout() {
     );
   }
 
-  return <>{isMobile ? <MobileOverview data={data} /> : <LargeOverview />}</>;
+  return <>{isMobile ? <MobileOverview /> : <LargeOverview />}</>;
 }
 
 export default OverviewLayout;
