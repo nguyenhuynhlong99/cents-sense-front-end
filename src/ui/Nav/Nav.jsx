@@ -40,30 +40,39 @@ function Nav() {
         </label>
         <ul className={styles.mobileNavLinkList}>
           <li>
-            <MobileNavLink>how it work</MobileNavLink>
+            <MobileNavLink to="/howitwork">how it work</MobileNavLink>
           </li>
           <li>
-            <MobileNavLink>about</MobileNavLink>
+            <MobileNavLink to="/about">about</MobileNavLink>
           </li>
           <li>
-            <MobileNavLink>log in</MobileNavLink>
+            <MobileNavLink to="/login">log in</MobileNavLink>
           </li>
         </ul>
       </div>
 
       <ul className="hidden lg:flex gap-5 items-center">
         <li>
-          <NavLink className="capitalize text-lg hover:text-green-400 transition-all duration-200 ease-linear">
+          <NavLink
+            to="/howitwork"
+            className="capitalize text-lg hover:text-green-400 transition-all duration-200 ease-linear"
+          >
             how it work
           </NavLink>
         </li>
         <li>
-          <NavLink className="capitalize text-lg hover:text-green-400 transition-all duration-200 ease-linear">
+          <NavLink
+            to="/about"
+            className="capitalize text-lg hover:text-green-400 transition-all duration-200 ease-linear"
+          >
             about
           </NavLink>
         </li>
         <li>
-          <NavLink className="capitalize text-lg hover:text-green-400 transition-all duration-200 ease-linear">
+          <NavLink
+            to="/login"
+            className="capitalize text-lg hover:text-green-400 transition-all duration-200 ease-linear"
+          >
             log in
           </NavLink>
         </li>
