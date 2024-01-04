@@ -1,14 +1,12 @@
-import { LoaderIcon } from 'react-hot-toast';
-// import { useUser } from '../auth/useUser';
 import { useAccounts } from '../../features/accounts/useAccounts';
 import { useTransactions } from '../../features/transactions/useTransactions';
 
+import { LoaderIcon } from 'react-hot-toast';
 import { getMonth, getYear, parseISO } from 'date-fns';
 import { currentMonth, currentYear } from '../../utils/helpers';
 import MonthlySummaryCard from './MonthlySummaryCard';
 
 function MonthlySummary() {
-  // const { user, isLoading } = useUser();
   const { accounts } = useAccounts();
   const { transactions, isLoading } = useTransactions();
 

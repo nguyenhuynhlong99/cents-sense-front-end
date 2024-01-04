@@ -1,13 +1,12 @@
-import BudgetCard from './BudgetCard';
 import { useExpectedIncome } from '../budgets/useExpectedIncome';
 import { useTransactions } from '../transactions/useTransactions';
 import { useBudgets } from '../budgets/useBudgets';
+
+import BudgetCard from './BudgetCard';
 import { LoaderIcon } from 'react-hot-toast';
-// import { useUser } from '../auth/useUser';
 import Icon from '../../ui/Icon';
 
 function MonthlyBudgetUsage() {
-  // const { user, isLoading } = useUser();
   const { expectedIncome, isLoading } = useExpectedIncome();
   const { budgets } = useBudgets();
   const { transactions } = useTransactions();

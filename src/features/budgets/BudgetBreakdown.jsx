@@ -1,6 +1,7 @@
-import BudgetBreakdownChart from './BudgetBreakdownChart';
 import { useBudgets } from './useBudgets';
 import { useExpectedIncome } from './useExpectedIncome';
+
+import BudgetBreakdownChart from './BudgetBreakdownChart';
 
 function BudgetBreakdown() {
   const { expectedIncome } = useExpectedIncome();

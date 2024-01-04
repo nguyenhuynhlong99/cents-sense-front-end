@@ -1,6 +1,6 @@
+import { useDeleteGoal } from './useDeleteGoal';
 import { Warning } from '@phosphor-icons/react';
 import Modal from '../../ui/Modal';
-import { useDeleteGoal } from './useDeleteGoal';
 
 function DeleteGoal({ goalToDelete, openDeleteModal, setOpenDeleteModal }) {
   const { isDeleting, deleteGoal } = useDeleteGoal();

@@ -1,8 +1,8 @@
+import { useGoals } from './useGoals';
 import { PencilSimple, TrashSimple } from '@phosphor-icons/react';
 import Icon from '../../ui/Icon';
 import Loader from '../../ui/Loader';
 import GoalCard from '../overview/GoalCard';
-import { useGoals } from './useGoals';
 
 function GoalList({ setOpenAddModal, setGoalToEdit, setOpenDeleteModal }) {
   const { isLoading, goals } = useGoals();

@@ -1,5 +1,8 @@
-import { useCreateExpectedIncome } from './UseCreateExpectedIncome';
+import { useCreateExpectedIncome } from './useCreateExpectedIncome';
 import { useForm } from 'react-hook-form';
+import { useUser } from '../auth/useUser';
+import { useExpectedIncome } from './useExpectedIncome';
+import { useTransactions } from '../transactions/useTransactions';
 
 import { currentMonth, currentYear, formatCurrency } from '../../utils/helpers';
 import { getMonth, getYear, parseISO } from 'date-fns';
@@ -7,9 +10,6 @@ import { getMonth, getYear, parseISO } from 'date-fns';
 import Button from '../../ui/Button';
 import ProgressBar from '../../ui/ProgressBar';
 import { CheckCircle, CurrencyDollar } from '@phosphor-icons/react';
-import { useUser } from '../auth/useUser';
-import { useExpectedIncome } from './useExpectedIncome';
-import { useTransactions } from '../transactions/useTransactions';
 
 function ExpectedIncome() {
   const { user } = useUser();

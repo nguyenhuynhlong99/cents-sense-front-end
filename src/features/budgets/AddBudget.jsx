@@ -1,5 +1,5 @@
-import Modal from '../../ui/Modal';
 import AddBudgetForm from './AddBudgetForm';
+import Modal from '../../ui/Modal';
 
 function AddBudget({ isShown, setIsShown, budgetToEdit }) {
   return (

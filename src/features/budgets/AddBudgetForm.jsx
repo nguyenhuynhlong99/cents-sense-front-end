@@ -3,13 +3,13 @@ import { useUpdateBudget } from './useUpdateBudget';
 import { useUser } from '../auth/useUser';
 import { useBudgets } from './useBudgets';
 import { useCreateBudget } from './useCreateBudget';
+import { useExpectedIncome } from './useExpectedIncome';
 
 import FormRow from '../../ui/FormRow';
 import Input from '../../ui/Input';
 import ModalButton from '../../ui/ModalButton';
 import Icon from '../../ui/Icon';
 import { listOfIcons } from '../../utils/helpers';
-import { useExpectedIncome } from './useExpectedIncome';
 
 function AddBudgetForm({ setIsShown, budgetToEdit }) {
   const { user } = useUser();
