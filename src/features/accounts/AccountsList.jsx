@@ -3,8 +3,6 @@ import { useAccounts } from './useAccounts';
 import AccountCard from '../../ui/AccountCard';
 import Loader from '../../ui/Loader';
 import { Pen, Trash } from '@phosphor-icons/react';
-import ErrorBox from '../../ui/ErrorBox';
-import { useUser } from '../auth/useUser';
 
 function AccountsList({
   openAddModal,
@@ -15,18 +13,11 @@ function AccountsList({
   accountToEdit,
   setAccountToEdit,
 }) {
-  // const userId = 1;
-  // const { accounts, error, isLoading } = useAccounts();
-  // const { user, isLoading } = useUser();
   const { accounts, isLoading } = useAccounts();
-  // const userAccounts = await accounts;
+
   const userCreditAccounts = accounts?.filter((acc) => acc.type === 'credit');
   const userDebitAccounts = accounts?.filter((acc) => acc.type === 'debit');
   const userSavingAccounts = accounts?.filter((acc) => acc.type === 'saving');
-
-  // function getAllUserAccounts(userID) {
-  //   return accounts?.filter((acc) => acc.userId === userId);
-  // }
 
   function openEditModal(item) {
     setOpenAddModal(true);
