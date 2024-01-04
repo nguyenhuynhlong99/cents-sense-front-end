@@ -1,11 +1,9 @@
+import { useTransactions } from '../transactions/useTransactions';
 import { parseISO } from 'date-fns';
 import Icon from '../../ui/Icon';
-// import { useUser } from '../auth/useUser';
 import TransactionCard from './TransactionCard';
-import { useTransactions } from '../transactions/useTransactions';
 
 function OverviewTransactions() {
-  // const { user } = useUser();
   const { transactions } = useTransactions();
 
   const userRecentTransactions = transactions?.sort(

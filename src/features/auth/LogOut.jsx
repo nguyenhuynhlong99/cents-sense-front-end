@@ -1,5 +1,5 @@
-import { SignOut } from '@phosphor-icons/react';
 import { useLogout } from './useLogout';
+import { SignOut } from '@phosphor-icons/react';
 
 function LogOut() {
   const { logout, isLoading } = useLogout();

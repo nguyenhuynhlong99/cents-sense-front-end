@@ -1,15 +1,15 @@
+import { useBudgets } from './useBudgets';
+import { useExpectedIncome } from './useExpectedIncome';
+import { useTransactions } from '../transactions/useTransactions';
+
 import BudgetCard from '../overview/BudgetCard';
 import Icon from '../../ui/Icon';
 import { PencilSimple, TrashSimple } from '@phosphor-icons/react';
 import { formatCurrency } from '../../utils/helpers';
-// import { useUser } from '../auth/useUser';
-import { useBudgets } from './useBudgets';
+
 import Loader from '../../ui/Loader';
-import { useExpectedIncome } from './useExpectedIncome';
-import { useTransactions } from '../transactions/useTransactions';
 
 function BudgetList({ setOpenModal, setBudgetToEdit, setOpenDeleteModal }) {
-  // const { isLoading, user } = useUser();
   const { budgets, isLoading } = useBudgets();
   const { expectedIncome } = useExpectedIncome();
   const { transactions } = useTransactions();

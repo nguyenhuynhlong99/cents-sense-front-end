@@ -1,6 +1,6 @@
-import { Warning } from '@phosphor-icons/react';
-import Modal from '../../ui/Modal';
 import { useDeleteBudget } from './useDeleteBudget';
+import Modal from '../../ui/Modal';
+import { Warning } from '@phosphor-icons/react';
 
 function DeleteBudget({ budgetToDelete, openDeleteModal, setOpenDeleteModal }) {
   const { isDeleting, deleteBudget } = useDeleteBudget();
