@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 const StyledHome = styled.div`
   height: 100vh;
-  background-color: #000;
-  color: #eeeeee;
+  background-color: rgb(10 10 10);
+  color: rgb(245 245 245);
   overflow: hidden;
 `;
 

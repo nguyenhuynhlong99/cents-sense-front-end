@@ -13,6 +13,7 @@ import { Toaster } from 'react-hot-toast';
 import Login from './pages/Login';
 import ProtectedRoute from './ui/ProtectedRoute';
 import Register from './pages/Register';
+import PageNotFound from './pages/PageNotFound';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -43,6 +44,7 @@ function App() {
             <Route path="goals" element={<Goals />} />
             <Route path="transactions" element={<Transactions />} />
           </Route>
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
       <Toaster
