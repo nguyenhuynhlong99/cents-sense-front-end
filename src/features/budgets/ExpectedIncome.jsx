@@ -10,6 +10,7 @@ import { getMonth, getYear, parseISO } from 'date-fns';
 import Button from '../../ui/Button';
 import ProgressBar from '../../ui/ProgressBar';
 import { CheckCircle, CurrencyDollar } from '@phosphor-icons/react';
+import { useMemo } from 'react';
 
 function ExpectedIncome() {
   const { user } = useUser();
@@ -17,13 +18,7 @@ function ExpectedIncome() {
   const { expectedIncome } = useExpectedIncome();
   const { transactions } = useTransactions();
 
-  const budgetUsedAmount = getBudgetUsed();
-
-  const { isCreating, createExpectedIncome } = useCreateExpectedIncome();
-  const { register, handleSubmit, formState, reset } = useForm();
-  const { errors } = formState;
-
-  function getBudgetUsed() {
+  const budgetUsedAmount = useMemo(() => {
     return transactions
       ?.filter(
         (t) =>
@@ -32,7 +27,22 @@ function ExpectedIncome() {
           getMonth(parseISO(t.created_at)) === currentMonth
       )
       .reduce((acc, curr) => acc + curr.amount, 0);
-  }
+  }, [transactions]);
+
+  const { isCreating, createExpectedIncome } = useCreateExpectedIncome();
+  const { register, handleSubmit, formState, reset } = useForm();
+  const { errors } = formState;
+
+  // function getBudgetUsed() {
+  //   return transactions
+  //     ?.filter(
+  //       (t) =>
+  //         t.budgets?.id &&
+  //         getYear(parseISO(t.created_at)) === currentYear &&
+  //         getMonth(parseISO(t.created_at)) === currentMonth
+  //     )
+  //     .reduce((acc, curr) => acc + curr.amount, 0);
+  // }
 
   function onSubmit(data) {
     const expectedIncomeData = {
