@@ -8,6 +8,7 @@ import { PencilSimple, TrashSimple } from '@phosphor-icons/react';
 import { formatCurrency } from '../../utils/helpers';
 
 import Loader from '../../ui/Loader';
+import { useCallback } from 'react';
 
 function BudgetList({ setOpenModal, setBudgetToEdit, setOpenDeleteModal }) {
   const { budgets, isLoading } = useBudgets();
@@ -16,23 +17,27 @@ function BudgetList({ setOpenModal, setBudgetToEdit, setOpenDeleteModal }) {
   const expectedIncomeId = expectedIncome?.id;
   const monthlyExpectedIncome = expectedIncome?.amount;
 
+  const getCurrentMonthBudgets = useCallback(() => {
+    return budgets?.filter((b) => b.expectedIncomeId === expectedIncomeId);
+  }, [budgets, expectedIncomeId]);
+
   const monthlyBudgets = getCurrentMonthBudgets();
+
+  const getTotalBudgetUsed = useCallback(() => {
+    return monthlyBudgets?.reduce((acc, curr) => acc + curr.amount, 0);
+  }, [monthlyBudgets]);
+
   const totalAmountBudgetUsed = getTotalBudgetUsed();
   const leftToBudget = monthlyExpectedIncome - totalAmountBudgetUsed;
 
-  function getCurrentMonthBudgets() {
-    return budgets?.filter((b) => b.expectedIncomeId === expectedIncomeId);
-  }
-
-  function getTotalBudgetUsed() {
-    return monthlyBudgets?.reduce((acc, curr) => acc + curr.amount, 0);
-  }
-
-  function getTotalUsedBudget(budgetId) {
-    return transactions
-      ?.filter((t) => t?.budgets?.id === budgetId)
-      .reduce((acc, curr) => acc + curr.amount, 0);
-  }
+  const getTotalUsedBudget = useCallback(
+    (budgetId) => {
+      return transactions
+        ?.filter((t) => t?.budgets?.id === budgetId)
+        .reduce((acc, curr) => acc + curr.amount, 0);
+    },
+    [transactions]
+  );
 
   function onOpenEditModal(budget) {
     setBudgetToEdit(budget);

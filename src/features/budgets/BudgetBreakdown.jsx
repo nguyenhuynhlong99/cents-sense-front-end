@@ -2,17 +2,18 @@ import { useBudgets } from './useBudgets';
 import { useExpectedIncome } from './useExpectedIncome';
 
 import BudgetBreakdownChart from './BudgetBreakdownChart';
+import { useCallback } from 'react';
 
 function BudgetBreakdown() {
   const { expectedIncome } = useExpectedIncome();
   const { budgets } = useBudgets();
 
   const expectedIncomeId = expectedIncome?.id;
-  const monthlyBudgets = getCurrentMonthBudgets();
 
-  function getCurrentMonthBudgets() {
+  const getCurrentMonthBudgets = useCallback(() => {
     return budgets?.filter((b) => b?.expectedIncomeId === expectedIncomeId);
-  }
+  }, [budgets, expectedIncomeId]);
+  const monthlyBudgets = getCurrentMonthBudgets();
 
   if (monthlyBudgets?.length < 1) return null;
 
