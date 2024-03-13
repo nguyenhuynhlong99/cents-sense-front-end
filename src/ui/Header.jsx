@@ -15,9 +15,9 @@ function Header() {
       <div className="ml-auto flex items-center">
         <div className="flex items-center gap-3">
           <span className="text-sm sm:text-base">
-            Hello,
+            Hello,{' '}
             <span className="font-bold text-green-500">
-              {' ' + user?.user_metadata?.fullName}
+              {user?.user_metadata?.fullName || 'Demo'}
             </span>
           </span>
           <LogOut />

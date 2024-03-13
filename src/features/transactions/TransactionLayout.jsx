@@ -4,9 +4,11 @@ import Button from '../../ui/Button';
 import TransactionList from './TransactionList';
 import { useState } from 'react';
 import AddTransaction from './AddTransaction';
+import { useTransactions } from './useTransactions';
 
 function TransactionLayout() {
   const [openAddModal, setOpenAddModal] = useState(false);
+  const { transactions, isLoading } = useTransactions();
 
   return (
     <>
@@ -18,17 +20,19 @@ function TransactionLayout() {
         </Button>
       </div>
 
-      <div className="mt-5 flex items-center justify-center">
-        <Filter
-          filterField="type"
-          options={[
-            { value: 'all', label: 'All' },
-            { value: 'income', label: 'Income' },
-            { value: 'expense', label: 'Expense' },
-            { value: 'transfer', label: 'Transfer' },
-          ]}
-        />
-      </div>
+      {!isLoading && transactions && (
+        <div className="mt-5 flex items-center justify-center">
+          <Filter
+            filterField="type"
+            options={[
+              { value: 'all', label: 'All' },
+              { value: 'income', label: 'Income' },
+              { value: 'expense', label: 'Expense' },
+              { value: 'transfer', label: 'Transfer' },
+            ]}
+          />
+        </div>
+      )}
 
       <TransactionList />
 
