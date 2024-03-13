@@ -5,25 +5,33 @@ import { useBudgets } from '../budgets/useBudgets';
 import BudgetCard from './BudgetCard';
 import { LoaderIcon } from 'react-hot-toast';
 import Icon from '../../ui/Icon';
+import { useCallback, useMemo } from 'react';
 
 function MonthlyBudgetUsage() {
   const { expectedIncome, isLoading } = useExpectedIncome();
   const { budgets } = useBudgets();
   const { transactions } = useTransactions();
 
-  const monthlyBudgets = getMonthlyBudgets();
-
-  function getMonthlyBudgets() {
+  const monthlyBudgets = useMemo(() => {
     const expectedIncomeId = expectedIncome?.id;
 
     return budgets?.filter((b) => b.expectedIncomeId === expectedIncomeId);
-  }
+  }, [budgets, expectedIncome?.id]);
 
-  function getTotalUsedBudget(budgetId) {
-    return transactions
-      ?.filter((t) => t?.budgets?.id === budgetId)
-      .reduce((acc, curr) => acc + curr.amount, 0);
-  }
+  // function getMonthlyBudgets() {
+  //   const expectedIncomeId = expectedIncome?.id;
+
+  //   return budgets?.filter((b) => b.expectedIncomeId === expectedIncomeId);
+  // }
+
+  const getTotalUsedBudget = useCallback(
+    (budgetId) => {
+      return transactions
+        ?.filter((t) => t?.budgets?.id === budgetId)
+        .reduce((acc, curr) => acc + curr.amount, 0);
+    },
+    [transactions]
+  );
 
   if (isLoading) return <LoaderIcon />;
 

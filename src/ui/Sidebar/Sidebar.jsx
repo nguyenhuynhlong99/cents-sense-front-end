@@ -3,7 +3,6 @@ import SidebarNavLink from './SidebarNavLink';
 
 import {
   ArrowsLeftRight,
-  CreditCard,
   CurrencyCircleDollar,
   FlagCheckered,
   SquaresFour,

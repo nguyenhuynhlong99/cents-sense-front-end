@@ -3,6 +3,7 @@ import { useAccounts } from './useAccounts';
 import AccountCard from '../../ui/AccountCard';
 import Loader from '../../ui/Loader';
 import { Pen, Trash } from '@phosphor-icons/react';
+import { useMemo } from 'react';
 
 function AccountsList({
   openAddModal,
@@ -15,9 +16,15 @@ function AccountsList({
 }) {
   const { accounts, isLoading } = useAccounts();
 
-  const userCreditAccounts = accounts?.filter((acc) => acc.type === 'credit');
-  const userDebitAccounts = accounts?.filter((acc) => acc.type === 'debit');
-  const userSavingAccounts = accounts?.filter((acc) => acc.type === 'saving');
+  const userCreditAccounts = useMemo(() => {
+    accounts?.filter((acc) => acc.type === 'credit');
+  }, [accounts]);
+  const userDebitAccounts = useMemo(() => {
+    accounts?.filter((acc) => acc.type === 'debit');
+  }, [accounts]);
+  const userSavingAccounts = useMemo(() => {
+    accounts?.filter((acc) => acc.type === 'saving');
+  }, [accounts]);
 
   function openEditModal(item) {
     setOpenAddModal(true);

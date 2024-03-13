@@ -10,6 +10,7 @@ import Input from '../../ui/Input';
 import ModalButton from '../../ui/ModalButton';
 import Icon from '../../ui/Icon';
 import { listOfIcons } from '../../utils/helpers';
+import { useMemo } from 'react';
 
 function AddBudgetForm({ setIsShown, budgetToEdit }) {
   const { user } = useUser();
@@ -30,24 +31,33 @@ function AddBudgetForm({ setIsShown, budgetToEdit }) {
   });
   const { errors } = formState;
 
-  const monthlyBudgetsData = getAllBudgetsData();
-  let monthlyBudgetsRemain = getBudgetsRemain();
-
-  monthlyBudgetsRemain = isEditSession
-    ? monthlyBudgetsRemain + editValues.amount
-    : monthlyBudgetsRemain;
-
-  function getAllBudgetsData() {
+  const monthlyBudgetsData = useMemo(() => {
     return budgets?.filter((b) => b.expectedIncomeId === expectedIncomeId);
-  }
+  }, [budgets, expectedIncomeId]);
 
-  function getBudgetsRemain() {
+  let monthlyBudgetsRemain = useMemo(() => {
     const totalCurrentBudgetsAmount = monthlyBudgetsData?.reduce(
       (acc, curr) => acc + curr.amount,
       0
     );
     return expectedIncomeAmount - totalCurrentBudgetsAmount;
-  }
+  }, [monthlyBudgetsData, expectedIncomeAmount]);
+
+  monthlyBudgetsRemain = isEditSession
+    ? monthlyBudgetsRemain + editValues.amount
+    : monthlyBudgetsRemain;
+
+  // function getAllBudgetsData() {
+  //   return budgets?.filter((b) => b.expectedIncomeId === expectedIncomeId);
+  // }
+
+  // function getBudgetsRemain() {
+  //   const totalCurrentBudgetsAmount = monthlyBudgetsData?.reduce(
+  //     (acc, curr) => acc + curr.amount,
+  //     0
+  //   );
+  //   return expectedIncomeAmount - totalCurrentBudgetsAmount;
+  // }
 
   function onSubmit(data) {
     if (isEditSession) {

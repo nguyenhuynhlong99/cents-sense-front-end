@@ -15,6 +15,7 @@ import { currentYear, formatCurrency, currentMonth } from '../../utils/helpers';
 import { getMonth, getYear, parseISO } from 'date-fns';
 import MobileTransactionCard from './MobileTransactionCard';
 import Loader from '../../ui/Loader';
+import { useCallback, useMemo } from 'react';
 
 function MobileOverview() {
   const { transactions, isLoading } = useTransactions();
@@ -22,23 +23,13 @@ function MobileOverview() {
   const { expectedIncome } = useExpectedIncome();
   const { budgets } = useBudgets();
 
-  const totalBalance = getTotalBalance();
-  const monthlyIncome = getMonthlyIncome();
-  const monthlyExpense = getMonthlyExpense();
-  const monthlyBudgetUsedAmount = getMonthlyBudgetUsed();
-  const monthlySaving = monthlyIncome - monthlyExpense;
-  const recentTransactions = transactions?.sort(
-    (a, b) =>
-      new Date(parseISO(b.created_at)) - new Date(parseISO(a.created_at))
-  );
-
-  function getTotalBalance() {
+  const totalBalance = useMemo(() => {
     return accounts
       ?.filter((acc) => acc.type !== 'credit')
       .reduce((acc, curr) => acc + curr.balance, 0);
-  }
+  }, [accounts]);
 
-  function getMonthlyIncome() {
+  const monthlyIncome = useMemo(() => {
     return transactions
       ?.filter(
         (t) =>
@@ -47,9 +38,9 @@ function MobileOverview() {
           getMonth(parseISO(t.created_at)) === currentMonth
       )
       .reduce((acc, curr) => acc + curr.amount, 0);
-  }
+  }, [transactions]);
 
-  function getMonthlyExpense() {
+  const monthlyExpense = useMemo(() => {
     return transactions
       ?.filter(
         (t) =>
@@ -58,21 +49,69 @@ function MobileOverview() {
           getMonth(parseISO(t.created_at)) === currentMonth
       )
       .reduce((acc, curr) => acc + curr.amount, 0);
-  }
+  }, [transactions]);
 
-  function getMonthlyBudgetUsed() {
+  const monthlyBudgetUsedAmount = useMemo(() => {
     const expectedIncomeId = expectedIncome?.id;
 
     return budgets
       ?.filter((b) => b.expectedIncomeId === expectedIncomeId)
       .reduce((acc, curr) => acc + curr.amount, 0);
-  }
+  }, [budgets, expectedIncome?.id]);
 
-  function getIconWithBudgetId(budgetId) {
-    const icon = budgets?.find((b) => b.id === budgetId)?.icon;
+  const monthlySaving = monthlyIncome - monthlyExpense;
 
-    return <Icon name={icon} />;
-  }
+  const recentTransactions = useMemo(() => {
+    transactions?.sort(
+      (a, b) =>
+        new Date(parseISO(b.created_at)) - new Date(parseISO(a.created_at))
+    );
+  }, [transactions]);
+
+  // function getTotalBalance() {
+  //   return accounts
+  //     ?.filter((acc) => acc.type !== 'credit')
+  //     .reduce((acc, curr) => acc + curr.balance, 0);
+  // }
+
+  // function getMonthlyIncome() {
+  //   return transactions
+  //     ?.filter(
+  //       (t) =>
+  //         t.type === 'income' &&
+  //         getYear(parseISO(t.created_at)) === currentYear &&
+  //         getMonth(parseISO(t.created_at)) === currentMonth
+  //     )
+  //     .reduce((acc, curr) => acc + curr.amount, 0);
+  // }
+
+  // function getMonthlyExpense() {
+  //   return transactions
+  //     ?.filter(
+  //       (t) =>
+  //         t.type === 'expense' &&
+  //         getYear(parseISO(t.created_at)) === currentYear &&
+  //         getMonth(parseISO(t.created_at)) === currentMonth
+  //     )
+  //     .reduce((acc, curr) => acc + curr.amount, 0);
+  // }
+
+  // function getMonthlyBudgetUsed() {
+  //   const expectedIncomeId = expectedIncome?.id;
+
+  //   return budgets
+  //     ?.filter((b) => b.expectedIncomeId === expectedIncomeId)
+  //     .reduce((acc, curr) => acc + curr.amount, 0);
+  // }
+
+  const getIconWithBudgetId = useCallback(
+    (budgetId) => {
+      const icon = budgets?.find((b) => b.id === budgetId)?.icon;
+
+      return <Icon name={icon} />;
+    },
+    [budgets]
+  );
 
   if (isLoading) return <Loader />;
 
