@@ -5,7 +5,14 @@ import toast from 'react-hot-toast';
 function LoginForm() {
   const { login, isLoading } = useLogin();
 
-  const { register, formState, handleSubmit, reset } = useForm();
+  const demoAccounts = {
+    email: 'demo@mail.com',
+    password: 'password123',
+  };
+
+  const { register, formState, handleSubmit, reset } = useForm({
+    defaultValues: demoAccounts,
+  });
   const { errors } = formState;
 
   function onSubmit(data) {
