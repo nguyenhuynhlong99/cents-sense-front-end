@@ -19,7 +19,6 @@ export function useTransactions() {
   } = useQuery({
     queryKey: ['transactions', filter],
     queryFn: () => getTransactions({ filter }),
-    // retry: 0,
   });
 
   return { isLoading, error, transactions };

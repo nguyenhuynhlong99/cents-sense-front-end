@@ -119,7 +119,7 @@ export const addExpenseTransaction = async (transaction) => {
       createTransaction(transaction)
     );
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
 };
 
@@ -161,7 +161,7 @@ export const addTransferTransaction = async (transaction) => {
         editAccount(newToAccountData, transaction.toAccountId)
       );
     } catch (error) {
-      // console.log(error);
+      console.log(error);
     }
   } else {
     const goalData = await getGoal(transaction.goalId);

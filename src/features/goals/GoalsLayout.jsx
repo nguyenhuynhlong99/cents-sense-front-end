@@ -6,7 +6,6 @@ import GoalList from './GoalList';
 import DeleteGoal from './DeleteGoal';
 
 function GoalsLayout() {
-  // const userID = 2;
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [goalToEdit, setGoalToEdit] = useState({});

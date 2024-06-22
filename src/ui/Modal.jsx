@@ -45,12 +45,7 @@ const ModalBody = ({ children }) => {
   return <>{children}</>;
 };
 
-// const ModalFooter = ({ children }) => {
-//   return <>{children}</>;
-// };
-
 Modal.Header = ModalHeader;
 Modal.Body = ModalBody;
-// Modal.Footer = ModalFooter;
 
 export default Modal;
