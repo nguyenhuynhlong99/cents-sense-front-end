@@ -31,10 +31,6 @@ function AccountsList({
 
   if (isLoading) return <Loader />;
 
-  // if (error) {
-  //   return <ErrorBox message="❌ There something went wrong!" />;
-  // }
-
   if (accounts?.length < 1) {
     return (
       <div className="max-w-[500px] m-auto lg:max-w-none lg:m-0 lg:flex lg:items-center lg:gap-3">

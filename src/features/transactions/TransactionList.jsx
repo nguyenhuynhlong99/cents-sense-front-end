@@ -1,14 +1,8 @@
-// import { useTransactionsExpandAccountAndBudget } from './useTransactionsExpandAccountsAndBudget';
 import { useTransactions } from './useTransactions';
-
 import Loader from '../../ui/Loader';
 import TransactionItem from './TransactionItem';
-// import { useUser } from '../auth/useUser';
 
 function TransactionList() {
-  // const { user } = useUser();
-  // const userId = user?.id;
-
   const { transactions, isLoading } = useTransactions();
 
   const recentTransactions = getRecentTransactions();
