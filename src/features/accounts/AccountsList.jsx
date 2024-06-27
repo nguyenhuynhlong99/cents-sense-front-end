@@ -5,12 +5,8 @@ import Loader from '../../ui/Loader';
 import { Pen, Trash } from '@phosphor-icons/react';
 
 function AccountsList({
-  openAddModal,
   setOpenAddModal,
-  openDeleteModal,
   setOpenDeleteModal,
-  allTypesOfAccount,
-  accountToEdit,
   setAccountToEdit,
 }) {
   const { accounts, isLoading } = useAccounts();
@@ -30,10 +26,6 @@ function AccountsList({
   }
 
   if (isLoading) return <Loader />;
-
-  // if (error) {
-  //   return <ErrorBox message="❌ There something went wrong!" />;
-  // }
 
   if (accounts?.length < 1) {
     return (
