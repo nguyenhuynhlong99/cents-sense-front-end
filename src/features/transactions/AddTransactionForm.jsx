@@ -12,6 +12,7 @@ import { useAddExpense } from './useAddExpense';
 import { useAddTransfer } from './useAddTransfer';
 import { useUser } from '../auth/useUser';
 import { useExpectedIncome } from '../budgets/useExpectedIncome';
+import toast from 'react-hot-toast';
 
 function AddTransactionForm({ setIsShown }) {
   const { user } = useUser();
@@ -115,7 +116,7 @@ function AddTransactionForm({ setIsShown }) {
   }
 
   function onError() {
-    console.log('Something went wrong!');
+    toast('Something went wrong!');
   }
 
   return (

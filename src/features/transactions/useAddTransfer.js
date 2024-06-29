@@ -16,7 +16,7 @@ export function useAddTransfer() {
         toast.success('Created transfer transaction successfully!');
       },
       onError: (err) => {
-        console.log(err);
+        toast.error(err.message);
       },
     });
 
