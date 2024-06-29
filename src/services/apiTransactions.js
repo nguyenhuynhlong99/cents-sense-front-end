@@ -1,12 +1,7 @@
-import axios from 'axios';
 import { editAccount, getAccount } from './apiAccounts';
 import { editGoal, getGoal } from './apiGoals';
 import supabase from './supabase';
 import { getCurrentUser } from './apiAuth';
-
-const transactionsApi = axios.create({
-  baseURL: 'http://localhost:3500/transactions',
-});
 
 export const getTransactions = async ({ filter }) => {
   const userData = await getCurrentUser();
@@ -32,11 +27,6 @@ export const getTransactions = async ({ filter }) => {
   return data;
 };
 
-export const getTransaction = async ({ id }) => {
-  const response = await transactionsApi.get(`/${id}`, id);
-  return response.data;
-};
-
 export const createTransaction = async (transaction) => {
   const { data, error } = await supabase
     .from('transactions')
@@ -46,39 +36,6 @@ export const createTransaction = async (transaction) => {
   if (error) throw new Error(error.message);
 
   return data;
-};
-
-export const editTransaction = async (transaction) => {
-  return await transactionsApi.patch(`/${transaction.id}`, transaction);
-};
-
-export const deleteTransaction = async ({ id }) => {
-  try {
-    return await transactionsApi.delete(`/${id}`, id);
-  } catch (error) {
-    return null;
-  }
-};
-
-export const getTransactionExpandAccountAndBudget = async ({ type }) => {
-  const typeValue = !type || type === 'all' ? null : { type };
-
-  const request = typeValue
-    ? {
-        params: {
-          _expand: ['account', 'budget'],
-          ...typeValue,
-        },
-      }
-    : {
-        params: {
-          _expand: ['account', 'budget'],
-        },
-      };
-
-  const response = await transactionsApi.get('/', request);
-
-  return response.data;
 };
 
 export const addIncomeTransaction = async (transaction) => {
@@ -194,5 +151,3 @@ export const addTransferTransaction = async (transaction) => {
     }
   }
 };
-
-export default transactionsApi;

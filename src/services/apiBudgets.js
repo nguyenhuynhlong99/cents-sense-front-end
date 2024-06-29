@@ -2,10 +2,6 @@ import axios from 'axios';
 import { getCurrentUser } from './apiAuth';
 import supabase from './supabase';
 
-const budgetsApi = axios.create({
-  baseURL: 'http://localhost:3500/budgets',
-});
-
 export const getBudgets = async () => {
   const userData = await getCurrentUser();
 
@@ -20,11 +16,6 @@ export const getBudgets = async () => {
   }
 
   return data;
-};
-
-export const getBudget = async ({ id }) => {
-  const response = await budgetsApi.get(`/${id}`);
-  return response.data;
 };
 
 export const createBudget = async (budget) => {
@@ -58,5 +49,3 @@ export const deleteBudget = async (id) => {
     throw new Error('Budget could not be deleted');
   }
 };
-
-export default budgetsApi;

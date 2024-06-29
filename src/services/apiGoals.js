@@ -1,10 +1,5 @@
-import axios from 'axios';
 import supabase from './supabase';
 import { getCurrentUser } from './apiAuth';
-
-const goalsApi = axios.create({
-  baseURL: 'http://localhost:3500/goals',
-});
 
 export const getGoals = async () => {
   const userData = await getCurrentUser();
@@ -66,5 +61,3 @@ export const deleteGoal = async (id) => {
     throw new Error('Goal could not be deleted');
   }
 };
-
-export default goalsApi;

@@ -1,12 +1,7 @@
-import axios from 'axios';
 import { getCurrentUser } from './apiAuth';
 import supabase from './supabase';
 import { getMonth, getYear, parseISO } from 'date-fns';
 import { currentMonth, currentYear } from '../utils/helpers';
-
-const expectedIncomeApi = axios.create({
-  baseURL: 'http://localhost:3500/expectedIncomes',
-});
 
 export const getExpectedIncomes = async () => {
   const userData = await getCurrentUser();
@@ -49,5 +44,3 @@ export const createExpectedIncome = async (expectedIncome) => {
 
   return data;
 };
-
-export default expectedIncomeApi;

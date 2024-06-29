@@ -5,15 +5,12 @@ import Loader from '../../ui/Loader';
 import { Pen, Trash } from '@phosphor-icons/react';
 
 function AccountsList({
-  openAddModal,
   setOpenAddModal,
-  openDeleteModal,
   setOpenDeleteModal,
-  allTypesOfAccount,
-  accountToEdit,
   setAccountToEdit,
 }) {
   const { accounts, isLoading } = useAccounts();
+  console.log(accounts);
 
   const userCreditAccounts = accounts?.filter((acc) => acc.type === 'credit');
   const userDebitAccounts = accounts?.filter((acc) => acc.type === 'debit');
