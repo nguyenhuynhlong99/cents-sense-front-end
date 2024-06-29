@@ -12,11 +12,7 @@ export async function register({ fullName, email, password }) {
     },
   });
 
-  if (error) {
-    throw new Error(error.message);
-  }
-
-  return data;
+  return { data, error };
 }
 
 export async function login({ email, password }) {

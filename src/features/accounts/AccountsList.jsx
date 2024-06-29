@@ -10,7 +10,6 @@ function AccountsList({
   setAccountToEdit,
 }) {
   const { accounts, isLoading } = useAccounts();
-  console.log(accounts);
 
   const userCreditAccounts = accounts?.filter((acc) => acc.type === 'credit');
   const userDebitAccounts = accounts?.filter((acc) => acc.type === 'debit');
