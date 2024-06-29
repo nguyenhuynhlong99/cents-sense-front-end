@@ -75,9 +75,7 @@ export const addExpenseTransaction = async (transaction) => {
       editAccount(newAccountData, transaction.accountId),
       createTransaction(transaction)
     );
-  } catch (error) {
-    // console.log(error);
-  }
+  } catch (error) {}
 };
 
 export const addTransferTransaction = async (transaction) => {
@@ -117,9 +115,7 @@ export const addTransferTransaction = async (transaction) => {
         editAccount(newFromAccountData, transaction.accountId),
         editAccount(newToAccountData, transaction.toAccountId)
       );
-    } catch (error) {
-      // console.log(error);
-    }
+    } catch (error) {}
   } else {
     const goalData = await getGoal(transaction.goalId);
     const goalCurrentAmount = await goalData.currentAmount;
@@ -146,8 +142,6 @@ export const addTransferTransaction = async (transaction) => {
         editAccount(newFromAccountData, transaction?.accountId),
         editGoal(newGoalData, transaction?.goalId)
       );
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 };

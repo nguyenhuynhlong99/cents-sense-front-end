@@ -5,15 +5,14 @@ import toast from 'react-hot-toast';
 export function useRegister() {
   const { mutate: register, isLoading } = useMutation({
     mutationFn: registerApi,
-    onSuccess: (user) => {
-      console.log(user);
-
-      toast.success(
-        'Signed up successfully! Please verify the new account from your email'
-      );
-    },
-    onError: (err) => {
-      toast.error(err);
+    onSuccess: (data) => {
+      if (data.data.user) {
+        toast.success(
+          'Please verify the new account from your email to sign up'
+        );
+      } else {
+        toast.error(data.error.message);
+      }
     },
   });
 
