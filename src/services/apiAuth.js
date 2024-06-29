@@ -8,7 +8,7 @@ export async function register({ fullName, email, password }) {
       data: {
         fullName,
       },
-      emailRedirectTo: 'http://127.0.0.1:5173/overview',
+      emailRedirectTo: 'https://cent-sense.vercel.app/overview',
     },
   });
 

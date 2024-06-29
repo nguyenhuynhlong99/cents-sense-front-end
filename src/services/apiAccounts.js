@@ -3,10 +3,6 @@ import supabase from './supabase';
 
 import { getCurrentUser } from './apiAuth';
 
-const accountsApi = axios.create({
-  baseURL: 'http://localhost:3500/accounts',
-});
-
 export const getAccounts = async () => {
   const userData = await getCurrentUser();
 
@@ -67,5 +63,3 @@ export const deleteAccount = async (id) => {
     throw new Error('Account could not be deleted');
   }
 };
-
-export default accountsApi;
