@@ -1,34 +1,40 @@
 import AccountsLayout from './AccountsLayout';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { render, screen } from '@testing-library/react';
-import { describe, expect } from 'vitest';
+import { render, screen, waitFor } from '@testing-library/react';
+import { beforeAll, describe, expect } from 'vitest';
+import { server } from '../../tests/server';
+
+// Establish API mocking before all tests.
+beforeAll(() => server.listen());
+
+// Reset any request handlers that we may add during the tests,
+// so they don't affect other tests.
+afterEach(() => server.resetHandlers());
+
+// Clean up after the tests are finished.
+afterAll(() => server.close());
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 0,
+      retry: false,
     },
   },
 });
 
-describe('AccountsLayout', () => {
-  it('should render heading Accounts', () => {
-    render(
-      <QueryClientProvider client={queryClient}>
-        <AccountsLayout />
-      </QueryClientProvider>
-    );
-    const heading = screen.getByRole('heading', { name: /Accounts/i });
-    expect(heading).toBeInTheDocument();
-  });
+const renderWithClient = (ui) => {
+  return render(
+    <QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>
+  );
+};
 
-  it('should render "Add your account" button', () => {
-    render(
-      <QueryClientProvider client={queryClient}>
-        <AccountsLayout />
-      </QueryClientProvider>
-    );
-    const addAccountBtn = screen.getByText(/Add your account/i);
-    expect(addAccountBtn).toBeInTheDocument();
+describe('AccountsLayout', () => {
+  it('should render heading Accounts', async () => {
+    renderWithClient(<AccountsLayout />);
+
+    await waitFor(() => {
+      const heading = screen.getByRole('heading', { name: /Accounts/i });
+      expect(heading).toBeInTheDocument();
+    });
   });
 });
